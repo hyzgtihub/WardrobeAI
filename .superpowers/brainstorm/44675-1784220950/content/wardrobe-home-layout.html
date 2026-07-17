@@ -1,0 +1,59 @@
+<h2>衣橱首页：哪一种信息结构更符合你的直觉？</h2>
+<p class="subtitle">两种方案都支持顶部切换“我 / 宝宝”等角色，主要区别是首页先强调分类，还是先强调衣物本身。</p>
+
+<div class="split">
+  <div class="card" data-choice="a-category-first" onclick="toggleSelect(this)">
+    <div class="card-body">
+      <div class="label">方案 A · 推荐</div>
+      <h3>分类优先</h3>
+      <div class="mockup">
+        <div class="mockup-header">我的衣橱　⌄　　搜索　＋录入</div>
+        <div class="mockup-body">
+          <div class="viz-row">
+            <span class="viz-badge">全部 126</span>
+            <span class="viz-badge">上衣 38</span>
+            <span class="viz-badge">裤子 21</span>
+            <span class="viz-badge">连衣裙 16</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:16px">
+            <div class="placeholder">白衬衫</div>
+            <div class="placeholder">针织衫</div>
+            <div class="placeholder">牛仔裤</div>
+            <div class="placeholder">碎花裙</div>
+            <div class="placeholder">风衣</div>
+            <div class="placeholder">运动鞋</div>
+          </div>
+          <div class="mock-nav" style="margin-top:16px">衣橱　　搭配　　OOTD　　我的</div>
+        </div>
+      </div>
+      <p>用户先选品类，再浏览衣物。适合“整理、查找、避免重复购买”的首版核心目标。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b-gallery-first" onclick="toggleSelect(this)">
+    <div class="card-body">
+      <div class="label">方案 B</div>
+      <h3>视觉衣橱优先</h3>
+      <div class="mockup">
+        <div class="mockup-header">我的衣橱　⌄　　搜索　＋录入</div>
+        <div class="mockup-body">
+          <div class="viz-row">
+            <span class="viz-badge">最近添加</span>
+            <span class="viz-badge">最近穿过</span>
+            <span class="viz-badge">筛选</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px">
+            <div class="placeholder">白衬衫<br>上衣</div>
+            <div class="placeholder">碎花裙<br>连衣裙</div>
+            <div class="placeholder">风衣<br>外套</div>
+            <div class="placeholder">牛仔裤<br>裤子</div>
+          </div>
+          <div class="mock-nav" style="margin-top:16px">衣橱　　搭配　　OOTD　　我的</div>
+        </div>
+      </div>
+      <p>打开就看到更大的衣物图片，更像翻阅真实衣橱；视觉更强，但分类管理入口略深。</p>
+    </div>
+  </div>
+</div>
+
+<p class="subtitle">点击你更喜欢的方案，然后回到对话告诉我你的感受；也可以说希望把两者怎样组合。</p>

@@ -1,0 +1,76 @@
+<h2>融合方案：分类是骨架，衣物状态是快捷入口</h2>
+<p class="subtitle">默认保持清晰的分类管理，同时让“最近添加、最近穿过、我的最爱、当季衣物”直接参与浏览。</p>
+
+<div class="mockup">
+  <div class="mockup-header">我的衣橱　⌄　　搜索　　筛选　　＋录入</div>
+  <div class="mockup-body">
+    <div class="label">智能集合</div>
+    <div class="viz-row">
+      <span class="viz-badge">最近添加 12</span>
+      <span class="viz-badge">最近穿过 8</span>
+      <span class="viz-badge">我的最爱 16</span>
+      <span class="viz-badge">当季衣物 45</span>
+    </div>
+
+    <div class="label" style="margin-top:20px">衣物分类</div>
+    <div class="viz-row">
+      <button class="btn btn-primary" type="button">全部 126</button>
+      <button class="btn" type="button">上衣 38</button>
+      <button class="btn" type="button">裤子 21</button>
+      <button class="btn" type="button">连衣裙 16</button>
+      <button class="btn" type="button">外套 14</button>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px">
+      <div class="placeholder">
+        <span class="viz-badge">最近添加</span><br><br>
+        白衬衫<br><span class="text-muted">上衣</span>
+      </div>
+      <div class="placeholder">
+        <span class="viz-badge">我的最爱</span><br><br>
+        针织开衫<br><span class="text-muted">上衣</span>
+      </div>
+      <div class="placeholder">
+        <span class="viz-badge">当季</span><br><br>
+        牛仔裤<br><span class="text-muted">裤子</span>
+      </div>
+      <div class="placeholder">
+        <span class="viz-badge">最近穿过</span><br><br>
+        碎花裙<br><span class="text-muted">连衣裙</span>
+      </div>
+      <div class="placeholder">
+        <span class="viz-badge">值得复购</span><br><br>
+        宝宝卫衣<br><span class="text-muted">上衣 · 90cm</span>
+      </div>
+      <div class="placeholder">
+        <span class="viz-badge">当季</span><br><br>
+        风衣<br><span class="text-muted">外套</span>
+      </div>
+    </div>
+
+    <div class="mock-nav" style="margin-top:18px">衣橱　　搭配　　OOTD　　我的</div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:20px">
+  <h3>视图策略</h3>
+  <p><strong>MVP：</strong>所有角色统一使用“分类 + 卡片网格”，降低开发和学习成本。</p>
+  <p><strong>后续：</strong>每个角色可独立选择分类视图、视觉大图视图或紧凑列表，并记住该角色上次使用的模式。</p>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="approve-hybrid" onclick="toggleSelect(this)">
+    <div class="letter">✓</div>
+    <div class="content">
+      <h3>采用这个融合方向</h3>
+      <p>分类作为主要结构，系统标签同时出现在智能集合和衣物卡片上。</p>
+    </div>
+  </div>
+  <div class="option" data-choice="revise-hybrid" onclick="toggleSelect(this)">
+    <div class="letter">↻</div>
+    <div class="content">
+      <h3>还需要调整</h3>
+      <p>选择后回到对话，告诉我希望增加、减少或移动什么。</p>
+    </div>
+  </div>
+</div>
