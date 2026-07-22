@@ -28,3 +28,7 @@ supabase/.temp/
 
 # Local Git worktrees
 .worktrees/
+
+# Codex local dependencies and generated deliverables
+.codex-tmp/
+outputs/
