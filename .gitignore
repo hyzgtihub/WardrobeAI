@@ -25,3 +25,6 @@ supabase/.temp/
 
 # 临时设计文件
 .superpowers/
+
+# Local Git worktrees
+.worktrees/
