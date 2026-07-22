@@ -1,0 +1,30 @@
+# macOS
+.DS_Store
+
+# Xcode
+DerivedData/
+build/
+*.xcuserstate
+xcuserdata/
+*.xccheckout
+*.xcscmblueprint
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# 本地密钥与环境配置
+Config/Secrets.xcconfig
+.env
+.env.*
+!.env.example
+
+# Supabase 本地状态
+supabase/.branches/
+supabase/.temp/
+
+# 临时设计文件
+.superpowers/
+
+# Local Git worktrees
+.worktrees/
