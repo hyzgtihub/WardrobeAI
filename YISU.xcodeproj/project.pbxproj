@@ -1,0 +1,548 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4B38B9ABAC6A082C0A140D09 /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AC7E25E50DB3916D8D2C29 /* SmokeTests.swift */; };
+		77809BD98769222D7691972F /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA5EC2F381A930D1C89ECC3 /* SignInView.swift */; };
+		9404EA3DE38CB2EE78B37CFE /* YISUApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497A5C0305038852711A7688 /* YISUApp.swift */; };
+		A4286A59DDCD2F1BF009B502 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903900986BD01F8F3AA8D918 /* RootView.swift */; };
+		B0C3DDEE173D04CFC813706E /* AppIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A9C9627E69BD77234EEAB2 /* AppIdentity.swift */; };
+		F27F3783968E54D4DD12D6E4 /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C12093FFA6C8AB6E318FA5 /* SmokeTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1262D42DB59A26F65EFEC325 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49139BAE39AAA090C270D826 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 41CB20D5AC323FB49E942B90;
+			remoteInfo = YISU;
+		};
+		F5B406BB6D3AB462D8269836 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49139BAE39AAA090C270D826 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 41CB20D5AC323FB49E942B90;
+			remoteInfo = YISU;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		30097FB853DAB2C9845955AC /* YISU.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = YISU.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3120796F5308EAB3EA2296E6 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		44AC7E25E50DB3916D8D2C29 /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
+		48A9C9627E69BD77234EEAB2 /* AppIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIdentity.swift; sourceTree = "<group>"; };
+		497A5C0305038852711A7688 /* YISUApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUApp.swift; sourceTree = "<group>"; };
+		84368EB371249E8B6C5DE7C9 /* YISUTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = YISUTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		903900986BD01F8F3AA8D918 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		ACA5EC2F381A930D1C89ECC3 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		D8C12093FFA6C8AB6E318FA5 /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
+		DD41C37A39974DAF72FC91BC /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		F61B251486587E22D03C6EFA /* YISUUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = YISUUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0145C884EC430D9FE36E4E22 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				6BF305C0BED43066B2D784B3 /* Auth */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		0DD4555A64E2D0EC8E4BA79C = {
+			isa = PBXGroup;
+			children = (
+				751D77088837A90F5FA810B5 /* Config */,
+				5E8E0E0F0DE8AF4C8DA5F081 /* WardrobeApp */,
+				D53A5933FD4A26C969C5F432 /* WardrobeAppTests */,
+				F696BB093A6FEBEA31EE003D /* WardrobeAppUITests */,
+				3189ED129F9A6F29CD772DA6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3189ED129F9A6F29CD772DA6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				30097FB853DAB2C9845955AC /* YISU.app */,
+				84368EB371249E8B6C5DE7C9 /* YISUTests.xctest */,
+				F61B251486587E22D03C6EFA /* YISUUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5E8E0E0F0DE8AF4C8DA5F081 /* WardrobeApp */ = {
+			isa = PBXGroup;
+			children = (
+				72DA89DD122D3788A3DE1B49 /* App */,
+				0145C884EC430D9FE36E4E22 /* Features */,
+			);
+			path = WardrobeApp;
+			sourceTree = "<group>";
+		};
+		6BF305C0BED43066B2D784B3 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				ACA5EC2F381A930D1C89ECC3 /* SignInView.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		72DA89DD122D3788A3DE1B49 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				48A9C9627E69BD77234EEAB2 /* AppIdentity.swift */,
+				903900986BD01F8F3AA8D918 /* RootView.swift */,
+				497A5C0305038852711A7688 /* YISUApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		751D77088837A90F5FA810B5 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				DD41C37A39974DAF72FC91BC /* Debug.xcconfig */,
+				3120796F5308EAB3EA2296E6 /* Release.xcconfig */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		D53A5933FD4A26C969C5F432 /* WardrobeAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				D8C12093FFA6C8AB6E318FA5 /* SmokeTests.swift */,
+			);
+			path = WardrobeAppTests;
+			sourceTree = "<group>";
+		};
+		F696BB093A6FEBEA31EE003D /* WardrobeAppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				44AC7E25E50DB3916D8D2C29 /* SmokeTests.swift */,
+			);
+			path = WardrobeAppUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		41CB20D5AC323FB49E942B90 /* YISU */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AC6ACA7525D7F49D6EE4ECB4 /* Build configuration list for PBXNativeTarget "YISU" */;
+			buildPhases = (
+				DA60A28C93D23B5CE84DDCAF /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = YISU;
+			packageProductDependencies = (
+			);
+			productName = YISU;
+			productReference = 30097FB853DAB2C9845955AC /* YISU.app */;
+			productType = "com.apple.product-type.application";
+		};
+		74981DC6BFF2C151702F03B2 /* YISUTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2E3FFE5747EA59C7A1C4A609 /* Build configuration list for PBXNativeTarget "YISUTests" */;
+			buildPhases = (
+				A913041B030AAB0DF432D928 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				38E9B9941F41F438F5BC2EBC /* PBXTargetDependency */,
+			);
+			name = YISUTests;
+			packageProductDependencies = (
+			);
+			productName = YISUTests;
+			productReference = 84368EB371249E8B6C5DE7C9 /* YISUTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		8877DE62DD558C362BAEC9A3 /* YISUUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FAE0CEB93DB90A168EA5C1EA /* Build configuration list for PBXNativeTarget "YISUUITests" */;
+			buildPhases = (
+				9B62E5DB250AA000276EE92E /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3D6F74C82C441B51BBF7971E /* PBXTargetDependency */,
+			);
+			name = YISUUITests;
+			packageProductDependencies = (
+			);
+			productName = YISUUITests;
+			productReference = F61B251486587E22D03C6EFA /* YISUUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		49139BAE39AAA090C270D826 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 2630;
+				TargetAttributes = {
+					41CB20D5AC323FB49E942B90 = {
+						DevelopmentTeam = "";
+					};
+					74981DC6BFF2C151702F03B2 = {
+						DevelopmentTeam = "";
+					};
+					8877DE62DD558C362BAEC9A3 = {
+						DevelopmentTeam = "";
+						TestTargetID = 41CB20D5AC323FB49E942B90;
+					};
+				};
+			};
+			buildConfigurationList = B44301ED37494E3316268917 /* Build configuration list for PBXProject "YISU" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 0DD4555A64E2D0EC8E4BA79C;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 3189ED129F9A6F29CD772DA6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				41CB20D5AC323FB49E942B90 /* YISU */,
+				74981DC6BFF2C151702F03B2 /* YISUTests */,
+				8877DE62DD558C362BAEC9A3 /* YISUUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9B62E5DB250AA000276EE92E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4B38B9ABAC6A082C0A140D09 /* SmokeTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A913041B030AAB0DF432D928 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F27F3783968E54D4DD12D6E4 /* SmokeTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA60A28C93D23B5CE84DDCAF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B0C3DDEE173D04CFC813706E /* AppIdentity.swift in Sources */,
+				A4286A59DDCD2F1BF009B502 /* RootView.swift in Sources */,
+				77809BD98769222D7691972F /* SignInView.swift in Sources */,
+				9404EA3DE38CB2EE78B37CFE /* YISUApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		38E9B9941F41F438F5BC2EBC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 41CB20D5AC323FB49E942B90 /* YISU */;
+			targetProxy = 1262D42DB59A26F65EFEC325 /* PBXContainerItemProxy */;
+		};
+		3D6F74C82C441B51BBF7971E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 41CB20D5AC323FB49E942B90 /* YISU */;
+			targetProxy = F5B406BB6D3AB462D8269836 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		373387B4C1F8DEF784AFFF8C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.huyouzhen.wardrobe.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = YISU;
+			};
+			name = Debug;
+		};
+		6B527256BB28505D0490AE2D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.huyouzhen.wardrobe.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YISU.app/YISU";
+			};
+			name = Release;
+		};
+		74F5E58BB612EB7DC1613577 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DD41C37A39974DAF72FC91BC /* Debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "衣序";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.huyouzhen.wardrobe;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		77A2ECDBE037F20A11643100 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.huyouzhen.wardrobe.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = YISU;
+			};
+			name = Release;
+		};
+		A5A696BC3752E1E6E6104222 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		B50AC62914A8EA0D109867F8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		C9F90343110C5ECF0D2DAAF8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3120796F5308EAB3EA2296E6 /* Release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "衣序";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.huyouzhen.wardrobe;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		CEADE950629929D758A41CDF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.huyouzhen.wardrobe.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YISU.app/YISU";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2E3FFE5747EA59C7A1C4A609 /* Build configuration list for PBXNativeTarget "YISUTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEADE950629929D758A41CDF /* Debug */,
+				6B527256BB28505D0490AE2D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		AC6ACA7525D7F49D6EE4ECB4 /* Build configuration list for PBXNativeTarget "YISU" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74F5E58BB612EB7DC1613577 /* Debug */,
+				C9F90343110C5ECF0D2DAAF8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B44301ED37494E3316268917 /* Build configuration list for PBXProject "YISU" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B50AC62914A8EA0D109867F8 /* Debug */,
+				A5A696BC3752E1E6E6104222 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		FAE0CEB93DB90A168EA5C1EA /* Build configuration list for PBXNativeTarget "YISUUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				373387B4C1F8DEF784AFFF8C /* Debug */,
+				77A2ECDBE037F20A11643100 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 49139BAE39AAA090C270D826 /* Project object */;
+}
