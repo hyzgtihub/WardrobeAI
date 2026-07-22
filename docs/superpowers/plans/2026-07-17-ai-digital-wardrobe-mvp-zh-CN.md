@@ -1,7 +1,5 @@
 # AI 数字衣橱 MVP 详细实施计划（中文）
 
-> **已废止：** 请勿执行本 SwiftUI 计划。客户端已于 2026-07-17 调整为 Flutter/Dart；本文件仅保留历史，等待新的 Flutter 实施计划替代。
-
 > 执行要求：使用 superpowers:subagent-driven-development（推荐）或 superpowers:executing-plans，严格按任务顺序实施，每完成一个任务独立测试、评审和提交。
 
 ## 目标与架构

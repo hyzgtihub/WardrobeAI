@@ -1,7 +1,5 @@
 # AI Digital Wardrobe MVP Implementation Plan
 
-> **SUPERSEDED:** Do not execute this SwiftUI plan. The client platform was changed to Flutter/Dart on 2026-07-17. Preserve this file for history until a replacement Flutter implementation plan is approved.
-
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Deliver a TestFlight-ready iPhone MVP that turns one garment photo into a private, searchable multi-role wardrobe and supports outfits, OOTD, sharing, and subscription entitlements.
