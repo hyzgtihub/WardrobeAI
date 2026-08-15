@@ -26,6 +26,16 @@ Figma 原始设计文件保存在 Figma 云端。本目录保存与其配套的�
 - 高保真采用独立命名空间 `YISU Hi-Fi`，不覆盖 `02 Foundations` 与 `03 Components` 的低保真基线。
 - 本地校验：`node scripts/validate-design-tokens.mjs` 与 `node scripts/validate-design-doc.mjs`。
 
+### Gate B2 待验收交付（2026-08-15）
+
+- Figma `06A Hi-Fi Foundations`：根节点 `325:2`，包含原始色、语义色、排版、间距/圆角/尺寸、阴影、图标、真实衣物图片和基础动效规则。
+- Figma `06B Hi-Fi Components`：根节点 `333:2`，包含 16 个高保真组件集、60 个组件变体；所有组件均绑定高保真变量。
+- Figma `09 Dev Handoff`：Gate B2 映射板节点 `338:2`，并排说明 P01、P05、P09 与 token、组件、SwiftUI 的对应关系。
+- 变量集合：`YISU Hi-Fi / Primitives` 20 个、`Semantic Colors` 19 个、`Layout` 26 个；共 65 个 Figma 变量。
+- 样式：10 个 `YISU Hi-Fi/Typography/*` 文字样式、3 个 `YISU Hi-Fi/Shadow/*` 阴影样式。
+- QA：Foundations 边界溢出 0；组件缺失 0、重复 0、变体绑定缺失 0；P01/P05/P09 原确认稿未被修改。
+- 当前状态：`ready_for_review`；用户确认前不标记 Gate B2 完成，也不提前更新项目交付管理包中的完成状态。
+
 ## 2026-08-13 可点击原型进度
 
 - 新增 Figma 页面：`05 Prototype`
