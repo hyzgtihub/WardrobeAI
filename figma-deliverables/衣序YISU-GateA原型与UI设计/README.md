@@ -19,6 +19,13 @@
 
 Figma 原始设计文件保存在 Figma 云端。本目录保存与其配套的需求、导出文件和验收记录。
 
+## Gate B2 高保真设计系统
+
+- 人类与 AI 执行规范：[DESIGN.md](./DESIGN.md)
+- 机器可读设计令牌：[tokens.json](./tokens.json)
+- 高保真采用独立命名空间 `YISU Hi-Fi`，不覆盖 `02 Foundations` 与 `03 Components` 的低保真基线。
+- 本地校验：`node scripts/validate-design-tokens.mjs` 与 `node scripts/validate-design-doc.mjs`。
+
 ## 2026-08-13 可点击原型进度
 
 - 新增 Figma 页面：`05 Prototype`
