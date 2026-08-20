@@ -92,7 +92,7 @@
 
 ### 10.1 YISU Hi-Fi/Button
 
-用途：主要、次要与破坏性操作。状态：Default、Pressed、Disabled、Loading。P01 确认稿尺寸为 `302×56`、圆角 `20`；最小触控区 44 pt。一个页面通常只保留一个主要按钮。
+用途：主要、次要与破坏性操作。状态：Default、Pressed、Disabled、Loading。公开文本属性为 `CTA Label#582:0`，8 个变体均可覆盖；默认文案按变体保持 Primary=`完成`、Secondary=`取消`、Loading=`处理中…`。P01 确认稿尺寸为 `302×56`、圆角 `20`；最小触控区 44 pt。一个页面通常只保留一个主要按钮。
 
 ### 10.2 YISU Hi-Fi/Icon Button
 
