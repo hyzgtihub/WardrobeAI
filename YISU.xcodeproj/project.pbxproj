@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		04C3191FB0C2365FC5F5312D /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DB435246FE769FEAB25D9 /* ModelTests.swift */; };
+		A10000000000000000000001 /* AuthFormPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000002 /* AuthFormPolicyTests.swift */; };
+		A11000000000000000000001 /* AuthFormPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11000000000000000000011 /* AuthFormPolicy.swift */; };
+		A11000000000000000000002 /* YISUAuthScaffold.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11000000000000000000012 /* YISUAuthScaffold.swift */; };
+		A11000000000000000000003 /* YISUAuthField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11000000000000000000013 /* YISUAuthField.swift */; };
+		A11000000000000000000004 /* YISUAgreementCheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11000000000000000000014 /* YISUAgreementCheckbox.swift */; };
 		3C79DF994F685A8D5A21B061 /* YISUButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F970D6EDA6C29BCF9AEF5CAE /* YISUButton.swift */; };
 		49E3A161E4E039076FA192D3 /* DesignSystemGalleryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469FA0AB02377F1B56792DD2 /* DesignSystemGalleryTests.swift */; };
 		4B38B9ABAC6A082C0A140D09 /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AC7E25E50DB3916D8D2C29 /* SmokeTests.swift */; };
@@ -51,6 +56,11 @@
 
 /* Begin PBXFileReference section */
 		0CC1FDB49AF03AC690A0B6A8 /* YISUContentStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUContentStateView.swift; sourceTree = "<group>"; };
+		A10000000000000000000002 /* AuthFormPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFormPolicyTests.swift; sourceTree = "<group>"; };
+		A11000000000000000000011 /* AuthFormPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFormPolicy.swift; sourceTree = "<group>"; };
+		A11000000000000000000012 /* YISUAuthScaffold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUAuthScaffold.swift; sourceTree = "<group>"; };
+		A11000000000000000000013 /* YISUAuthField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUAuthField.swift; sourceTree = "<group>"; };
+		A11000000000000000000014 /* YISUAgreementCheckbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUAgreementCheckbox.swift; sourceTree = "<group>"; };
 		186F4DA5E18B28ED85E9CD16 /* FoundationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationTests.swift; sourceTree = "<group>"; };
 		1B64E05C66A1089FE5C1BAFB /* YISUCategoryFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUCategoryFilter.swift; sourceTree = "<group>"; };
 		1E9DB435246FE769FEAB25D9 /* ModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
@@ -139,6 +149,9 @@
 		512C761FE5773C9CCD607DEE /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				A11000000000000000000014 /* YISUAgreementCheckbox.swift */,
+				A11000000000000000000013 /* YISUAuthField.swift */,
+				A11000000000000000000012 /* YISUAuthScaffold.swift */,
 				89D46BAFE516AA8BD1B69A8A /* YISUBottomNavigation.swift */,
 				F970D6EDA6C29BCF9AEF5CAE /* YISUButton.swift */,
 				31D1E0FC5F69B35CAEBC97C1 /* YISUCategoryChip.swift */,
@@ -163,6 +176,7 @@
 		6BF305C0BED43066B2D784B3 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				A11000000000000000000011 /* AuthFormPolicy.swift */,
 				ACA5EC2F381A930D1C89ECC3 /* SignInView.swift */,
 			);
 			path = Auth;
@@ -198,9 +212,18 @@
 			path = Config;
 			sourceTree = "<group>";
 		};
+		A10000000000000000000003 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000002 /* AuthFormPolicyTests.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 		D53A5933FD4A26C969C5F432 /* WardrobeAppTests */ = {
 			isa = PBXGroup;
 			children = (
+				A10000000000000000000003 /* Auth */,
 				D8C12093FFA6C8AB6E318FA5 /* SmokeTests.swift */,
 				E383F9F511E7C96B8F920880 /* DesignSystem */,
 			);
@@ -339,6 +362,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10000000000000000000001 /* AuthFormPolicyTests.swift in Sources */,
 				55E820685356BBFC7E2A0332 /* CollectionBehaviorTests.swift in Sources */,
 				91B392E42D659BAA47BDCBFF /* ControlBehaviorTests.swift in Sources */,
 				83516AFD1C87246D83CCF380 /* FoundationTests.swift in Sources */,
@@ -351,6 +375,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A11000000000000000000001 /* AuthFormPolicy.swift in Sources */,
+				A11000000000000000000002 /* YISUAuthScaffold.swift in Sources */,
+				A11000000000000000000003 /* YISUAuthField.swift in Sources */,
+				A11000000000000000000004 /* YISUAgreementCheckbox.swift in Sources */,
 				B0C3DDEE173D04CFC813706E /* AppIdentity.swift in Sources */,
 				E798517D62BE125CE9E766E3 /* DesignSystemGalleryView.swift in Sources */,
 				BE9EFA9F1087483698262764 /* GarmentSummary.swift in Sources */,

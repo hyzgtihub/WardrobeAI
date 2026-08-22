@@ -11,6 +11,7 @@ enum YISUTheme {
         static let navAccent = SwiftUI.Color(red: 94 / 255, green: 82 / 255, blue: 117 / 255)
         static let textPrimary = SwiftUI.Color(red: 58 / 255, green: 53 / 255, blue: 69 / 255)
         static let textSecondary = SwiftUI.Color(red: 129 / 255, green: 122 / 255, blue: 139 / 255)
+        static let textPlaceholder = SwiftUI.Color(red: 154 / 255, green: 145 / 255, blue: 168 / 255)
         static let textOnBrand = SwiftUI.Color.white
         static let border = SwiftUI.Color(red: 222 / 255, green: 216 / 255, blue: 232 / 255)
         static let danger = SwiftUI.Color(red: 184 / 255, green: 95 / 255, blue: 104 / 255)
