@@ -2,19 +2,20 @@ import SwiftUI
 
 enum YISUTheme {
     enum Color {
-        static let background = SwiftUI.Color(red: 0.984, green: 0.969, blue: 0.937)
-        static let surface = SwiftUI.Color(red: 1.000, green: 0.988, blue: 0.969)
-        static let surfaceSubtle = SwiftUI.Color(red: 0.949, green: 0.925, blue: 0.875)
-        static let brand = SwiftUI.Color(red: 0.616, green: 0.722, blue: 0.651)
-        static let brandEmphasis = SwiftUI.Color(red: 0.365, green: 0.506, blue: 0.420)
-        static let brandSubtle = SwiftUI.Color(red: 0.890, green: 0.929, blue: 0.902)
-        static let textPrimary = SwiftUI.Color(red: 0.204, green: 0.204, blue: 0.271)
-        static let textSecondary = SwiftUI.Color(red: 0.451, green: 0.447, blue: 0.529)
+        static let background = SwiftUI.Color(red: 248 / 255, green: 245 / 255, blue: 252 / 255)
+        static let surface = SwiftUI.Color(red: 255 / 255, green: 252 / 255, blue: 254 / 255)
+        static let surfaceSubtle = SwiftUI.Color(red: 245 / 255, green: 239 / 255, blue: 231 / 255)
+        static let brand = SwiftUI.Color(red: 141 / 255, green: 122 / 255, blue: 181 / 255)
+        static let brandEmphasis = SwiftUI.Color(red: 125 / 255, green: 106 / 255, blue: 165 / 255)
+        static let brandSubtle = SwiftUI.Color(red: 201 / 255, green: 192 / 255, blue: 232 / 255)
+        static let navAccent = SwiftUI.Color(red: 94 / 255, green: 82 / 255, blue: 117 / 255)
+        static let textPrimary = SwiftUI.Color(red: 58 / 255, green: 53 / 255, blue: 69 / 255)
+        static let textSecondary = SwiftUI.Color(red: 129 / 255, green: 122 / 255, blue: 139 / 255)
         static let textOnBrand = SwiftUI.Color.white
-        static let border = SwiftUI.Color(red: 0.894, green: 0.871, blue: 0.827)
-        static let danger = SwiftUI.Color(red: 0.753, green: 0.263, blue: 0.314)
-        static let dangerSubtle = SwiftUI.Color(red: 0.980, green: 0.894, blue: 0.902)
-        static let lavender = SwiftUI.Color(red: 0.725, green: 0.682, blue: 0.847)
+        static let border = SwiftUI.Color(red: 222 / 255, green: 216 / 255, blue: 232 / 255)
+        static let danger = SwiftUI.Color(red: 184 / 255, green: 95 / 255, blue: 104 / 255)
+        static let dangerSubtle = SwiftUI.Color(red: 250 / 255, green: 233 / 255, blue: 234 / 255)
+        static let lavender = SwiftUI.Color(red: 238 / 255, green: 234 / 255, blue: 247 / 255)
     }
 
     enum Typography {

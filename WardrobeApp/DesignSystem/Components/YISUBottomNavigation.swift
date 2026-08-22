@@ -45,7 +45,7 @@ struct YISUBottomNavigation: View {
                             .font(YISUTheme.Typography.footnote)
                             .lineLimit(1)
                     }
-                    .foregroundStyle(selection == tab ? YISUTheme.Color.brandEmphasis : YISUTheme.Color.textSecondary)
+                    .foregroundStyle(selection == tab ? YISUTheme.Color.navAccent : YISUTheme.Color.textSecondary)
                     .frame(maxWidth: .infinity, minHeight: YISUTheme.Size.bottomNavigationHeight)
                     .contentShape(Rectangle())
                 }
