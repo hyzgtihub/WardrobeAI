@@ -21,6 +21,7 @@ struct YISUContentStateView: View {
     let message: String
     let actionTitle: String?
     let action: (() -> Void)?
+    var actionAccessibilityIdentifier = "designSystem.contentState.action"
 
     var body: some View {
         VStack(spacing: YISUTheme.Spacing.md) {
@@ -40,7 +41,7 @@ struct YISUContentStateView: View {
                     title: actionTitle,
                     style: .primary,
                     state: .normal,
-                    accessibilityIdentifier: "designSystem.contentState.action",
+                    accessibilityIdentifier: actionAccessibilityIdentifier,
                     action: action
                 )
                 .frame(maxWidth: 180)
