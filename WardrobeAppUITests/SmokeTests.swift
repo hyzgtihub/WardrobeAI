@@ -2,10 +2,13 @@ import XCTest
 
 final class SmokeTests: XCTestCase {
     @MainActor
-    func testRootShowsSignedOutState() {
+    func testP01ReachesRegistration() {
         let app = XCUIApplication()
         app.launch()
 
-        XCTAssertTrue(app.buttons["auth.signInWithApple"].waitForExistence(timeout: 3))
+        let register = app.buttons["auth.register"]
+        XCTAssertTrue(register.waitForExistence(timeout: 3))
+        register.tap()
+        XCTAssertTrue(app.staticTexts["auth.signUp.title"].waitForExistence(timeout: 2))
     }
 }
