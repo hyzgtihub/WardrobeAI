@@ -7,7 +7,12 @@ struct RootView: View {
     init(arguments: [String] = ProcessInfo.processInfo.arguments) {
         let screen = Self.argument(after: "-ui-screen", in: arguments)
         let stateValue = Self.argument(after: "-ui-state", in: arguments)
-        _route = State(initialValue: screen == "onboarding" ? .onboarding : .signIn)
+        let initialRoute: AppRoute = switch screen {
+        case "onboarding": .onboarding
+        case "wardrobe": .wardrobe
+        default: .signIn
+        }
+        _route = State(initialValue: initialRoute)
         _setupState = State(initialValue: WardrobeSetupState(rawValue: stateValue ?? "") ?? .creating)
     }
 
@@ -31,8 +36,7 @@ struct RootView: View {
                         }
                     )
                 case .wardrobe:
-                    Text("衣橱首页")
-                        .font(YISUTheme.Typography.largeTitle)
+                    WardrobeHomeView()
                 }
             }
         }

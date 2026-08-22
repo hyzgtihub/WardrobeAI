@@ -25,10 +25,12 @@ struct ModelTests {
             id: "linen-shirt",
             title: "白色亚麻衬衫",
             metadata: "春夏 · 上衣",
-            imageName: nil
+            imageName: nil,
+            category: .tops
         )
 
         #expect(item.title == "白色亚麻衬衫")
         #expect(item.imageName == nil)
+        #expect(item.category == .tops)
     }
 }

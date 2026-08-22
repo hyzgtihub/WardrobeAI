@@ -6,8 +6,8 @@ struct DesignSystemGalleryView: View {
     @State private var actionCount = 0
 
     private let garments = [
-        GarmentSummary(id: "linen-shirt", title: "白色亚麻长袖衬衫轻薄通勤版型", metadata: "春夏 · 上衣", imageName: nil),
-        GarmentSummary(id: "trench-coat", title: "米色短款风衣", metadata: "秋季 · 外套", imageName: nil)
+        GarmentSummary(id: "linen-shirt", title: "白色亚麻长袖衬衫轻薄通勤版型", metadata: "春夏 · 上衣", imageName: nil, category: .tops),
+        GarmentSummary(id: "trench-coat", title: "米色短款风衣", metadata: "秋季 · 外套", imageName: nil, category: .outerwear)
     ]
 
     var body: some View {

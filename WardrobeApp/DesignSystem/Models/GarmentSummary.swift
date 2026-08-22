@@ -3,4 +3,5 @@ struct GarmentSummary: Identifiable, Equatable, Sendable {
     let title: String
     let metadata: String
     let imageName: String?
+    let category: YISUCategory
 }

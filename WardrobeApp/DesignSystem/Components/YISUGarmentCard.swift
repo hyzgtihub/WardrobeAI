@@ -20,7 +20,7 @@ struct YISUGarmentCard: View {
                 imageArea
                     .frame(maxWidth: .infinity)
                     .frame(height: 154)
-                    .background(YISUTheme.Color.surfaceSubtle)
+                    .background(imageBackground)
                     .clipShape(RoundedRectangle(cornerRadius: YISUTheme.Radius.medium))
 
                 if state == .loading {
@@ -53,6 +53,16 @@ struct YISUGarmentCard: View {
         .accessibilityElement(children: .combine)
         .accessibilityIdentifier("designSystem.garment.\(item.id)")
         .accessibilityLabel("\(item.title)，\(item.metadata)")
+    }
+
+    private var imageBackground: Color {
+        switch item.imageName {
+        case "garment-white-linen-shirt": Color(red: 250 / 255, green: 238 / 255, blue: 240 / 255)
+        case "garment-powder-blue-knit": Color(red: 232 / 255, green: 241 / 255, blue: 247 / 255)
+        case "garment-beige-trench": YISUTheme.Color.surfaceSubtle
+        case "garment-black-knit-dress": YISUTheme.Color.lavender
+        default: YISUTheme.Color.surfaceSubtle
+        }
     }
 
     @ViewBuilder

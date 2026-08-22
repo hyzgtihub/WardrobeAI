@@ -8,20 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		04C3191FB0C2365FC5F5312D /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DB435246FE769FEAB25D9 /* ModelTests.swift */; };
-		A10000000000000000000001 /* AuthFormPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000002 /* AuthFormPolicyTests.swift */; };
-		A12000000000000000000001 /* AuthSubmissionStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12000000000000000000002 /* AuthSubmissionStateTests.swift */; };
-		A11000000000000000000001 /* AuthFormPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11000000000000000000011 /* AuthFormPolicy.swift */; };
-		A11000000000000000000002 /* YISUAuthScaffold.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11000000000000000000012 /* YISUAuthScaffold.swift */; };
-		A11000000000000000000003 /* YISUAuthField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11000000000000000000013 /* YISUAuthField.swift */; };
-		A11000000000000000000004 /* YISUAgreementCheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11000000000000000000014 /* YISUAgreementCheckbox.swift */; };
-		A13000000000000000000001 /* AuthSubmissionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13000000000000000000011 /* AuthSubmissionState.swift */; };
-		A13000000000000000000002 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13000000000000000000012 /* SignUpView.swift */; };
-		A14000000000000000000001 /* AppRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14000000000000000000011 /* AppRoute.swift */; };
-		A14000000000000000000002 /* WardrobeSetupState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14000000000000000000012 /* WardrobeSetupState.swift */; };
-		A14000000000000000000003 /* WardrobeSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14000000000000000000013 /* WardrobeSetupView.swift */; };
-		A14000000000000000000004 /* CurrentWardrobeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14000000000000000000014 /* CurrentWardrobeView.swift */; };
-		A14000000000000000000005 /* WardrobeSetupStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14000000000000000000015 /* WardrobeSetupStateTests.swift */; };
-		A14000000000000000000006 /* OnboardingFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14000000000000000000016 /* OnboardingFlowTests.swift */; };
 		3C79DF994F685A8D5A21B061 /* YISUButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F970D6EDA6C29BCF9AEF5CAE /* YISUButton.swift */; };
 		49E3A161E4E039076FA192D3 /* DesignSystemGalleryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469FA0AB02377F1B56792DD2 /* DesignSystemGalleryTests.swift */; };
 		4B38B9ABAC6A082C0A140D09 /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AC7E25E50DB3916D8D2C29 /* SmokeTests.swift */; };
@@ -36,6 +22,25 @@
 		9404EA3DE38CB2EE78B37CFE /* YISUApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497A5C0305038852711A7688 /* YISUApp.swift */; };
 		9F2D539591BC28580D065E48 /* YISUCategoryChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D1E0FC5F69B35CAEBC97C1 /* YISUCategoryChip.swift */; };
 		A02A645A134C87085B9E4FE2 /* YISUBottomNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D46BAFE516AA8BD1B69A8A /* YISUBottomNavigation.swift */; };
+		A10000000000000000000001 /* AuthFormPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000002 /* AuthFormPolicyTests.swift */; };
+		A11000000000000000000001 /* AuthFormPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11000000000000000000011 /* AuthFormPolicy.swift */; };
+		A11000000000000000000002 /* YISUAuthScaffold.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11000000000000000000012 /* YISUAuthScaffold.swift */; };
+		A11000000000000000000003 /* YISUAuthField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11000000000000000000013 /* YISUAuthField.swift */; };
+		A11000000000000000000004 /* YISUAgreementCheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11000000000000000000014 /* YISUAgreementCheckbox.swift */; };
+		A12000000000000000000001 /* AuthSubmissionStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12000000000000000000002 /* AuthSubmissionStateTests.swift */; };
+		A13000000000000000000001 /* AuthSubmissionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13000000000000000000011 /* AuthSubmissionState.swift */; };
+		A13000000000000000000002 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13000000000000000000012 /* SignUpView.swift */; };
+		A14000000000000000000001 /* AppRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14000000000000000000011 /* AppRoute.swift */; };
+		A14000000000000000000002 /* WardrobeSetupState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14000000000000000000012 /* WardrobeSetupState.swift */; };
+		A14000000000000000000003 /* WardrobeSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14000000000000000000013 /* WardrobeSetupView.swift */; };
+		A14000000000000000000004 /* CurrentWardrobeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14000000000000000000014 /* CurrentWardrobeView.swift */; };
+		A14000000000000000000005 /* WardrobeSetupStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14000000000000000000015 /* WardrobeSetupStateTests.swift */; };
+		A14000000000000000000006 /* OnboardingFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14000000000000000000016 /* OnboardingFlowTests.swift */; };
+		A15000000000000000000001 /* WardrobeHomePolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15000000000000000000011 /* WardrobeHomePolicyTests.swift */; };
+		A15000000000000000000002 /* WardrobeHomeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15000000000000000000012 /* WardrobeHomeTests.swift */; };
+		A15000000000000000000003 /* WardrobeSampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15000000000000000000013 /* WardrobeSampleData.swift */; };
+		A15000000000000000000004 /* WardrobeHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15000000000000000000014 /* WardrobeHomeView.swift */; };
+		A15000000000000000000005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A15000000000000000000015 /* Assets.xcassets */; };
 		A4286A59DDCD2F1BF009B502 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903900986BD01F8F3AA8D918 /* RootView.swift */; };
 		B0C3DDEE173D04CFC813706E /* AppIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A9C9627E69BD77234EEAB2 /* AppIdentity.swift */; };
 		BE9EFA9F1087483698262764 /* GarmentSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457325C80B2EDA611036D550 /* GarmentSummary.swift */; };
@@ -65,24 +70,10 @@
 
 /* Begin PBXFileReference section */
 		0CC1FDB49AF03AC690A0B6A8 /* YISUContentStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUContentStateView.swift; sourceTree = "<group>"; };
-		A10000000000000000000002 /* AuthFormPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFormPolicyTests.swift; sourceTree = "<group>"; };
-		A12000000000000000000002 /* AuthSubmissionStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSubmissionStateTests.swift; sourceTree = "<group>"; };
-		A11000000000000000000011 /* AuthFormPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFormPolicy.swift; sourceTree = "<group>"; };
-		A11000000000000000000012 /* YISUAuthScaffold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUAuthScaffold.swift; sourceTree = "<group>"; };
-		A11000000000000000000013 /* YISUAuthField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUAuthField.swift; sourceTree = "<group>"; };
-		A11000000000000000000014 /* YISUAgreementCheckbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUAgreementCheckbox.swift; sourceTree = "<group>"; };
-		A13000000000000000000011 /* AuthSubmissionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSubmissionState.swift; sourceTree = "<group>"; };
-		A13000000000000000000012 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
-		A14000000000000000000011 /* AppRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRoute.swift; sourceTree = "<group>"; };
-		A14000000000000000000012 /* WardrobeSetupState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeSetupState.swift; sourceTree = "<group>"; };
-		A14000000000000000000013 /* WardrobeSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeSetupView.swift; sourceTree = "<group>"; };
-		A14000000000000000000014 /* CurrentWardrobeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWardrobeView.swift; sourceTree = "<group>"; };
-		A14000000000000000000015 /* WardrobeSetupStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeSetupStateTests.swift; sourceTree = "<group>"; };
-		A14000000000000000000016 /* OnboardingFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowTests.swift; sourceTree = "<group>"; };
 		186F4DA5E18B28ED85E9CD16 /* FoundationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationTests.swift; sourceTree = "<group>"; };
 		1B64E05C66A1089FE5C1BAFB /* YISUCategoryFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUCategoryFilter.swift; sourceTree = "<group>"; };
 		1E9DB435246FE769FEAB25D9 /* ModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
-		30097FB853DAB2C9845955AC /* YISU.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = YISU.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		30097FB853DAB2C9845955AC /* YISU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YISU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3120796F5308EAB3EA2296E6 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		31D1E0FC5F69B35CAEBC97C1 /* YISUCategoryChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUCategoryChip.swift; sourceTree = "<group>"; };
 		437130D898E88B896F0C71EF /* CollectionBehaviorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionBehaviorTests.swift; sourceTree = "<group>"; };
@@ -94,17 +85,36 @@
 		4C68D9E99BE84D7C2290B83C /* YISUGarmentCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUGarmentCard.swift; sourceTree = "<group>"; };
 		6B81D2C7BE7469893128BD69 /* YISUGarmentGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUGarmentGrid.swift; sourceTree = "<group>"; };
 		7F15D1E8890942046B4E372E /* YISUTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUTheme.swift; sourceTree = "<group>"; };
-		84368EB371249E8B6C5DE7C9 /* YISUTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = YISUTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		84368EB371249E8B6C5DE7C9 /* YISUTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YISUTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		857B97111652B2592BFB2982 /* YISUComponentState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUComponentState.swift; sourceTree = "<group>"; };
 		89D46BAFE516AA8BD1B69A8A /* YISUBottomNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUBottomNavigation.swift; sourceTree = "<group>"; };
 		903900986BD01F8F3AA8D918 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		995472F01A313D9C9E8EB633 /* YISUCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUCategory.swift; sourceTree = "<group>"; };
+		A10000000000000000000002 /* AuthFormPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFormPolicyTests.swift; sourceTree = "<group>"; };
+		A11000000000000000000011 /* AuthFormPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFormPolicy.swift; sourceTree = "<group>"; };
+		A11000000000000000000012 /* YISUAuthScaffold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUAuthScaffold.swift; sourceTree = "<group>"; };
+		A11000000000000000000013 /* YISUAuthField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUAuthField.swift; sourceTree = "<group>"; };
+		A11000000000000000000014 /* YISUAgreementCheckbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUAgreementCheckbox.swift; sourceTree = "<group>"; };
+		A12000000000000000000002 /* AuthSubmissionStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSubmissionStateTests.swift; sourceTree = "<group>"; };
+		A13000000000000000000011 /* AuthSubmissionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSubmissionState.swift; sourceTree = "<group>"; };
+		A13000000000000000000012 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		A14000000000000000000011 /* AppRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRoute.swift; sourceTree = "<group>"; };
+		A14000000000000000000012 /* WardrobeSetupState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeSetupState.swift; sourceTree = "<group>"; };
+		A14000000000000000000013 /* WardrobeSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeSetupView.swift; sourceTree = "<group>"; };
+		A14000000000000000000014 /* CurrentWardrobeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWardrobeView.swift; sourceTree = "<group>"; };
+		A14000000000000000000015 /* WardrobeSetupStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeSetupStateTests.swift; sourceTree = "<group>"; };
+		A14000000000000000000016 /* OnboardingFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowTests.swift; sourceTree = "<group>"; };
+		A15000000000000000000011 /* WardrobeHomePolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeHomePolicyTests.swift; sourceTree = "<group>"; };
+		A15000000000000000000012 /* WardrobeHomeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeHomeTests.swift; sourceTree = "<group>"; };
+		A15000000000000000000013 /* WardrobeSampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeSampleData.swift; sourceTree = "<group>"; };
+		A15000000000000000000014 /* WardrobeHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeHomeView.swift; sourceTree = "<group>"; };
+		A15000000000000000000015 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AC4E099C8A517B7866713AEB /* DesignSystemGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystemGalleryView.swift; sourceTree = "<group>"; };
 		ACA5EC2F381A930D1C89ECC3 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		CB763FE465B9CFC1DDE51D26 /* ControlBehaviorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlBehaviorTests.swift; sourceTree = "<group>"; };
 		D8C12093FFA6C8AB6E318FA5 /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
 		DD41C37A39974DAF72FC91BC /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
-		F61B251486587E22D03C6EFA /* YISUUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = YISUUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F61B251486587E22D03C6EFA /* YISUUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YISUUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F970D6EDA6C29BCF9AEF5CAE /* YISUButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,26 +124,26 @@
 			children = (
 				6BF305C0BED43066B2D784B3 /* Auth */,
 				A14000000000000000000020 /* Onboarding */,
+				A15000000000000000000021 /* Wardrobe */,
 			);
 			path = Features;
 			sourceTree = "<group>";
 		};
-		A14000000000000000000020 /* Onboarding */ = {
+		A15000000000000000000021 /* Wardrobe */ = {
 			isa = PBXGroup;
 			children = (
-				A14000000000000000000014 /* CurrentWardrobeView.swift */,
-				A14000000000000000000012 /* WardrobeSetupState.swift */,
-				A14000000000000000000013 /* WardrobeSetupView.swift */,
+				A15000000000000000000014 /* WardrobeHomeView.swift */,
+				A15000000000000000000013 /* WardrobeSampleData.swift */,
 			);
-			path = Onboarding;
+			path = Wardrobe;
 			sourceTree = "<group>";
 		};
-		A14000000000000000000021 /* Onboarding */ = {
+		A15000000000000000000022 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A14000000000000000000015 /* WardrobeSetupStateTests.swift */,
+				A15000000000000000000015 /* Assets.xcassets */,
 			);
-			path = Onboarding;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		0DD4555A64E2D0EC8E4BA79C = {
@@ -206,6 +216,7 @@
 				72DA89DD122D3788A3DE1B49 /* App */,
 				6E80D150466881FD6DC4E1CE /* DesignSystem */,
 				0145C884EC430D9FE36E4E22 /* Features */,
+				A15000000000000000000022 /* Resources */,
 			);
 			path = WardrobeApp;
 			sourceTree = "<group>";
@@ -261,11 +272,38 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
+		A14000000000000000000020 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				A14000000000000000000014 /* CurrentWardrobeView.swift */,
+				A14000000000000000000012 /* WardrobeSetupState.swift */,
+				A14000000000000000000013 /* WardrobeSetupView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		A14000000000000000000021 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				A14000000000000000000015 /* WardrobeSetupStateTests.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		A15000000000000000000020 /* Wardrobe */ = {
+			isa = PBXGroup;
+			children = (
+				A15000000000000000000011 /* WardrobeHomePolicyTests.swift */,
+			);
+			path = Wardrobe;
+			sourceTree = "<group>";
+		};
 		D53A5933FD4A26C969C5F432 /* WardrobeAppTests */ = {
 			isa = PBXGroup;
 			children = (
 				A10000000000000000000003 /* Auth */,
 				A14000000000000000000021 /* Onboarding */,
+				A15000000000000000000020 /* Wardrobe */,
 				D8C12093FFA6C8AB6E318FA5 /* SmokeTests.swift */,
 				E383F9F511E7C96B8F920880 /* DesignSystem */,
 			);
@@ -289,6 +327,7 @@
 				469FA0AB02377F1B56792DD2 /* DesignSystemGalleryTests.swift */,
 				A14000000000000000000016 /* OnboardingFlowTests.swift */,
 				44AC7E25E50DB3916D8D2C29 /* SmokeTests.swift */,
+				A15000000000000000000012 /* WardrobeHomeTests.swift */,
 			);
 			path = WardrobeAppUITests;
 			sourceTree = "<group>";
@@ -301,6 +340,7 @@
 			buildConfigurationList = AC6ACA7525D7F49D6EE4ECB4 /* Build configuration list for PBXNativeTarget "YISU" */;
 			buildPhases = (
 				DA60A28C93D23B5CE84DDCAF /* Sources */,
+				A15000000000000000000030 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -358,14 +398,7 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 2630;
 				TargetAttributes = {
-					41CB20D5AC323FB49E942B90 = {
-						DevelopmentTeam = "";
-					};
-					74981DC6BFF2C151702F03B2 = {
-						DevelopmentTeam = "";
-					};
 					8877DE62DD558C362BAEC9A3 = {
-						DevelopmentTeam = "";
 						TestTargetID = 41CB20D5AC323FB49E942B90;
 					};
 				};
@@ -391,12 +424,24 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		A15000000000000000000030 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A15000000000000000000005 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9B62E5DB250AA000276EE92E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				A14000000000000000000006 /* OnboardingFlowTests.swift in Sources */,
+				A15000000000000000000002 /* WardrobeHomeTests.swift in Sources */,
 				49E3A161E4E039076FA192D3 /* DesignSystemGalleryTests.swift in Sources */,
 				4B38B9ABAC6A082C0A140D09 /* SmokeTests.swift in Sources */,
 			);
@@ -407,6 +452,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A14000000000000000000005 /* WardrobeSetupStateTests.swift in Sources */,
+				A15000000000000000000001 /* WardrobeHomePolicyTests.swift in Sources */,
 				A10000000000000000000001 /* AuthFormPolicyTests.swift in Sources */,
 				A12000000000000000000001 /* AuthSubmissionStateTests.swift in Sources */,
 				55E820685356BBFC7E2A0332 /* CollectionBehaviorTests.swift in Sources */,
@@ -421,6 +467,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A15000000000000000000003 /* WardrobeSampleData.swift in Sources */,
+				A15000000000000000000004 /* WardrobeHomeView.swift in Sources */,
 				A14000000000000000000001 /* AppRoute.swift in Sources */,
 				A14000000000000000000002 /* WardrobeSetupState.swift in Sources */,
 				A14000000000000000000003 /* WardrobeSetupView.swift in Sources */,
@@ -470,6 +518,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = XC8P63CBU2;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -487,6 +536,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = XC8P63CBU2;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -505,7 +555,9 @@
 			baseConfigurationReference = DD41C37A39974DAF72FC91BC /* Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = XC8P63CBU2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "衣序";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -515,7 +567,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.huyouzhen.wardrobe;
+				PRODUCT_BUNDLE_IDENTIFIER = com.huyouzhen.wardrobe1;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -525,6 +578,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = XC8P63CBU2;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -571,7 +625,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_ALLOWED = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
@@ -629,7 +683,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_ALLOWED = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = "";
@@ -666,7 +720,9 @@
 			baseConfigurationReference = 3120796F5308EAB3EA2296E6 /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = XC8P63CBU2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "衣序";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -676,7 +732,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.huyouzhen.wardrobe;
+				PRODUCT_BUNDLE_IDENTIFIER = com.huyouzhen.wardrobe1;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -686,6 +743,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = XC8P63CBU2;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
