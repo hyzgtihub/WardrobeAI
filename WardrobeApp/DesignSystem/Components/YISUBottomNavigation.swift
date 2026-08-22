@@ -58,7 +58,6 @@ struct YISUBottomNavigation: View {
         .background(YISUTheme.Color.surface)
         .clipShape(RoundedRectangle(cornerRadius: YISUTheme.Radius.large))
         .shadow(color: YISUTheme.Shadow.color, radius: YISUTheme.Shadow.radius, y: YISUTheme.Shadow.y)
-        .accessibilityIdentifier("designSystem.bottomNavigation")
     }
 }
 

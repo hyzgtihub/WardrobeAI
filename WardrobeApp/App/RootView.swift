@@ -2,8 +2,12 @@ import SwiftUI
 
 struct RootView: View {
     var body: some View {
-        NavigationStack {
-            SignInView()
+        if ProcessInfo.processInfo.arguments.contains("-design-system-gallery") {
+            DesignSystemGalleryView()
+        } else {
+            NavigationStack {
+                SignInView()
+            }
         }
     }
 }

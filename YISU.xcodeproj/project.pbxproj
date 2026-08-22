@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		04C3191FB0C2365FC5F5312D /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DB435246FE769FEAB25D9 /* ModelTests.swift */; };
 		3C79DF994F685A8D5A21B061 /* YISUButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F970D6EDA6C29BCF9AEF5CAE /* YISUButton.swift */; };
+		49E3A161E4E039076FA192D3 /* DesignSystemGalleryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469FA0AB02377F1B56792DD2 /* DesignSystemGalleryTests.swift */; };
 		4B38B9ABAC6A082C0A140D09 /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AC7E25E50DB3916D8D2C29 /* SmokeTests.swift */; };
 		55E820685356BBFC7E2A0332 /* CollectionBehaviorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437130D898E88B896F0C71EF /* CollectionBehaviorTests.swift */; };
 		62A7AE88027C37BBB5DF10F1 /* YISUCategoryFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B64E05C66A1089FE5C1BAFB /* YISUCategoryFilter.swift */; };
@@ -26,6 +27,7 @@
 		BE9EFA9F1087483698262764 /* GarmentSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457325C80B2EDA611036D550 /* GarmentSummary.swift */; };
 		CC10561C4A21F38BB8EA0888 /* YISUGarmentCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C68D9E99BE84D7C2290B83C /* YISUGarmentCard.swift */; };
 		D81C57138923BFCCAD2F5CF2 /* YISUContentStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC1FDB49AF03AC690A0B6A8 /* YISUContentStateView.swift */; };
+		E798517D62BE125CE9E766E3 /* DesignSystemGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4E099C8A517B7866713AEB /* DesignSystemGalleryView.swift */; };
 		F1C085690E8449DEC1EF5DD3 /* YISUGarmentGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B81D2C7BE7469893128BD69 /* YISUGarmentGrid.swift */; };
 		F27F3783968E54D4DD12D6E4 /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C12093FFA6C8AB6E318FA5 /* SmokeTests.swift */; };
 /* End PBXBuildFile section */
@@ -58,6 +60,7 @@
 		437130D898E88B896F0C71EF /* CollectionBehaviorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionBehaviorTests.swift; sourceTree = "<group>"; };
 		44AC7E25E50DB3916D8D2C29 /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
 		457325C80B2EDA611036D550 /* GarmentSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentSummary.swift; sourceTree = "<group>"; };
+		469FA0AB02377F1B56792DD2 /* DesignSystemGalleryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystemGalleryTests.swift; sourceTree = "<group>"; };
 		48A9C9627E69BD77234EEAB2 /* AppIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIdentity.swift; sourceTree = "<group>"; };
 		497A5C0305038852711A7688 /* YISUApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUApp.swift; sourceTree = "<group>"; };
 		4C68D9E99BE84D7C2290B83C /* YISUGarmentCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUGarmentCard.swift; sourceTree = "<group>"; };
@@ -68,6 +71,7 @@
 		89D46BAFE516AA8BD1B69A8A /* YISUBottomNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUBottomNavigation.swift; sourceTree = "<group>"; };
 		903900986BD01F8F3AA8D918 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		995472F01A313D9C9E8EB633 /* YISUCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUCategory.swift; sourceTree = "<group>"; };
+		AC4E099C8A517B7866713AEB /* DesignSystemGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystemGalleryView.swift; sourceTree = "<group>"; };
 		ACA5EC2F381A930D1C89ECC3 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		CB763FE465B9CFC1DDE51D26 /* ControlBehaviorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlBehaviorTests.swift; sourceTree = "<group>"; };
 		D8C12093FFA6C8AB6E318FA5 /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
@@ -124,6 +128,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		43E9446B9DBB128D33741800 /* Preview */ = {
+			isa = PBXGroup;
+			children = (
+				AC4E099C8A517B7866713AEB /* DesignSystemGalleryView.swift */,
+			);
+			path = Preview;
+			sourceTree = "<group>";
+		};
 		512C761FE5773C9CCD607DEE /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -162,6 +174,7 @@
 				512C761FE5773C9CCD607DEE /* Components */,
 				3022650830400EB6C68994A6 /* Foundation */,
 				117C224CFF7CCE68F4E6B699 /* Models */,
+				43E9446B9DBB128D33741800 /* Preview */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -208,6 +221,7 @@
 		F696BB093A6FEBEA31EE003D /* WardrobeAppUITests */ = {
 			isa = PBXGroup;
 			children = (
+				469FA0AB02377F1B56792DD2 /* DesignSystemGalleryTests.swift */,
 				44AC7E25E50DB3916D8D2C29 /* SmokeTests.swift */,
 			);
 			path = WardrobeAppUITests;
@@ -316,6 +330,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49E3A161E4E039076FA192D3 /* DesignSystemGalleryTests.swift in Sources */,
 				4B38B9ABAC6A082C0A140D09 /* SmokeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -337,6 +352,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0C3DDEE173D04CFC813706E /* AppIdentity.swift in Sources */,
+				E798517D62BE125CE9E766E3 /* DesignSystemGalleryView.swift in Sources */,
 				BE9EFA9F1087483698262764 /* GarmentSummary.swift in Sources */,
 				A4286A59DDCD2F1BF009B502 /* RootView.swift in Sources */,
 				77809BD98769222D7691972F /* SignInView.swift in Sources */,
