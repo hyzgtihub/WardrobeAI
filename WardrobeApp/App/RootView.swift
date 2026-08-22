@@ -26,9 +26,9 @@ struct RootView: View {
             NavigationStack {
                 switch route {
                 case .signIn:
-                    SignInView(onRegister: { route = .signUp }, onSubmit: { _, _ in route = .onboarding })
+                    SignInView(onRegister: { route = .signUp }, onSubmit: { _, _ in route = .wardrobe })
                 case .signUp:
-                    SignUpView(onBack: { route = .signIn }, onCreated: { _, _ in route = .onboarding })
+                    SignUpView(onBack: { route = .signIn }, onCreated: { _, _ in route = .wardrobe })
                 case .onboarding:
                     WardrobeSetupView(
                         state: setupState,
