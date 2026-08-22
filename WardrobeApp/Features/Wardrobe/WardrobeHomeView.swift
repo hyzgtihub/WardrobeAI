@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct WardrobeHomeView: View {
+    let items: [GarmentSummary]
     let onSearch: () -> Void
     let onAdd: () -> Void
     let onSelectGarment: (GarmentSummary) -> Void
@@ -9,11 +10,13 @@ struct WardrobeHomeView: View {
     @State private var category: YISUCategory = .all
 
     init(
+        items: [GarmentSummary] = WardrobeSampleData.garments,
         onSearch: @escaping () -> Void = {},
         onAdd: @escaping () -> Void = {},
         onSelectGarment: @escaping (GarmentSummary) -> Void = { _ in },
         onProfile: @escaping () -> Void = {}
     ) {
+        self.items = items
         self.onSearch = onSearch
         self.onAdd = onAdd
         self.onSelectGarment = onSelectGarment
@@ -73,7 +76,7 @@ struct WardrobeHomeView: View {
     }
 
     @ViewBuilder private var content: some View {
-        let items = WardrobeHomePolicy.items(WardrobeSampleData.garments, matching: category)
+        let items = WardrobeHomePolicy.items(items, matching: category)
         if items.isEmpty {
             YISUContentStateView(
                 state: .noResults,

@@ -3,6 +3,8 @@ import SwiftUI
 struct RootView: View {
     @State private var route: AppRoute
     @State private var setupState: WardrobeSetupState
+    @State private var garments = WardrobeSampleData.garments
+    @State private var selectedGarment = GarmentDetailDraft.whiteLinenShirt
 
     init(arguments: [String] = ProcessInfo.processInfo.arguments) {
         let screen = Self.argument(after: "-ui-screen", in: arguments)
@@ -10,6 +12,7 @@ struct RootView: View {
         let initialRoute: AppRoute = switch screen {
         case "onboarding": .onboarding
         case "wardrobe": .wardrobe
+        case "garment-detail": .garmentDetail
         default: .signIn
         }
         _route = State(initialValue: initialRoute)
@@ -36,7 +39,27 @@ struct RootView: View {
                         }
                     )
                 case .wardrobe:
-                    WardrobeHomeView()
+                    WardrobeHomeView(
+                        items: garments,
+                        onSelectGarment: { garment in
+                            if garment.id == GarmentDetailDraft.whiteLinenShirt.id {
+                                selectedGarment = .whiteLinenShirt
+                                route = .garmentDetail
+                            }
+                        }
+                    )
+                case .garmentDetail:
+                    GarmentDetailView(
+                        garment: selectedGarment,
+                        onBack: { route = .wardrobe },
+                        onChange: { updated in
+                            selectedGarment = updated
+                            if let index = garments.firstIndex(where: { $0.id == updated.id }) {
+                                garments[index] = updated.summary
+                            }
+                        },
+                        onDelete: { route = .wardrobe }
+                    )
                 }
             }
         }

@@ -41,6 +41,11 @@
 		A15000000000000000000003 /* WardrobeSampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15000000000000000000013 /* WardrobeSampleData.swift */; };
 		A15000000000000000000004 /* WardrobeHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15000000000000000000014 /* WardrobeHomeView.swift */; };
 		A15000000000000000000005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A15000000000000000000015 /* Assets.xcassets */; };
+		A16000000000000000000001 /* GarmentDetailPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16000000000000000000011 /* GarmentDetailPolicyTests.swift */; };
+		A16000000000000000000002 /* GarmentDetailTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16000000000000000000012 /* GarmentDetailTests.swift */; };
+		A16000000000000000000003 /* GarmentDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16000000000000000000013 /* GarmentDetailModel.swift */; };
+		A16000000000000000000004 /* GarmentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16000000000000000000014 /* GarmentDetailView.swift */; };
+		A16000000000000000000005 /* YISUGarmentDetailComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16000000000000000000015 /* YISUGarmentDetailComponents.swift */; };
 		A4286A59DDCD2F1BF009B502 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903900986BD01F8F3AA8D918 /* RootView.swift */; };
 		B0C3DDEE173D04CFC813706E /* AppIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A9C9627E69BD77234EEAB2 /* AppIdentity.swift */; };
 		BE9EFA9F1087483698262764 /* GarmentSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457325C80B2EDA611036D550 /* GarmentSummary.swift */; };
@@ -109,6 +114,11 @@
 		A15000000000000000000013 /* WardrobeSampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeSampleData.swift; sourceTree = "<group>"; };
 		A15000000000000000000014 /* WardrobeHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeHomeView.swift; sourceTree = "<group>"; };
 		A15000000000000000000015 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A16000000000000000000011 /* GarmentDetailPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentDetailPolicyTests.swift; sourceTree = "<group>"; };
+		A16000000000000000000012 /* GarmentDetailTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentDetailTests.swift; sourceTree = "<group>"; };
+		A16000000000000000000013 /* GarmentDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentDetailModel.swift; sourceTree = "<group>"; };
+		A16000000000000000000014 /* GarmentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentDetailView.swift; sourceTree = "<group>"; };
+		A16000000000000000000015 /* YISUGarmentDetailComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUGarmentDetailComponents.swift; sourceTree = "<group>"; };
 		AC4E099C8A517B7866713AEB /* DesignSystemGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystemGalleryView.swift; sourceTree = "<group>"; };
 		ACA5EC2F381A930D1C89ECC3 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		CB763FE465B9CFC1DDE51D26 /* ControlBehaviorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlBehaviorTests.swift; sourceTree = "<group>"; };
@@ -132,6 +142,8 @@
 		A15000000000000000000021 /* Wardrobe */ = {
 			isa = PBXGroup;
 			children = (
+				A16000000000000000000014 /* GarmentDetailView.swift */,
+				A16000000000000000000013 /* GarmentDetailModel.swift */,
 				A15000000000000000000014 /* WardrobeHomeView.swift */,
 				A15000000000000000000013 /* WardrobeSampleData.swift */,
 			);
@@ -196,6 +208,7 @@
 		512C761FE5773C9CCD607DEE /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				A16000000000000000000015 /* YISUGarmentDetailComponents.swift */,
 				A11000000000000000000014 /* YISUAgreementCheckbox.swift */,
 				A11000000000000000000013 /* YISUAuthField.swift */,
 				A11000000000000000000012 /* YISUAuthScaffold.swift */,
@@ -293,6 +306,7 @@
 		A15000000000000000000020 /* Wardrobe */ = {
 			isa = PBXGroup;
 			children = (
+				A16000000000000000000011 /* GarmentDetailPolicyTests.swift */,
 				A15000000000000000000011 /* WardrobeHomePolicyTests.swift */,
 			);
 			path = Wardrobe;
@@ -325,6 +339,7 @@
 			isa = PBXGroup;
 			children = (
 				469FA0AB02377F1B56792DD2 /* DesignSystemGalleryTests.swift */,
+				A16000000000000000000012 /* GarmentDetailTests.swift */,
 				A14000000000000000000016 /* OnboardingFlowTests.swift */,
 				44AC7E25E50DB3916D8D2C29 /* SmokeTests.swift */,
 				A15000000000000000000012 /* WardrobeHomeTests.swift */,
@@ -440,6 +455,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A16000000000000000000002 /* GarmentDetailTests.swift in Sources */,
 				A14000000000000000000006 /* OnboardingFlowTests.swift in Sources */,
 				A15000000000000000000002 /* WardrobeHomeTests.swift in Sources */,
 				49E3A161E4E039076FA192D3 /* DesignSystemGalleryTests.swift in Sources */,
@@ -451,6 +467,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A16000000000000000000001 /* GarmentDetailPolicyTests.swift in Sources */,
 				A14000000000000000000005 /* WardrobeSetupStateTests.swift in Sources */,
 				A15000000000000000000001 /* WardrobeHomePolicyTests.swift in Sources */,
 				A10000000000000000000001 /* AuthFormPolicyTests.swift in Sources */,
@@ -467,6 +484,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A16000000000000000000005 /* YISUGarmentDetailComponents.swift in Sources */,
+				A16000000000000000000004 /* GarmentDetailView.swift in Sources */,
+				A16000000000000000000003 /* GarmentDetailModel.swift in Sources */,
 				A15000000000000000000003 /* WardrobeSampleData.swift in Sources */,
 				A15000000000000000000004 /* WardrobeHomeView.swift in Sources */,
 				A14000000000000000000001 /* AppRoute.swift in Sources */,

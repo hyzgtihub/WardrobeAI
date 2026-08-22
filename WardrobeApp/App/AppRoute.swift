@@ -3,4 +3,5 @@ enum AppRoute: Equatable, Sendable {
     case signUp
     case onboarding
     case wardrobe
+    case garmentDetail
 }
