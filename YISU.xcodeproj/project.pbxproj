@@ -10,6 +10,7 @@
 		04C3191FB0C2365FC5F5312D /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DB435246FE769FEAB25D9 /* ModelTests.swift */; };
 		3C79DF994F685A8D5A21B061 /* YISUButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F970D6EDA6C29BCF9AEF5CAE /* YISUButton.swift */; };
 		4B38B9ABAC6A082C0A140D09 /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AC7E25E50DB3916D8D2C29 /* SmokeTests.swift */; };
+		55E820685356BBFC7E2A0332 /* CollectionBehaviorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437130D898E88B896F0C71EF /* CollectionBehaviorTests.swift */; };
 		62A7AE88027C37BBB5DF10F1 /* YISUCategoryFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B64E05C66A1089FE5C1BAFB /* YISUCategoryFilter.swift */; };
 		77809BD98769222D7691972F /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA5EC2F381A930D1C89ECC3 /* SignInView.swift */; };
 		7AE229BE3D693FD068F26857 /* YISUTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F15D1E8890942046B4E372E /* YISUTheme.swift */; };
@@ -19,10 +20,13 @@
 		91B392E42D659BAA47BDCBFF /* ControlBehaviorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB763FE465B9CFC1DDE51D26 /* ControlBehaviorTests.swift */; };
 		9404EA3DE38CB2EE78B37CFE /* YISUApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497A5C0305038852711A7688 /* YISUApp.swift */; };
 		9F2D539591BC28580D065E48 /* YISUCategoryChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D1E0FC5F69B35CAEBC97C1 /* YISUCategoryChip.swift */; };
+		A02A645A134C87085B9E4FE2 /* YISUBottomNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D46BAFE516AA8BD1B69A8A /* YISUBottomNavigation.swift */; };
 		A4286A59DDCD2F1BF009B502 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903900986BD01F8F3AA8D918 /* RootView.swift */; };
 		B0C3DDEE173D04CFC813706E /* AppIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A9C9627E69BD77234EEAB2 /* AppIdentity.swift */; };
 		BE9EFA9F1087483698262764 /* GarmentSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457325C80B2EDA611036D550 /* GarmentSummary.swift */; };
+		CC10561C4A21F38BB8EA0888 /* YISUGarmentCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C68D9E99BE84D7C2290B83C /* YISUGarmentCard.swift */; };
 		D81C57138923BFCCAD2F5CF2 /* YISUContentStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC1FDB49AF03AC690A0B6A8 /* YISUContentStateView.swift */; };
+		F1C085690E8449DEC1EF5DD3 /* YISUGarmentGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B81D2C7BE7469893128BD69 /* YISUGarmentGrid.swift */; };
 		F27F3783968E54D4DD12D6E4 /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C12093FFA6C8AB6E318FA5 /* SmokeTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -51,13 +55,17 @@
 		30097FB853DAB2C9845955AC /* YISU.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = YISU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3120796F5308EAB3EA2296E6 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		31D1E0FC5F69B35CAEBC97C1 /* YISUCategoryChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUCategoryChip.swift; sourceTree = "<group>"; };
+		437130D898E88B896F0C71EF /* CollectionBehaviorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionBehaviorTests.swift; sourceTree = "<group>"; };
 		44AC7E25E50DB3916D8D2C29 /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
 		457325C80B2EDA611036D550 /* GarmentSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentSummary.swift; sourceTree = "<group>"; };
 		48A9C9627E69BD77234EEAB2 /* AppIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIdentity.swift; sourceTree = "<group>"; };
 		497A5C0305038852711A7688 /* YISUApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUApp.swift; sourceTree = "<group>"; };
+		4C68D9E99BE84D7C2290B83C /* YISUGarmentCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUGarmentCard.swift; sourceTree = "<group>"; };
+		6B81D2C7BE7469893128BD69 /* YISUGarmentGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUGarmentGrid.swift; sourceTree = "<group>"; };
 		7F15D1E8890942046B4E372E /* YISUTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUTheme.swift; sourceTree = "<group>"; };
 		84368EB371249E8B6C5DE7C9 /* YISUTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = YISUTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		857B97111652B2592BFB2982 /* YISUComponentState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUComponentState.swift; sourceTree = "<group>"; };
+		89D46BAFE516AA8BD1B69A8A /* YISUBottomNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUBottomNavigation.swift; sourceTree = "<group>"; };
 		903900986BD01F8F3AA8D918 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		995472F01A313D9C9E8EB633 /* YISUCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUCategory.swift; sourceTree = "<group>"; };
 		ACA5EC2F381A930D1C89ECC3 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
@@ -119,10 +127,13 @@
 		512C761FE5773C9CCD607DEE /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				89D46BAFE516AA8BD1B69A8A /* YISUBottomNavigation.swift */,
 				F970D6EDA6C29BCF9AEF5CAE /* YISUButton.swift */,
 				31D1E0FC5F69B35CAEBC97C1 /* YISUCategoryChip.swift */,
 				1B64E05C66A1089FE5C1BAFB /* YISUCategoryFilter.swift */,
 				0CC1FDB49AF03AC690A0B6A8 /* YISUContentStateView.swift */,
+				4C68D9E99BE84D7C2290B83C /* YISUGarmentCard.swift */,
+				6B81D2C7BE7469893128BD69 /* YISUGarmentGrid.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -186,6 +197,7 @@
 		E383F9F511E7C96B8F920880 /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
+				437130D898E88B896F0C71EF /* CollectionBehaviorTests.swift */,
 				CB763FE465B9CFC1DDE51D26 /* ControlBehaviorTests.swift */,
 				186F4DA5E18B28ED85E9CD16 /* FoundationTests.swift */,
 				1E9DB435246FE769FEAB25D9 /* ModelTests.swift */,
@@ -312,6 +324,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55E820685356BBFC7E2A0332 /* CollectionBehaviorTests.swift in Sources */,
 				91B392E42D659BAA47BDCBFF /* ControlBehaviorTests.swift in Sources */,
 				83516AFD1C87246D83CCF380 /* FoundationTests.swift in Sources */,
 				04C3191FB0C2365FC5F5312D /* ModelTests.swift in Sources */,
@@ -328,12 +341,15 @@
 				A4286A59DDCD2F1BF009B502 /* RootView.swift in Sources */,
 				77809BD98769222D7691972F /* SignInView.swift in Sources */,
 				9404EA3DE38CB2EE78B37CFE /* YISUApp.swift in Sources */,
+				A02A645A134C87085B9E4FE2 /* YISUBottomNavigation.swift in Sources */,
 				3C79DF994F685A8D5A21B061 /* YISUButton.swift in Sources */,
 				84192E25EE19A142829D0111 /* YISUCategory.swift in Sources */,
 				9F2D539591BC28580D065E48 /* YISUCategoryChip.swift in Sources */,
 				62A7AE88027C37BBB5DF10F1 /* YISUCategoryFilter.swift in Sources */,
 				86CE2359B6EA8BA942D6335A /* YISUComponentState.swift in Sources */,
 				D81C57138923BFCCAD2F5CF2 /* YISUContentStateView.swift in Sources */,
+				CC10561C4A21F38BB8EA0888 /* YISUGarmentCard.swift in Sources */,
+				F1C085690E8449DEC1EF5DD3 /* YISUGarmentGrid.swift in Sources */,
 				7AE229BE3D693FD068F26857 /* YISUTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
