@@ -1,8 +1,8 @@
 # 衣序 YISU 高保真设计系统
 
 > 版本：Gate B2 / 1.1.0（Gate B1 无描边确认稿重新校准）
-> 视觉方向：V3B · 柔焦衣间  
-> 适用范围：iOS MVP 高保真 UI、Figma 组件、SwiftUI 实现与 AI 辅助生成  
+> 视觉方向：V3B · 柔焦衣间
+> 适用范围：iOS MVP 高保真 UI、Figma 组件、SwiftUI 实现与 AI 辅助生成
 > 机器可读规范：[tokens.json](./tokens.json)
 
 ## 1. 文档作用与单一真源

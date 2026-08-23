@@ -36,4 +36,3 @@ if (errors.length) {
 }
 
 console.log(`PASS: DESIGN.md 已通过 ${requiredSections.length} 个章节、${requiredComponents.length} 个组件和交付映射检查`);
-
