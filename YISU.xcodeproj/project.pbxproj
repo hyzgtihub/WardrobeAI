@@ -12,6 +12,8 @@
 		02F4D24DBC073C86A6C0456C /* WardrobeHomePolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5C8A4C3418D6B4C37E1C2C /* WardrobeHomePolicyTests.swift */; };
 		03EBBD3BC6EC356DBFF0B6E2 /* SupabaseConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32828918AE6D675CF62A06E /* SupabaseConfigurationTests.swift */; };
 		04C3191FB0C2365FC5F5312D /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DB435246FE769FEAB25D9 /* ModelTests.swift */; };
+		11400DC336C7CCDB4EA8CC7D /* AppDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86330F2FBE249CB2E279FC4B /* AppDependencies.swift */; };
+		14541358F539BB2C4F6BDA24 /* AuthSessionFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7062A69595B7F9A8B4D7F5 /* AuthSessionFlowTests.swift */; };
 		26D528236AEEA5E93E8E745D /* SupabaseProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0B77FB37F8803F9B56D380 /* SupabaseProfileRepository.swift */; };
 		297C81632EBD8509C50403F4 /* AppRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063904435C870A2D29CF1E26 /* AppRoute.swift */; };
 		2C6BD65ABF2D9A7D783608E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA106F2D845E7256446C5FD6 /* Assets.xcassets */; };
@@ -26,6 +28,7 @@
 		4B38B9ABAC6A082C0A140D09 /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AC7E25E50DB3916D8D2C29 /* SmokeTests.swift */; };
 		524A1B1FCE81D179F977601B /* WardrobeSampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D16DB641F6A9DF785B71AC6 /* WardrobeSampleData.swift */; };
 		55E820685356BBFC7E2A0332 /* CollectionBehaviorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437130D898E88B896F0C71EF /* CollectionBehaviorTests.swift */; };
+		57A36F6A5939EFE27C26BF64 /* AppDependenciesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743D2B331AAB8EA6C3E0782F /* AppDependenciesTests.swift */; };
 		5A6149836D677442BC5EE0F3 /* SupabaseWardrobeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A3057C6D8A237F646E4E2E /* SupabaseWardrobeRepository.swift */; };
 		5FF8D4BEFD214325A5A5F0CA /* SupabaseAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D18F0E054E741DF8ADEC34 /* SupabaseAuthRepository.swift */; };
 		62A7AE88027C37BBB5DF10F1 /* YISUCategoryFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B64E05C66A1089FE5C1BAFB /* YISUCategoryFilter.swift */; };
@@ -66,6 +69,7 @@
 		E5D5A4AD85ED8B0FC10AF6A6 /* SupabaseConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785FDCFE4EB06900146D66F1 /* SupabaseConfiguration.swift */; };
 		E798517D62BE125CE9E766E3 /* DesignSystemGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4E099C8A517B7866713AEB /* DesignSystemGalleryView.swift */; };
 		ED09DA92CB1711C22D6AB9C6 /* AccountRepositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3604722319521DEB614467EF /* AccountRepositories.swift */; };
+		EE2C7E1205D3734FA225EF6F /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CBF57357C9F2716E436D0E /* ProfileView.swift */; };
 		F1C085690E8449DEC1EF5DD3 /* YISUGarmentGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B81D2C7BE7469893128BD69 /* YISUGarmentGrid.swift */; };
 		F27F3783968E54D4DD12D6E4 /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C12093FFA6C8AB6E318FA5 /* SmokeTests.swift */; };
 /* End PBXBuildFile section */
@@ -111,6 +115,7 @@
 		6B0B77FB37F8803F9B56D380 /* SupabaseProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseProfileRepository.swift; sourceTree = "<group>"; };
 		6B81D2C7BE7469893128BD69 /* YISUGarmentGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUGarmentGrid.swift; sourceTree = "<group>"; };
 		6D45B77C991C3AC93E3AE5A1 /* SupabaseClientFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseClientFactory.swift; sourceTree = "<group>"; };
+		743D2B331AAB8EA6C3E0782F /* AppDependenciesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependenciesTests.swift; sourceTree = "<group>"; };
 		785FDCFE4EB06900146D66F1 /* SupabaseConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseConfiguration.swift; sourceTree = "<group>"; };
 		78D0C35C55E844FAA10DD295 /* GarmentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentDetailView.swift; sourceTree = "<group>"; };
 		7ADD599013CE7666543E844E /* YISUGarmentDetailComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUGarmentDetailComponents.swift; sourceTree = "<group>"; };
@@ -118,6 +123,7 @@
 		7FE3030C543511AE06C0E43A /* YISUAuthScaffold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUAuthScaffold.swift; sourceTree = "<group>"; };
 		84368EB371249E8B6C5DE7C9 /* YISUTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = YISUTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		857B97111652B2592BFB2982 /* YISUComponentState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUComponentState.swift; sourceTree = "<group>"; };
+		86330F2FBE249CB2E279FC4B /* AppDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependencies.swift; sourceTree = "<group>"; };
 		89D18F0E054E741DF8ADEC34 /* SupabaseAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseAuthRepository.swift; sourceTree = "<group>"; };
 		89D46BAFE516AA8BD1B69A8A /* YISUBottomNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUBottomNavigation.swift; sourceTree = "<group>"; };
 		8B042293BE06012AAB28F451 /* CurrentWardrobeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWardrobeView.swift; sourceTree = "<group>"; };
@@ -132,11 +138,13 @@
 		ACA5EC2F381A930D1C89ECC3 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		ADC111B708C72FB4C75A7BE3 /* YISUAgreementCheckbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUAgreementCheckbox.swift; sourceTree = "<group>"; };
 		B01F8FE78921C95149792B82 /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
+		B3CBF57357C9F2716E436D0E /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		C553E22CD0B4411D370BE0D9 /* WardrobeHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeHomeView.swift; sourceTree = "<group>"; };
 		C727E80CE5517984972CC5B7 /* AccountModelCodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModelCodingTests.swift; sourceTree = "<group>"; };
 		C7BEA1A020CC045EAD77924A /* SessionStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStoreTests.swift; sourceTree = "<group>"; };
 		C9E51D018EF93CF07BEF87FC /* OnboardingFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowTests.swift; sourceTree = "<group>"; };
 		CAD04FEB2D68752A82B70CAA /* AuthFormPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFormPolicyTests.swift; sourceTree = "<group>"; };
+		CB7062A69595B7F9A8B4D7F5 /* AuthSessionFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSessionFlowTests.swift; sourceTree = "<group>"; };
 		CB763FE465B9CFC1DDE51D26 /* ControlBehaviorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlBehaviorTests.swift; sourceTree = "<group>"; };
 		CFFCCBD4A656823137FB37E2 /* WardrobeHomeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeHomeTests.swift; sourceTree = "<group>"; };
 		D0491A94AA215385953033BE /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -173,6 +181,7 @@
 				68BB3521C6C1BDF5FB18CD44 /* Account */,
 				6BF305C0BED43066B2D784B3 /* Auth */,
 				FAFEEF5A8492B51F8EE69BD6 /* Onboarding */,
+				89828E03A9FF637841FA327F /* Profile */,
 				B3ED9CB159883534AA1B10B2 /* Wardrobe */,
 			);
 			path = Features;
@@ -220,6 +229,7 @@
 		3CE89CBB41FB8B68544B77B1 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				743D2B331AAB8EA6C3E0782F /* AppDependenciesTests.swift */,
 				C7BEA1A020CC045EAD77924A /* SessionStoreTests.swift */,
 			);
 			path = App;
@@ -338,6 +348,7 @@
 		72DA89DD122D3788A3DE1B49 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				86330F2FBE249CB2E279FC4B /* AppDependencies.swift */,
 				48A9C9627E69BD77234EEAB2 /* AppIdentity.swift */,
 				063904435C870A2D29CF1E26 /* AppRoute.swift */,
 				903900986BD01F8F3AA8D918 /* RootView.swift */,
@@ -362,6 +373,14 @@
 				C727E80CE5517984972CC5B7 /* AccountModelCodingTests.swift */,
 			);
 			path = Account;
+			sourceTree = "<group>";
+		};
+		89828E03A9FF637841FA327F /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				B3CBF57357C9F2716E436D0E /* ProfileView.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		B3E8E78BA75DA02D9B6A9655 /* Infrastructure */ = {
@@ -431,6 +450,7 @@
 		F696BB093A6FEBEA31EE003D /* WardrobeAppUITests */ = {
 			isa = PBXGroup;
 			children = (
+				CB7062A69595B7F9A8B4D7F5 /* AuthSessionFlowTests.swift */,
 				469FA0AB02377F1B56792DD2 /* DesignSystemGalleryTests.swift */,
 				F2352787C60645DBA33DA9CF /* GarmentDetailTests.swift */,
 				C9E51D018EF93CF07BEF87FC /* OnboardingFlowTests.swift */,
@@ -582,6 +602,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14541358F539BB2C4F6BDA24 /* AuthSessionFlowTests.swift in Sources */,
 				49E3A161E4E039076FA192D3 /* DesignSystemGalleryTests.swift in Sources */,
 				02729C5611C224621113DF2C /* GarmentDetailTests.swift in Sources */,
 				87578537B8D00273BF220039 /* OnboardingFlowTests.swift in Sources */,
@@ -595,6 +616,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				34D12C5468DE0AEBCB0AAB5A /* AccountModelCodingTests.swift in Sources */,
+				57A36F6A5939EFE27C26BF64 /* AppDependenciesTests.swift in Sources */,
 				B075C02E4408D9ECC8AADE8B /* AuthFormPolicyTests.swift in Sources */,
 				B6CD886F8ECF379639C404DA /* AuthSubmissionStateTests.swift in Sources */,
 				55E820685356BBFC7E2A0332 /* CollectionBehaviorTests.swift in Sources */,
@@ -617,6 +639,7 @@
 			files = (
 				9AEE4713E74DBC2E465ABB9A /* AccountModels.swift in Sources */,
 				ED09DA92CB1711C22D6AB9C6 /* AccountRepositories.swift in Sources */,
+				11400DC336C7CCDB4EA8CC7D /* AppDependencies.swift in Sources */,
 				B0C3DDEE173D04CFC813706E /* AppIdentity.swift in Sources */,
 				297C81632EBD8509C50403F4 /* AppRoute.swift in Sources */,
 				ADDFB973C722C4601BF86627 /* AuthFormPolicy.swift in Sources */,
@@ -626,6 +649,7 @@
 				C4F176BD9B1D23C01889CBF2 /* GarmentDetailModel.swift in Sources */,
 				A21E664F8450304ECE6ECD2B /* GarmentDetailView.swift in Sources */,
 				BE9EFA9F1087483698262764 /* GarmentSummary.swift in Sources */,
+				EE2C7E1205D3734FA225EF6F /* ProfileView.swift in Sources */,
 				A4286A59DDCD2F1BF009B502 /* RootView.swift in Sources */,
 				AD96232CE6C40EBE4DF71AF2 /* SessionStore.swift in Sources */,
 				77809BD98769222D7691972F /* SignInView.swift in Sources */,

@@ -4,6 +4,7 @@ final class SmokeTests: XCTestCase {
     @MainActor
     func testSuccessfulSignInOpensWardrobeHome() {
         let app = XCUIApplication()
+        app.launchArguments += ["-ui-auth-scenario", "login-success"]
         app.launch()
 
         let email = app.textFields["auth.email"]
@@ -26,6 +27,7 @@ final class SmokeTests: XCTestCase {
     @MainActor
     func testP01ReachesRegistration() {
         let app = XCUIApplication()
+        app.launchArguments += ["-ui-auth-scenario", "signed-out"]
         app.launch()
 
         let register = app.buttons["auth.register"]

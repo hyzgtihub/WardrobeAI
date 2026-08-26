@@ -1,8 +1,11 @@
 import SwiftUI
 
 struct SignUpView: View {
+    let isSubmitting: Bool
+    let error: AccountError?
+    let passwordTextContentType: UITextContentType?
     let onBack: (() -> Void)?
-    let onCreated: (_ email: String, _ password: String) -> Void
+    let onCreated: (_ email: String, _ password: String) async -> AccountError?
 
     @Environment(\.dismiss) private var dismiss
     @State private var email: String
@@ -13,6 +16,9 @@ struct SignUpView: View {
     @State private var validationIssue: SignUpIssue?
 
     init(
+        isSubmitting: Bool = false,
+        error: AccountError? = nil,
+        passwordTextContentType: UITextContentType? = .newPassword,
         initialState: AuthSubmissionState = .idle,
         initialEmail: String = "",
         initialPassword: String = "",
@@ -20,8 +26,11 @@ struct SignUpView: View {
         agreementAccepted: Bool = true,
         validationIssue: SignUpIssue? = nil,
         onBack: (() -> Void)? = nil,
-        onCreated: @escaping (_ email: String, _ password: String) -> Void = { _, _ in }
+        onCreated: @escaping (_ email: String, _ password: String) async -> AccountError? = { _, _ in nil }
     ) {
+        self.isSubmitting = isSubmitting
+        self.error = error
+        self.passwordTextContentType = passwordTextContentType
         self.onBack = onBack
         self.onCreated = onCreated
         _email = State(initialValue: initialEmail)
@@ -55,6 +64,17 @@ struct SignUpView: View {
                         .foregroundStyle(YISUTheme.Color.textSecondary)
                 }
 
+                if let serviceMessage {
+                    Label(serviceMessage, systemImage: "exclamationmark.triangle.fill")
+                        .font(YISUTheme.Typography.footnote)
+                        .foregroundStyle(YISUTheme.Color.danger)
+                        .padding(YISUTheme.Spacing.md)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(YISUTheme.Color.dangerSubtle)
+                        .clipShape(RoundedRectangle(cornerRadius: YISUTheme.Radius.small))
+                        .accessibilityIdentifier("auth.error")
+                }
+
                 VStack(spacing: YISUTheme.Spacing.md) {
                     YISUAuthField(
                         label: "邮箱",
@@ -71,7 +91,7 @@ struct SignUpView: View {
                         placeholder: "至少 8 位",
                         text: binding(for: $password),
                         errorMessage: passwordError,
-                        textContentType: .newPassword,
+                        textContentType: passwordTextContentType,
                         accessibilityIdentifier: "auth.signUp.password"
                     )
                     YISUPasswordField(
@@ -79,20 +99,9 @@ struct SignUpView: View {
                         placeholder: "再次输入密码",
                         text: binding(for: $confirmation),
                         errorMessage: confirmationError,
-                        textContentType: .newPassword,
+                        textContentType: passwordTextContentType,
                         accessibilityIdentifier: "auth.signUp.confirmation"
                     )
-                }
-
-                if let serviceMessage {
-                    Label(serviceMessage, systemImage: "exclamationmark.triangle.fill")
-                        .font(YISUTheme.Typography.footnote)
-                        .foregroundStyle(YISUTheme.Color.danger)
-                        .padding(YISUTheme.Spacing.md)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(YISUTheme.Color.dangerSubtle)
-                        .clipShape(RoundedRectangle(cornerRadius: YISUTheme.Radius.small))
-                        .accessibilityIdentifier("auth.signUp.serviceError")
                 }
 
                 YISUAgreementCheckbox(
@@ -124,12 +133,12 @@ struct SignUpView: View {
     }
 
     private var buttonState: YISUControlState {
-        submissionState == .submitting ? .loading : .normal
+        isSubmitting || submissionState == .submitting ? .loading : .normal
     }
 
     private var emailError: String? {
         if validationIssue == .invalidEmail { return SignUpIssue.invalidEmail.message }
-        if submissionState == .emailExists { return "该邮箱已注册，请直接登录" }
+        if submissionState == .emailExists || error == .emailAlreadyRegistered { return "该邮箱已注册，请直接登录" }
         return nil
     }
 
@@ -142,7 +151,14 @@ struct SignUpView: View {
     }
 
     private var serviceMessage: String? {
-        submissionState == .serviceFailure ? "服务暂时不可用，请稍后重试" : nil
+        if submissionState == .serviceFailure { return "服务暂时不可用，请稍后重试" }
+        switch error {
+        case .emailAlreadyRegistered: return "该邮箱已注册，请直接登录"
+        case .networkUnavailable: return "网络连接不可用，请稍后重试"
+        case .invalidCredentials, .accountDataUnavailable, .invalidConfiguration, .unknown:
+            return "服务暂时不可用，请稍后重试"
+        case nil: return nil
+        }
     }
 
     private func binding<Value>(for source: Binding<Value>) -> Binding<Value> {
@@ -164,7 +180,17 @@ struct SignUpView: View {
             validationIssue = issue
             return
         }
-        onCreated(email, password)
+        Task {
+            let result = await onCreated(email, password)
+            switch result {
+            case .emailAlreadyRegistered:
+                submissionState = .emailExists
+            case .some:
+                submissionState = .serviceFailure
+            case nil:
+                break
+            }
+        }
     }
 }
 

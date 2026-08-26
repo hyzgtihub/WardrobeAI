@@ -1,9 +1,11 @@
 import SwiftUI
 
 struct SignInView: View {
+    let isSubmitting: Bool
+    let error: AccountError?
     let onRegister: (() -> Void)?
     let onForgotPassword: () -> Void
-    let onSubmit: (_ email: String, _ password: String) -> Void
+    let onSubmit: (_ email: String, _ password: String) async -> Void
 
     @State private var email = ""
     @State private var password = ""
@@ -11,10 +13,14 @@ struct SignInView: View {
     @State private var showsSignUp = false
 
     init(
+        isSubmitting: Bool = false,
+        error: AccountError? = nil,
         onRegister: (() -> Void)? = nil,
         onForgotPassword: @escaping () -> Void = {},
-        onSubmit: @escaping (_ email: String, _ password: String) -> Void = { _, _ in }
+        onSubmit: @escaping (_ email: String, _ password: String) async -> Void = { _, _ in }
     ) {
+        self.isSubmitting = isSubmitting
+        self.error = error
         self.onRegister = onRegister
         self.onForgotPassword = onForgotPassword
         self.onSubmit = onSubmit
@@ -59,13 +65,26 @@ struct SignInView: View {
                 }
                 .tint(YISUTheme.Color.brandEmphasis)
 
+                if let errorMessage {
+                    Label(errorMessage, systemImage: "exclamationmark.triangle.fill")
+                        .font(YISUTheme.Typography.footnote)
+                        .foregroundStyle(YISUTheme.Color.danger)
+                        .padding(YISUTheme.Spacing.md)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(YISUTheme.Color.dangerSubtle)
+                        .clipShape(RoundedRectangle(cornerRadius: YISUTheme.Radius.small))
+                        .accessibilityIdentifier("auth.error")
+                }
+
                 YISUButton(
                     title: "登录",
                     style: .primary,
-                    state: canSubmit ? .normal : .disabled,
+                    state: isSubmitting ? .loading : (canSubmit ? .normal : .disabled),
                     accessibilityIdentifier: "auth.signIn"
                 ) {
-                    onSubmit(email, password)
+                    Task {
+                        await onSubmit(email, password)
+                    }
                 }
 
                 HStack(spacing: YISUTheme.Spacing.xs) {
@@ -100,6 +119,17 @@ struct SignInView: View {
 
     private var canSubmit: Bool {
         AuthFormPolicy.canSignIn(email: email, password: password, agreementAccepted: agreementAccepted)
+    }
+
+    private var errorMessage: String? {
+        switch error {
+        case .invalidCredentials: "邮箱或密码不正确"
+        case .networkUnavailable: "网络连接不可用，请稍后重试"
+        case .emailAlreadyRegistered: "该邮箱已注册"
+        case .accountDataUnavailable: "账号资料尚未准备完成，请重试"
+        case .invalidConfiguration, .unknown: "服务暂时不可用，请稍后重试"
+        case nil: nil
+        }
     }
 }
 
