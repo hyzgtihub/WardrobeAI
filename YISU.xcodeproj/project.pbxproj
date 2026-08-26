@@ -12,6 +12,7 @@
 		02F4D24DBC073C86A6C0456C /* WardrobeHomePolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5C8A4C3418D6B4C37E1C2C /* WardrobeHomePolicyTests.swift */; };
 		03EBBD3BC6EC356DBFF0B6E2 /* SupabaseConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32828918AE6D675CF62A06E /* SupabaseConfigurationTests.swift */; };
 		04C3191FB0C2365FC5F5312D /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DB435246FE769FEAB25D9 /* ModelTests.swift */; };
+		26D528236AEEA5E93E8E745D /* SupabaseProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0B77FB37F8803F9B56D380 /* SupabaseProfileRepository.swift */; };
 		297C81632EBD8509C50403F4 /* AppRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063904435C870A2D29CF1E26 /* AppRoute.swift */; };
 		2C6BD65ABF2D9A7D783608E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA106F2D845E7256446C5FD6 /* Assets.xcassets */; };
 		2E3E1D17375A7D72213BA1B6 /* GarmentDetailPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0D7C4E391802D9F2508FEF /* GarmentDetailPolicyTests.swift */; };
@@ -25,7 +26,11 @@
 		4B38B9ABAC6A082C0A140D09 /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AC7E25E50DB3916D8D2C29 /* SmokeTests.swift */; };
 		524A1B1FCE81D179F977601B /* WardrobeSampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D16DB641F6A9DF785B71AC6 /* WardrobeSampleData.swift */; };
 		55E820685356BBFC7E2A0332 /* CollectionBehaviorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437130D898E88B896F0C71EF /* CollectionBehaviorTests.swift */; };
+		5A6149836D677442BC5EE0F3 /* SupabaseWardrobeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A3057C6D8A237F646E4E2E /* SupabaseWardrobeRepository.swift */; };
+		5FF8D4BEFD214325A5A5F0CA /* SupabaseAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D18F0E054E741DF8ADEC34 /* SupabaseAuthRepository.swift */; };
 		62A7AE88027C37BBB5DF10F1 /* YISUCategoryFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B64E05C66A1089FE5C1BAFB /* YISUCategoryFilter.swift */; };
+		65C75DC9A52055FFA8F9B30C /* SupabaseErrorMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AD26C971DD37EDA0972F25 /* SupabaseErrorMapper.swift */; };
+		6B27A7FB43349092A283E6FB /* SupabaseClientFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D45B77C991C3AC93E3AE5A1 /* SupabaseClientFactory.swift */; };
 		77809BD98769222D7691972F /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA5EC2F381A930D1C89ECC3 /* SignInView.swift */; };
 		7AE229BE3D693FD068F26857 /* YISUTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F15D1E8890942046B4E372E /* YISUTheme.swift */; };
 		7CEF84076B094FD52D234EB9 /* WardrobeHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C553E22CD0B4411D370BE0D9 /* WardrobeHomeView.swift */; };
@@ -50,6 +55,7 @@
 		B075C02E4408D9ECC8AADE8B /* AuthFormPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD04FEB2D68752A82B70CAA /* AuthFormPolicyTests.swift */; };
 		B0C3DDEE173D04CFC813706E /* AppIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A9C9627E69BD77234EEAB2 /* AppIdentity.swift */; };
 		B6CD886F8ECF379639C404DA /* AuthSubmissionStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D959CC576383CD94CD9975A /* AuthSubmissionStateTests.swift */; };
+		BDB32DCC40732927C168BE66 /* SupabaseErrorMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3436BC8D13945FAD5981977 /* SupabaseErrorMapperTests.swift */; };
 		BE9EFA9F1087483698262764 /* GarmentSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457325C80B2EDA611036D550 /* GarmentSummary.swift */; };
 		C281986D494E04CBE6C8A81C /* YISUAgreementCheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC111B708C72FB4C75A7BE3 /* YISUAgreementCheckbox.swift */; };
 		C451818200699D5DD8552BC6 /* YISUGarmentDetailComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ADD599013CE7666543E844E /* YISUGarmentDetailComponents.swift */; };
@@ -102,7 +108,9 @@
 		497A5C0305038852711A7688 /* YISUApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUApp.swift; sourceTree = "<group>"; };
 		4C68D9E99BE84D7C2290B83C /* YISUGarmentCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUGarmentCard.swift; sourceTree = "<group>"; };
 		63E30539C5FBF8D0B8D8AEA3 /* WardrobeSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeSetupView.swift; sourceTree = "<group>"; };
+		6B0B77FB37F8803F9B56D380 /* SupabaseProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseProfileRepository.swift; sourceTree = "<group>"; };
 		6B81D2C7BE7469893128BD69 /* YISUGarmentGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUGarmentGrid.swift; sourceTree = "<group>"; };
+		6D45B77C991C3AC93E3AE5A1 /* SupabaseClientFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseClientFactory.swift; sourceTree = "<group>"; };
 		785FDCFE4EB06900146D66F1 /* SupabaseConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseConfiguration.swift; sourceTree = "<group>"; };
 		78D0C35C55E844FAA10DD295 /* GarmentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentDetailView.swift; sourceTree = "<group>"; };
 		7ADD599013CE7666543E844E /* YISUGarmentDetailComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUGarmentDetailComponents.swift; sourceTree = "<group>"; };
@@ -110,10 +118,12 @@
 		7FE3030C543511AE06C0E43A /* YISUAuthScaffold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUAuthScaffold.swift; sourceTree = "<group>"; };
 		84368EB371249E8B6C5DE7C9 /* YISUTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = YISUTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		857B97111652B2592BFB2982 /* YISUComponentState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUComponentState.swift; sourceTree = "<group>"; };
+		89D18F0E054E741DF8ADEC34 /* SupabaseAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseAuthRepository.swift; sourceTree = "<group>"; };
 		89D46BAFE516AA8BD1B69A8A /* YISUBottomNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUBottomNavigation.swift; sourceTree = "<group>"; };
 		8B042293BE06012AAB28F451 /* CurrentWardrobeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWardrobeView.swift; sourceTree = "<group>"; };
 		8FD442C4FDA23B540ADF1689 /* AccountModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModels.swift; sourceTree = "<group>"; };
 		903900986BD01F8F3AA8D918 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		98A3057C6D8A237F646E4E2E /* SupabaseWardrobeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseWardrobeRepository.swift; sourceTree = "<group>"; };
 		995472F01A313D9C9E8EB633 /* YISUCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUCategory.swift; sourceTree = "<group>"; };
 		9FD67F4AA9EC18B83E9CCFD9 /* AuthSubmissionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSubmissionState.swift; sourceTree = "<group>"; };
 		A32828918AE6D675CF62A06E /* SupabaseConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseConfigurationTests.swift; sourceTree = "<group>"; };
@@ -137,6 +147,8 @@
 		EFE9C936381084B65990CA1C /* YISUAuthField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUAuthField.swift; sourceTree = "<group>"; };
 		F2352787C60645DBA33DA9CF /* GarmentDetailTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentDetailTests.swift; sourceTree = "<group>"; };
 		F338FBCC073E7894D4E6256A /* WardrobeSetupStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeSetupStateTests.swift; sourceTree = "<group>"; };
+		F3436BC8D13945FAD5981977 /* SupabaseErrorMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseErrorMapperTests.swift; sourceTree = "<group>"; };
+		F4AD26C971DD37EDA0972F25 /* SupabaseErrorMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseErrorMapper.swift; sourceTree = "<group>"; };
 		F61B251486587E22D03C6EFA /* YISUUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = YISUUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F970D6EDA6C29BCF9AEF5CAE /* YISUButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUButton.swift; sourceTree = "<group>"; };
 		FD5C8A4C3418D6B4C37E1C2C /* WardrobeHomePolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeHomePolicyTests.swift; sourceTree = "<group>"; };
@@ -284,6 +296,14 @@
 			path = Configuration;
 			sourceTree = "<group>";
 		};
+		667913C2183CA51129D8CB83 /* Infrastructure */ = {
+			isa = PBXGroup;
+			children = (
+				F3436BC8D13945FAD5981977 /* SupabaseErrorMapperTests.swift */,
+			);
+			path = Infrastructure;
+			sourceTree = "<group>";
+		};
 		68BB3521C6C1BDF5FB18CD44 /* Account */ = {
 			isa = PBXGroup;
 			children = (
@@ -348,6 +368,7 @@
 			isa = PBXGroup;
 			children = (
 				56E6DD7B7769E7CD2B3619B0 /* Configuration */,
+				F6C0F4C196EA1D94EBE10B4B /* Supabase */,
 			);
 			path = Infrastructure;
 			sourceTree = "<group>";
@@ -381,6 +402,7 @@
 				5BC7F9B6FFF2AF6D9B10429E /* Auth */,
 				61B419DD45D5CB70472001AE /* Configuration */,
 				E383F9F511E7C96B8F920880 /* DesignSystem */,
+				667913C2183CA51129D8CB83 /* Infrastructure */,
 				EC75B95C2F1E5A0FDC90FC5B /* Onboarding */,
 				BDC039FF5656958A1E511321 /* Wardrobe */,
 			);
@@ -416,6 +438,18 @@
 				CFFCCBD4A656823137FB37E2 /* WardrobeHomeTests.swift */,
 			);
 			path = WardrobeAppUITests;
+			sourceTree = "<group>";
+		};
+		F6C0F4C196EA1D94EBE10B4B /* Supabase */ = {
+			isa = PBXGroup;
+			children = (
+				89D18F0E054E741DF8ADEC34 /* SupabaseAuthRepository.swift */,
+				6D45B77C991C3AC93E3AE5A1 /* SupabaseClientFactory.swift */,
+				F4AD26C971DD37EDA0972F25 /* SupabaseErrorMapper.swift */,
+				6B0B77FB37F8803F9B56D380 /* SupabaseProfileRepository.swift */,
+				98A3057C6D8A237F646E4E2E /* SupabaseWardrobeRepository.swift */,
+			);
+			path = Supabase;
 			sourceTree = "<group>";
 		};
 		FAFEEF5A8492B51F8EE69BD6 /* Onboarding */ = {
@@ -571,6 +605,7 @@
 				8E36D96068B8D968286BB481 /* SessionStoreTests.swift in Sources */,
 				F27F3783968E54D4DD12D6E4 /* SmokeTests.swift in Sources */,
 				03EBBD3BC6EC356DBFF0B6E2 /* SupabaseConfigurationTests.swift in Sources */,
+				BDB32DCC40732927C168BE66 /* SupabaseErrorMapperTests.swift in Sources */,
 				02F4D24DBC073C86A6C0456C /* WardrobeHomePolicyTests.swift in Sources */,
 				45F64DFFE9BA32126F59E91D /* WardrobeSetupStateTests.swift in Sources */,
 			);
@@ -595,7 +630,12 @@
 				AD96232CE6C40EBE4DF71AF2 /* SessionStore.swift in Sources */,
 				77809BD98769222D7691972F /* SignInView.swift in Sources */,
 				30EDE1BCBCD52B54C1D61668 /* SignUpView.swift in Sources */,
+				5FF8D4BEFD214325A5A5F0CA /* SupabaseAuthRepository.swift in Sources */,
+				6B27A7FB43349092A283E6FB /* SupabaseClientFactory.swift in Sources */,
 				E5D5A4AD85ED8B0FC10AF6A6 /* SupabaseConfiguration.swift in Sources */,
+				65C75DC9A52055FFA8F9B30C /* SupabaseErrorMapper.swift in Sources */,
+				26D528236AEEA5E93E8E745D /* SupabaseProfileRepository.swift in Sources */,
+				5A6149836D677442BC5EE0F3 /* SupabaseWardrobeRepository.swift in Sources */,
 				7CEF84076B094FD52D234EB9 /* WardrobeHomeView.swift in Sources */,
 				524A1B1FCE81D179F977601B /* WardrobeSampleData.swift in Sources */,
 				31FA8BE31085391AA255BEA4 /* WardrobeSetupState.swift in Sources */,
