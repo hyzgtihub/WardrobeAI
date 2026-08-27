@@ -29,6 +29,7 @@ final class SessionStore {
     private let wardrobeRepository: any WardrobeRepository
     private let sleep: Sleep
     private var lastUser: AuthenticatedUser?
+    private var sessionGeneration = 0
     private var accountLoadGeneration = 0
     private var submissionGeneration = 0
     private nonisolated(unsafe) var eventTask: Task<Void, Never>?
@@ -110,18 +111,18 @@ final class SessionStore {
 
     func updateProfile(_ changes: ProfileChanges) async {
         guard !isSubmitting, case var .ready(account) = state else { return }
-        let generation = accountLoadGeneration
+        let generation = sessionGeneration
         let submission = beginSubmission()
         submissionError = nil
         defer { finishSubmission(submission) }
         do {
             account.profile = try await profileRepository.updateProfile(changes)
-            guard generation == accountLoadGeneration,
-                  case let .ready(currentAccount) = state,
-                  currentAccount.user.id == account.user.id else { return }
+            guard generation == sessionGeneration,
+                  lastUser?.id == account.user.id else { return }
+            accountLoadGeneration += 1
             state = .ready(account)
         } catch {
-            guard generation == accountLoadGeneration else { return }
+            guard generation == sessionGeneration else { return }
             submissionError = accountError(from: error)
         }
     }
@@ -141,6 +142,7 @@ final class SessionStore {
     }
 
     private func loadAccount(for user: AuthenticatedUser) async {
+        if lastUser?.id != user.id { sessionGeneration += 1 }
         accountLoadGeneration += 1
         let generation = accountLoadGeneration
         lastUser = user
@@ -177,6 +179,7 @@ final class SessionStore {
     }
 
     private func clearLocalAccount() {
+        sessionGeneration += 1
         accountLoadGeneration += 1
         submissionGeneration += 1
         lastUser = nil

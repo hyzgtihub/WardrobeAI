@@ -192,8 +192,11 @@ struct SessionStoreTests {
     @Test @MainActor
     func tokenRefreshDuringProfileUpdateStillClearsSubmissionProgress() async {
         let updateGate = AsyncGate()
+        var updatedProfile = UserProfile.fixture
+        updatedProfile.nickname = "Mia after refresh"
         let dependencies = TestAccountDependencies(
             currentUser: .success(.fixture),
+            updatedProfile: .success(updatedProfile),
             updateGate: updateGate
         )
         let store = dependencies.makeStore()
@@ -217,10 +220,11 @@ struct SessionStoreTests {
         await updateTask.value
 
         #expect(!store.isSubmitting)
-        guard case .ready = store.state else {
+        guard case let .ready(account) = store.state else {
             Issue.record("Expected refreshed account to remain ready")
             return
         }
+        #expect(account.profile.nickname == "Mia after refresh")
     }
 }
 
