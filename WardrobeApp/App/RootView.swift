@@ -29,6 +29,9 @@ struct RootView: View {
             DesignSystemGalleryView()
         } else {
             NavigationStack { content }
+                .onChange(of: sessionStore.state) { _, state in
+                    if forcedScreen == nil, state == .signedOut { route = .signIn }
+                }
         }
     }
 
@@ -60,6 +63,7 @@ struct RootView: View {
                 onBack: { route = .signIn },
                 onCreated: { email, password in
                     await sessionStore.signUp(email: email, password: password)
+                    if sessionStore.submissionError == nil { route = .signIn }
                     return sessionStore.submissionError
                 }
             )

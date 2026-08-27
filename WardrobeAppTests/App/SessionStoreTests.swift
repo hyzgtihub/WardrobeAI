@@ -88,6 +88,26 @@ struct SessionStoreTests {
     }
 
     @Test @MainActor
+    func signOutInvalidatesAnInFlightAccountLoad() async {
+        let fetchGate = AsyncGate()
+        let dependencies = TestAccountDependencies(
+            currentUser: .success(.fixture),
+            fetchGate: fetchGate
+        )
+        let store = dependencies.makeStore()
+        let restoreTask = Task { await store.restore() }
+        for _ in 0..<100 where dependencies.profile.fetchCount == 0 {
+            await Task.yield()
+        }
+
+        await store.signOut()
+        await fetchGate.release()
+        await restoreTask.value
+
+        #expect(store.state == .signedOut)
+    }
+
+    @Test @MainActor
     func profileUpdateReplacesReadyProfile() async {
         var updatedProfile = UserProfile.fixture
         updatedProfile.nickname = "Mia"
@@ -109,6 +129,35 @@ struct SessionStoreTests {
             return
         }
         #expect(account.profile.nickname == "Mia")
+    }
+
+    @Test @MainActor
+    func profileUpdateShowsProgressAndSuppressesDuplicateSubmissions() async {
+        let updateGate = AsyncGate()
+        let dependencies = TestAccountDependencies(
+            currentUser: .success(.fixture),
+            updateGate: updateGate
+        )
+        let store = dependencies.makeStore()
+        await store.restore()
+        let changes = ProfileChanges(
+            nickname: "Mia",
+            languageCode: "zh-Hans",
+            notificationsEnabled: true
+        )
+
+        let firstUpdate = Task { await store.updateProfile(changes) }
+        for _ in 0..<100 where dependencies.profile.updateCount == 0 {
+            await Task.yield()
+        }
+        #expect(store.isSubmitting)
+
+        await store.updateProfile(changes)
+        #expect(dependencies.profile.updateCount == 1)
+
+        await updateGate.release()
+        await firstUpdate.value
+        #expect(!store.isSubmitting)
     }
 }
 
@@ -148,23 +197,59 @@ private final class ProfileRepositorySpy: ProfileRepository, @unchecked Sendable
     private let queue = DispatchQueue(label: "ProfileRepositorySpy")
     private var fetchResults: [Result<UserProfile, AccountError>]
     private let updatedProfile: Result<UserProfile, AccountError>
-    private(set) var fetchCount = 0
+    private let fetchGate: AsyncGate?
+    private let updateGate: AsyncGate?
+    private var storedFetchCount = 0
+    private var storedUpdateCount = 0
 
-    init(fetchResults: [Result<UserProfile, AccountError>], updatedProfile: Result<UserProfile, AccountError>) {
+    var fetchCount: Int { queue.sync { storedFetchCount } }
+    var updateCount: Int { queue.sync { storedUpdateCount } }
+
+    init(
+        fetchResults: [Result<UserProfile, AccountError>],
+        updatedProfile: Result<UserProfile, AccountError>,
+        fetchGate: AsyncGate?,
+        updateGate: AsyncGate?
+    ) {
         self.fetchResults = fetchResults
         self.updatedProfile = updatedProfile
+        self.fetchGate = fetchGate
+        self.updateGate = updateGate
     }
 
     func fetchProfile() async throws -> UserProfile {
-        try queue.sync {
-            fetchCount += 1
+        let result = queue.sync {
+            storedFetchCount += 1
             let result = fetchResults.count > 1 ? fetchResults.removeFirst() : fetchResults[0]
-            return try result.get()
+            return result
         }
+        if let fetchGate { await fetchGate.wait() }
+        return try result.get()
     }
 
     func updateProfile(_ changes: ProfileChanges) async throws -> UserProfile {
-        try updatedProfile.get()
+        queue.sync { storedUpdateCount += 1 }
+        if let updateGate { await updateGate.wait() }
+        return try updatedProfile.get()
+    }
+}
+
+private actor AsyncGate {
+    private var isOpen = false
+    private var waiters: [CheckedContinuation<Void, Never>] = []
+
+    func wait() async {
+        guard !isOpen else { return }
+        await withCheckedContinuation { continuation in
+            waiters.append(continuation)
+        }
+    }
+
+    func release() {
+        isOpen = true
+        let pending = waiters
+        waiters.removeAll()
+        pending.forEach { $0.resume() }
     }
 }
 
@@ -200,7 +285,9 @@ private final class TestAccountDependencies {
         signOut: Result<Void, AccountError> = .success(()),
         profileResults: [Result<UserProfile, AccountError>] = [.success(.fixture)],
         updatedProfile: Result<UserProfile, AccountError> = .success(.fixture),
-        wardrobe: Result<WardrobeIdentity, AccountError> = .success(.fixture)
+        wardrobe: Result<WardrobeIdentity, AccountError> = .success(.fixture),
+        fetchGate: AsyncGate? = nil,
+        updateGate: AsyncGate? = nil
     ) {
         auth = AuthRepositorySpy(
             currentUser: currentUser,
@@ -208,7 +295,12 @@ private final class TestAccountDependencies {
             signUp: signUp,
             signOut: signOut
         )
-        profile = ProfileRepositorySpy(fetchResults: profileResults, updatedProfile: updatedProfile)
+        profile = ProfileRepositorySpy(
+            fetchResults: profileResults,
+            updatedProfile: updatedProfile,
+            fetchGate: fetchGate,
+            updateGate: updateGate
+        )
         self.wardrobe = WardrobeRepositorySpy(result: wardrobe)
     }
 

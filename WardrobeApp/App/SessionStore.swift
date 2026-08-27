@@ -29,6 +29,7 @@ final class SessionStore {
     private let wardrobeRepository: any WardrobeRepository
     private let sleep: Sleep
     private var lastUser: AuthenticatedUser?
+    private var accountLoadGeneration = 0
     private nonisolated(unsafe) var eventTask: Task<Void, Never>?
 
     init(
@@ -107,8 +108,10 @@ final class SessionStore {
     }
 
     func updateProfile(_ changes: ProfileChanges) async {
-        guard case var .ready(account) = state else { return }
+        guard !isSubmitting, case var .ready(account) = state else { return }
+        isSubmitting = true
         submissionError = nil
+        defer { isSubmitting = false }
         do {
             account.profile = try await profileRepository.updateProfile(changes)
             state = .ready(account)
@@ -132,6 +135,8 @@ final class SessionStore {
     }
 
     private func loadAccount(for user: AuthenticatedUser) async {
+        accountLoadGeneration += 1
+        let generation = accountLoadGeneration
         lastUser = user
         state = .loadingAccount(user)
 
@@ -144,10 +149,12 @@ final class SessionStore {
                     profile: profile,
                     defaultWardrobe: wardrobe
                 )
+                guard generation == accountLoadGeneration else { return }
                 state = .ready(account)
                 submissionError = nil
                 return
             } catch {
+                guard generation == accountLoadGeneration else { return }
                 let accountError = accountError(from: error)
                 guard accountError == .accountDataUnavailable else {
                     state = .failed(sessionFailure(from: accountError))
@@ -164,6 +171,7 @@ final class SessionStore {
     }
 
     private func clearLocalAccount() {
+        accountLoadGeneration += 1
         lastUser = nil
         state = .signedOut
         isSubmitting = false
