@@ -188,6 +188,40 @@ struct SessionStoreTests {
         #expect(!store.isSubmitting)
         #expect(store.submissionError == nil)
     }
+
+    @Test @MainActor
+    func tokenRefreshDuringProfileUpdateStillClearsSubmissionProgress() async {
+        let updateGate = AsyncGate()
+        let dependencies = TestAccountDependencies(
+            currentUser: .success(.fixture),
+            updateGate: updateGate
+        )
+        let store = dependencies.makeStore()
+        await store.restore()
+        let changes = ProfileChanges(
+            nickname: "Mia after refresh",
+            languageCode: "zh-Hans",
+            notificationsEnabled: true
+        )
+
+        let updateTask = Task { await store.updateProfile(changes) }
+        for _ in 0..<100 where dependencies.profile.updateCount == 0 {
+            await Task.yield()
+        }
+        dependencies.auth.send(.tokenRefreshed(.fixture))
+        for _ in 0..<100 where dependencies.profile.fetchCount < 2 {
+            await Task.yield()
+        }
+
+        await updateGate.release()
+        await updateTask.value
+
+        #expect(!store.isSubmitting)
+        guard case .ready = store.state else {
+            Issue.record("Expected refreshed account to remain ready")
+            return
+        }
+    }
 }
 
 private final class AuthRepositorySpy: AuthRepository, @unchecked Sendable {

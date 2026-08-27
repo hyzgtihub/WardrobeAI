@@ -30,6 +30,7 @@ final class SessionStore {
     private let sleep: Sleep
     private var lastUser: AuthenticatedUser?
     private var accountLoadGeneration = 0
+    private var submissionGeneration = 0
     private nonisolated(unsafe) var eventTask: Task<Void, Never>?
 
     init(
@@ -71,9 +72,9 @@ final class SessionStore {
 
     func signIn(email: String, password: String) async {
         guard !isSubmitting else { return }
-        isSubmitting = true
+        let submission = beginSubmission()
         submissionError = nil
-        defer { isSubmitting = false }
+        defer { finishSubmission(submission) }
 
         do {
             let user = try await authRepository.signIn(email: email, password: password)
@@ -86,9 +87,9 @@ final class SessionStore {
 
     func signUp(email: String, password: String) async {
         guard !isSubmitting else { return }
-        isSubmitting = true
+        let submission = beginSubmission()
         submissionError = nil
-        defer { isSubmitting = false }
+        defer { finishSubmission(submission) }
 
         do {
             let user = try await authRepository.signUp(email: email, password: password)
@@ -110,11 +111,9 @@ final class SessionStore {
     func updateProfile(_ changes: ProfileChanges) async {
         guard !isSubmitting, case var .ready(account) = state else { return }
         let generation = accountLoadGeneration
-        isSubmitting = true
+        let submission = beginSubmission()
         submissionError = nil
-        defer {
-            if generation == accountLoadGeneration { isSubmitting = false }
-        }
+        defer { finishSubmission(submission) }
         do {
             account.profile = try await profileRepository.updateProfile(changes)
             guard generation == accountLoadGeneration,
@@ -179,10 +178,22 @@ final class SessionStore {
 
     private func clearLocalAccount() {
         accountLoadGeneration += 1
+        submissionGeneration += 1
         lastUser = nil
         state = .signedOut
         isSubmitting = false
         submissionError = nil
+    }
+
+    private func beginSubmission() -> Int {
+        submissionGeneration += 1
+        isSubmitting = true
+        return submissionGeneration
+    }
+
+    private func finishSubmission(_ submission: Int) {
+        guard submission == submissionGeneration else { return }
+        isSubmitting = false
     }
 
     private func accountError(from error: any Error) -> AccountError {
