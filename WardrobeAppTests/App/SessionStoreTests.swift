@@ -159,6 +159,35 @@ struct SessionStoreTests {
         await firstUpdate.value
         #expect(!store.isSubmitting)
     }
+
+    @Test @MainActor
+    func signOutInvalidatesAnInFlightProfileUpdate() async {
+        let updateGate = AsyncGate()
+        let dependencies = TestAccountDependencies(
+            currentUser: .success(.fixture),
+            updateGate: updateGate
+        )
+        let store = dependencies.makeStore()
+        await store.restore()
+        let changes = ProfileChanges(
+            nickname: "Former session",
+            languageCode: "zh-Hans",
+            notificationsEnabled: true
+        )
+
+        let updateTask = Task { await store.updateProfile(changes) }
+        for _ in 0..<100 where dependencies.profile.updateCount == 0 {
+            await Task.yield()
+        }
+
+        await store.signOut()
+        await updateGate.release()
+        await updateTask.value
+
+        #expect(store.state == .signedOut)
+        #expect(!store.isSubmitting)
+        #expect(store.submissionError == nil)
+    }
 }
 
 private final class AuthRepositorySpy: AuthRepository, @unchecked Sendable {

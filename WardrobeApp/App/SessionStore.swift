@@ -109,13 +109,20 @@ final class SessionStore {
 
     func updateProfile(_ changes: ProfileChanges) async {
         guard !isSubmitting, case var .ready(account) = state else { return }
+        let generation = accountLoadGeneration
         isSubmitting = true
         submissionError = nil
-        defer { isSubmitting = false }
+        defer {
+            if generation == accountLoadGeneration { isSubmitting = false }
+        }
         do {
             account.profile = try await profileRepository.updateProfile(changes)
+            guard generation == accountLoadGeneration,
+                  case let .ready(currentAccount) = state,
+                  currentAccount.user.id == account.user.id else { return }
             state = .ready(account)
         } catch {
+            guard generation == accountLoadGeneration else { return }
             submissionError = accountError(from: error)
         }
     }
