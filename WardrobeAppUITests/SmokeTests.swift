@@ -2,6 +2,17 @@ import XCTest
 
 final class SmokeTests: XCTestCase {
     @MainActor
+    func testP01ExposesAnimatedBrandMark() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-ui-auth-scenario", "signed-out"]
+        app.launch()
+
+        let brandMark = app.images["brand.logo"]
+        XCTAssertTrue(brandMark.waitForExistence(timeout: 3))
+        XCTAssertEqual(brandMark.label, "衣序品牌标志")
+    }
+
+    @MainActor
     func testSuccessfulSignInOpensWardrobeHome() {
         let app = XCUIApplication()
         app.launchArguments += ["-ui-auth-scenario", "login-success"]
