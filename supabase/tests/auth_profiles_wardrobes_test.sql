@@ -3,7 +3,7 @@ begin;
 create extension if not exists pgtap with schema extensions;
 set search_path = public, extensions;
 
-select plan(14);
+select plan(15);
 
 select has_table('public', 'profiles', 'profiles exists');
 select has_table('public', 'wardrobes', 'wardrobes exists');
@@ -89,6 +89,17 @@ select set_config('request.jwt.claim.role', 'authenticated', true);
 
 select is((select count(*) from public.profiles), 1::bigint, 'user A sees only own profile');
 select is((select count(*) from public.wardrobes), 1::bigint, 'user A sees only own wardrobe');
+with changed as (
+  update public.profiles
+  set nickname = 'updated by owner'
+  where id = '00000000-0000-0000-0000-000000000001'
+  returning nickname
+)
+select is(
+  (select nickname from changed),
+  'updated by owner'::text,
+  'user A can update own profile'
+);
 with changed as (
   update public.profiles
   set nickname = 'forbidden'

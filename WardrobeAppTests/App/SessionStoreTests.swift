@@ -129,6 +129,7 @@ struct SessionStoreTests {
             return
         }
         #expect(account.profile.nickname == "Mia")
+        #expect(dependencies.profile.updatedUserID == AuthenticatedUser.fixture.id)
     }
 
     @Test @MainActor
@@ -268,9 +269,11 @@ private final class ProfileRepositorySpy: ProfileRepository, @unchecked Sendable
     private let updateGate: AsyncGate?
     private var storedFetchCount = 0
     private var storedUpdateCount = 0
+    private var storedUpdatedUserID: UUID?
 
     var fetchCount: Int { queue.sync { storedFetchCount } }
     var updateCount: Int { queue.sync { storedUpdateCount } }
+    var updatedUserID: UUID? { queue.sync { storedUpdatedUserID } }
 
     init(
         fetchResults: [Result<UserProfile, AccountError>],
@@ -294,8 +297,11 @@ private final class ProfileRepositorySpy: ProfileRepository, @unchecked Sendable
         return try result.get()
     }
 
-    func updateProfile(_ changes: ProfileChanges) async throws -> UserProfile {
-        queue.sync { storedUpdateCount += 1 }
+    func updateProfile(_ changes: ProfileChanges, for userID: UUID) async throws -> UserProfile {
+        queue.sync {
+            storedUpdateCount += 1
+            storedUpdatedUserID = userID
+        }
         if let updateGate { await updateGate.wait() }
         return try updatedProfile.get()
     }

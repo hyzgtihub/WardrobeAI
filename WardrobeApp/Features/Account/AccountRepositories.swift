@@ -25,7 +25,7 @@ protocol AuthRepository: Sendable {
 
 protocol ProfileRepository: Sendable {
     func fetchProfile() async throws -> UserProfile
-    func updateProfile(_ changes: ProfileChanges) async throws -> UserProfile
+    func updateProfile(_ changes: ProfileChanges, for userID: UUID) async throws -> UserProfile
 }
 
 protocol WardrobeRepository: Sendable {

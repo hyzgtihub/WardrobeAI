@@ -116,7 +116,7 @@ final class SessionStore {
         submissionError = nil
         defer { finishSubmission(submission) }
         do {
-            account.profile = try await profileRepository.updateProfile(changes)
+            account.profile = try await profileRepository.updateProfile(changes, for: account.user.id)
             guard generation == sessionGeneration,
                   lastUser?.id == account.user.id else { return }
             accountLoadGeneration += 1

@@ -82,7 +82,7 @@ private actor UITestProfileRepository: ProfileRepository {
 
     func fetchProfile() async throws -> UserProfile { profile }
 
-    func updateProfile(_ changes: ProfileChanges) async throws -> UserProfile {
+    func updateProfile(_ changes: ProfileChanges, for userID: UUID) async throws -> UserProfile {
         profile.nickname = changes.nickname
         profile.languageCode = changes.languageCode
         profile.notificationsEnabled = changes.notificationsEnabled
