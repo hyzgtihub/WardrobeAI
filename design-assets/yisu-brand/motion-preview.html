@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>衣序品牌与导航动效预览</title>
+  <style>
+    :root { --brand:#7666B5; --selected:#8E7BC7; --soft:#C8BDEB; --ink:#35313D; --muted:#9891A3; --bg:#F7F3FC; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; display:grid; place-items:center; background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif; }
+    main { width:min(920px,94vw); padding:40px; }
+    .stage { display:grid; place-items:center; min-height:300px; background:#fff; border-radius:32px; box-shadow:0 18px 55px rgba(64,48,96,.10); }
+    .logo { width:190px; overflow:visible; }
+    .logo path { fill:none; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:420; stroke-dashoffset:420; animation:draw 1.15s cubic-bezier(.22,1,.36,1) forwards; }
+    .logo .hanger { stroke:var(--brand); stroke-width:12; }
+    .logo .order-one { stroke:var(--soft); stroke-width:12; animation-delay:.55s; }
+    .logo .order-two { stroke:var(--selected); stroke-width:12; animation-delay:.72s; }
+    .logo { animation:settle .42s cubic-bezier(.34,1.56,.64,1) 1.08s both; }
+    @keyframes draw { to { stroke-dashoffset:0; } }
+    @keyframes settle { from { transform:translateY(7px) scale(.96); opacity:.75; } to { transform:none; opacity:1; } }
+    .nav { margin-top:28px; display:grid; grid-template-columns:repeat(3,1fr); background:#fff; border-radius:28px; padding:12px 20px max(12px,env(safe-area-inset-bottom)); box-shadow:0 16px 48px rgba(64,48,96,.10); }
+    button { position:relative; min-height:76px; border:0; background:transparent; color:var(--muted); font:500 13px inherit; display:grid; justify-items:center; align-content:center; gap:5px; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+    button svg { width:32px; height:32px; overflow:visible; }
+    button path,button rect,button circle { fill:none; stroke:currentColor; stroke-width:2.3; stroke-linecap:round; stroke-linejoin:round; transition:transform .28s cubic-bezier(.34,1.56,.64,1),fill .2s,stroke .2s; transform-origin:center; }
+    button::before { content:""; position:absolute; width:48px; height:48px; top:5px; border-radius:50%; background:#F0ECFA; transform:scale(0); transition:transform .28s cubic-bezier(.34,1.56,.64,1); z-index:0; }
+    button svg,button span { position:relative; z-index:1; }
+    button[aria-selected="true"] { color:var(--brand); }
+    button[aria-selected="true"]::before { transform:scale(1); }
+    button[aria-selected="true"] svg { animation:pop .32s cubic-bezier(.34,1.56,.64,1); }
+    button.add[aria-selected="true"] .plus { transform:rotate(90deg); }
+    button.wardrobe[aria-selected="true"] .doors { transform:scaleX(.86); }
+    button.profile[aria-selected="true"] .head { fill:var(--soft); transform:translateY(-2px); }
+    @keyframes pop { 50% { transform:translateY(-3px) scale(1.08); } }
+    .hint { text-align:center; color:#746E7D; font-size:13px; margin-top:14px; }
+    @media (prefers-reduced-motion:reduce) { *,*::before { animation:none!important; transition:none!important; } .logo path { stroke-dashoffset:0; } }
+  </style>
+</head>
+<body>
+<main>
+  <section class="stage" aria-label="衣序动态标志">
+    <svg class="logo" viewBox="0 0 256 256" role="img" aria-label="衣序标志">
+      <path class="hanger" d="M128 58C128 46.954 136.954 38 148 38C159.046 38 168 46.954 168 58C168 68.75 159.515 77.523 148.879 77.982C137.378 78.478 128 87.628 128 99V104M128 104L63 151C54.04 157.477 58.622 171.63 69.68 171.63H186.32C197.378 171.63 201.96 157.477 193 151L128 104Z"/>
+      <path class="order-one" d="M82 184H174"/>
+      <path class="order-two" d="M98 207H158"/>
+    </svg>
+  </section>
+  <nav class="nav" aria-label="主导航">
+    <button class="wardrobe" aria-selected="true"><svg viewBox="-30 -32 60 72"><rect x="-25" y="-23" width="50" height="58" rx="9"/><path class="doors" d="M0-23V35M-17 3H-11M11 3H17"/></svg><span>衣橱</span></button>
+    <button class="add" aria-selected="false"><svg viewBox="-38 -38 76 76"><path d="M0-22C0-28 5-33 11-33C17-33 22-28 22-22C22-16 17-11 11-11C5-11 0-6 0 0M0 0L-29 21C-33 24-31 31-26 31H26C31 31 33 24 29 21L0 0Z"/><path class="plus" d="M25-8V10M16 1H34"/></svg><span>添加衣物</span></button>
+    <button class="profile" aria-selected="false"><svg viewBox="-36 -36 72 76"><circle class="head" cy="-14" r="13"/><path d="M-28 31C-25 11-15 2 0 2C15 2 25 11 28 31"/></svg><span>我的</span></button>
+  </nav>
+  <p class="hint">点击底部导航查看选中 / 非选中状态动画</p>
+</main>
+<script>
+  document.querySelectorAll('button').forEach(button => button.addEventListener('click', () => {
+    document.querySelectorAll('button').forEach(item => item.setAttribute('aria-selected','false'));
+    button.setAttribute('aria-selected','true');
+  }));
+</script>
+</body>
+</html>

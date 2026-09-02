@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>衣序 YISU V2 品牌与导航动效</title>
+  <link rel="stylesheet" href="tokens.css">
+  <style>
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:var(--yisu-canvas);color:var(--yisu-ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC",sans-serif}.page{width:min(1040px,calc(100% - 32px));margin:auto;padding:56px 0}.eyebrow{margin:0 0 10px;color:var(--yisu-brand-600);font:600 12px/1.4 "Avenir Next",sans-serif;letter-spacing:.16em}.heading{margin:0;font-size:clamp(28px,4vw,46px);line-height:1.12;letter-spacing:-.025em}.lead{max-width:580px;margin:16px 0 32px;color:var(--yisu-text-secondary);font-size:15px;line-height:1.7}.grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:20px}.card{position:relative;overflow:hidden;background:rgba(255,255,255,.86);border:1px solid rgba(89,77,133,.10);border-radius:32px;box-shadow:0 22px 70px rgba(58,45,82,.09)}.brand-stage{min-height:470px;display:grid;place-items:center;background:radial-gradient(circle at 50% 48%,rgba(216,208,234,.42),transparent 36%),var(--yisu-surface)}.brand-stage::after{content:"256 / 8pt / 32pt clear space";position:absolute;bottom:24px;color:var(--yisu-text-secondary);font:500 11px "Avenir Next",sans-serif;letter-spacing:.08em}.mark{width:224px;height:224px;overflow:visible}.mark path{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:420;stroke-dashoffset:420}.mark .hook,.mark .body{stroke:var(--yisu-brand-700);stroke-width:8}.mark .collar{stroke:var(--yisu-brand-500);stroke-width:8}.mark .order{stroke:var(--yisu-brand-200);stroke-width:8}.run .hook{animation:draw 360ms var(--yisu-ease-standard) forwards}.run .body{animation:draw 480ms var(--yisu-ease-standard) 120ms forwards}.run .collar{animation:draw 360ms var(--yisu-ease-standard) 280ms forwards}.run .order{animation:draw 320ms var(--yisu-ease-standard) 440ms forwards}.run{animation:resolve 240ms var(--yisu-ease-standard) 720ms both}@keyframes draw{to{stroke-dashoffset:0}}@keyframes resolve{from{transform:scale(.985);filter:saturate(.88)}to{transform:scale(1);filter:saturate(1)}}.side{padding:28px}.side h2{margin:0 0 6px;font-size:18px}.side p{margin:0 0 24px;color:var(--yisu-text-secondary);font-size:13px;line-height:1.6}.swatches{display:grid;gap:10px}.swatch{display:grid;grid-template-columns:38px 1fr auto;align-items:center;gap:12px;padding:10px;border-radius:14px;background:var(--yisu-canvas);font-size:12px}.chip{width:38px;height:38px;border-radius:12px;border:1px solid rgba(41,38,48,.08)}.code{color:var(--yisu-text-secondary);font-family:"SFMono-Regular",monospace}.replay{width:100%;min-height:44px;margin-top:24px;border:0;border-radius:14px;background:var(--yisu-brand-700);color:white;font:600 14px inherit;cursor:pointer;transition:opacity var(--yisu-motion-instant),transform var(--yisu-motion-instant)}.replay:hover{opacity:.92}.replay:active{transform:scale(.985)}.nav-card{margin-top:20px;padding:24px}.nav-card h2{margin:0 0 4px;font-size:18px}.nav-card>p{margin:0 0 24px;color:var(--yisu-text-secondary);font-size:13px}.nav{display:grid;grid-template-columns:repeat(3,1fr);min-height:92px;padding:8px 20px max(8px,env(safe-area-inset-bottom));border:1px solid rgba(89,77,133,.09);border-radius:var(--yisu-radius-nav);background:rgba(255,255,255,.92);box-shadow:0 18px 55px rgba(58,45,82,.10)}.tab{position:relative;min-width:44px;min-height:60px;border:0;background:transparent;color:var(--yisu-icon-inactive);font:500 11px inherit;display:grid;place-content:center;justify-items:center;gap:4px;cursor:pointer}.tab::before{content:"";position:absolute;top:4px;width:32px;height:32px;border-radius:50%;background:var(--yisu-brand-100);transform:scale(.78);opacity:0;transition:transform var(--yisu-motion-fast) var(--yisu-ease-emphasized),opacity var(--yisu-motion-fast)}.tab svg{position:relative;width:24px;height:24px;overflow:visible;z-index:1}.tab svg>*{fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;transition:transform var(--yisu-motion-fast) var(--yisu-ease-emphasized),fill var(--yisu-motion-fast),stroke-width var(--yisu-motion-fast);transform-origin:center}.tab span{position:relative;z-index:1}.tab[aria-selected="true"]{color:var(--yisu-brand-700)}.tab[aria-selected="true"]::before{transform:scale(1);opacity:1}.tab[aria-selected="true"] svg>*{stroke-width:2}.tab.wardrobe[aria-selected="true"] .garment{transform:translateY(-1px)}.tab.add[aria-selected="true"] .plus-v{transform:scaleY(1)}.tab.add .plus-v{transform:scaleY(.12)}.tab.profile[aria-selected="true"] .head{fill:var(--yisu-brand-200);transform:translateY(-1px)}.specs{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.specs span{padding:7px 10px;border-radius:999px;background:var(--yisu-brand-100);color:var(--yisu-brand-700);font:500 11px "Avenir Next",sans-serif}.tab:focus-visible,.replay:focus-visible{outline:3px solid var(--yisu-brand-200);outline-offset:3px}@media(max-width:760px){.page{padding:32px 0}.grid{grid-template-columns:1fr}.brand-stage{min-height:360px}.nav-card{padding:18px}.nav{padding-inline:8px}}@media(prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition:none!important}.mark path{stroke-dashoffset:0}}
+  </style>
+</head>
+<body>
+<main class="page">
+  <p class="eyebrow">YISU · QUIET LUXURY WARDROBE</p>
+  <h1 class="heading">衣物被看见，也被温柔地归序。</h1>
+  <p class="lead">V2 将衣架、衣领和秩序层叠收敛成一个克制的品牌符号。女性感来自曲率、留白和材质感，而不是具象装饰。</p>
+  <div class="grid">
+    <section class="card brand-stage" aria-label="衣序动态品牌标志">
+      <svg id="mark" class="mark run" viewBox="0 0 256 256" role="img" aria-label="衣序品牌标志">
+        <path class="hook" d="M128 73C128 54.222 142.327 42 158 42C175.673 42 187 54.402 187 68.5C187 82.188 176.154 93 162.5 93H156.5C140.76 93 128 105.76 128 121.5V124"/>
+        <path class="body" d="M128 124L67.81 158.195C57.321 164.155 61.548 180.143 73.612 180.143H182.388C194.452 180.143 198.679 164.155 188.19 158.195L128 124Z"/>
+        <path class="collar" d="M91 158C104.445 149.02 116.779 144.53 128 144.53C139.221 144.53 151.555 149.02 165 158"/>
+        <path class="order" d="M92 180.143C102.667 190.714 114.667 196 128 196C141.333 196 153.333 190.714 164 180.143"/>
+      </svg>
+    </section>
+    <aside class="card side">
+      <h2>Color Tokens</h2><p>深葡萄紫提供稳定识别；雾紫承担柔和层次，避免传统女性产品中过度粉色化。</p>
+      <div class="swatches">
+        <div class="swatch"><i class="chip" style="background:#594D85"></i><b>Brand 700</b><span class="code">#594D85</span></div>
+        <div class="swatch"><i class="chip" style="background:#8B7DB4"></i><b>Brand 500</b><span class="code">#8B7DB4</span></div>
+        <div class="swatch"><i class="chip" style="background:#D8D0EA"></i><b>Brand 200</b><span class="code">#D8D0EA</span></div>
+        <div class="swatch"><i class="chip" style="background:#FAF8FB"></i><b>Canvas</b><span class="code">#FAF8FB</span></div>
+        <div class="swatch"><i class="chip" style="background:#292630"></i><b>Ink</b><span class="code">#292630</span></div>
+      </div>
+      <button class="replay" type="button" id="replay">重新播放 Logo 动效</button>
+    </aside>
+  </div>
+  <section class="card nav-card">
+    <h2>Bottom Navigation</h2><p>点击切换状态。颜色、局部填充和形态共同表达选中状态，不仅依赖颜色。</p>
+    <nav class="nav" aria-label="主导航" role="tablist">
+      <button class="tab wardrobe" type="button" role="tab" aria-selected="true"><svg viewBox="-12 -12 24 24" aria-hidden="true"><path d="M-8.5-8.5H8.5C9.881-8.5 11-7.381 11-6V9C11 10.105 10.105 11 9 11H-9C-10.105 11-11 10.105-11 9V-6C-11-7.381-9.881-8.5-8.5-8.5Z"/><path d="M0-8.5V11M-6.5-2H-4.75M4.75-2H6.5"/><path class="garment" d="M-5.5 6.5C-2.3 4.3 2.3 4.3 5.5 6.5"/></svg><span>衣橱</span></button>
+      <button class="tab add" type="button" role="tab" aria-selected="false"><svg viewBox="-12 -12 24 24" aria-hidden="true"><path d="M0-8.5C0-10.157 1.343-11.5 3-11.5C4.657-11.5 6-10.157 6-8.5C6-6.843 4.657-5.5 3-5.5C1.343-5.5 0-4.157 0-2.5V-1M0-1L-9.5 5.4C-11.09 6.471-10.332 8.95-8.415 8.95H8.415C10.332 8.95 11.09 6.471 9.5 5.4L0-1Z"/><path class="plus-v" d="M7-7V-1"/><path d="M4-4H10"/></svg><span>添加衣物</span></button>
+      <button class="tab profile" type="button" role="tab" aria-selected="false"><svg viewBox="-12 -12 24 24" aria-hidden="true"><circle class="head" cy="-5" r="4.25"/><path d="M-9 10C-8.25 3.8-4.85.5 0 .5C4.85.5 8.25 3.8 9 10"/></svg><span>我的</span></button>
+    </nav>
+    <div class="specs"><span>24pt icon</span><span>44pt touch</span><span>1.75 / 2pt stroke</span><span>240ms state</span><span>4pt label gap</span><span>Reduce Motion</span></div>
+  </section>
+</main>
+<script>
+  const mark=document.querySelector('#mark');document.querySelector('#replay').addEventListener('click',()=>{mark.classList.remove('run');void mark.offsetWidth;mark.classList.add('run')});document.querySelectorAll('.tab').forEach(tab=>tab.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(item=>item.setAttribute('aria-selected','false'));tab.setAttribute('aria-selected','true')}));
+</script>
+</body>
+</html>

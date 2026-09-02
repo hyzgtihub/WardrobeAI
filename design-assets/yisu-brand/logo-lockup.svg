@@ -1,0 +1,12 @@
+<svg width="560" height="180" viewBox="0 0 560 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>衣序 YISU 横向组合标</title>
+  <g transform="translate(20 10) scale(.625)">
+    <path d="M128 58C128 46.954 136.954 38 148 38C159.046 38 168 46.954 168 58C168 68.75 159.515 77.523 148.879 77.982C137.378 78.478 128 87.628 128 99V104" stroke="#7666B5" stroke-width="12" stroke-linecap="round"/>
+    <path d="M128 104L63 151C54.04 157.477 58.622 171.63 69.68 171.63H186.32C197.378 171.63 201.96 157.477 193 151L128 104Z" stroke="#7666B5" stroke-width="12" stroke-linejoin="round"/>
+    <path d="M82 184H174" stroke="#C8BDEB" stroke-width="12" stroke-linecap="round"/>
+    <path d="M98 207H158" stroke="#8E7BC7" stroke-width="12" stroke-linecap="round"/>
+  </g>
+  <text x="200" y="91" fill="#35313D" font-size="52" font-weight="700" font-family="PingFang SC, Noto Sans CJK SC, sans-serif">衣序</text>
+  <text x="202" y="128" fill="#7666B5" font-size="20" font-weight="600" letter-spacing="6" font-family="Avenir Next, sans-serif">YISU</text>
+  <text x="334" y="127" fill="#746E7D" font-size="17" font-family="PingFang SC, sans-serif">让每件衣服，都井然有序</text>
+</svg>

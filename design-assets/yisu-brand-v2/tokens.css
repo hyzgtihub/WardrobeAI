@@ -1,0 +1,21 @@
+:root {
+  --yisu-brand-700: #594d85;
+  --yisu-brand-600: #6f619d;
+  --yisu-brand-500: #8b7db4;
+  --yisu-brand-200: #d8d0ea;
+  --yisu-brand-100: #eeeaf6;
+  --yisu-canvas: #faf8fb;
+  --yisu-surface: #ffffff;
+  --yisu-ink: #292630;
+  --yisu-text-secondary: #716b78;
+  --yisu-icon-inactive: #96909d;
+  --yisu-border: #e5e0eb;
+  --yisu-icon-size: 24px;
+  --yisu-touch-target-ios: 44px;
+  --yisu-radius-nav: 28px;
+  --yisu-motion-instant: 120ms;
+  --yisu-motion-fast: 240ms;
+  --yisu-motion-brand: 960ms;
+  --yisu-ease-standard: cubic-bezier(.22, 1, .36, 1);
+  --yisu-ease-emphasized: cubic-bezier(.34, 1.32, .64, 1);
+}

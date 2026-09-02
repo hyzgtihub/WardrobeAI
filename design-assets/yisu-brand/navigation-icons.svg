@@ -1,0 +1,53 @@
+<svg width="720" height="320" viewBox="0 0 720 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>衣序底部导航图标状态</title>
+  <style>
+    .label { font: 500 16px 'PingFang SC', sans-serif; text-anchor: middle; }
+    .caption { font: 400 13px 'PingFang SC', sans-serif; text-anchor: middle; fill: #746E7D; }
+    .off { stroke: #9891A3; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .on { stroke: #7666B5; stroke-width: 2.75; stroke-linecap: round; stroke-linejoin: round; }
+  </style>
+
+  <g transform="translate(100 54)">
+    <rect x="-25" y="-23" width="50" height="58" rx="9" class="off"/>
+    <path d="M0-23V35M-17 3H-11M11 3H17" class="off"/>
+    <text y="68" class="label" fill="#746E7D">衣橱</text>
+    <text y="93" class="caption">未选中</text>
+  </g>
+  <g transform="translate(260 54)">
+    <rect x="-25" y="-23" width="50" height="58" rx="9" fill="#F0ECFA" class="on"/>
+    <path d="M0-23V35M-17 3H-11M11 3H17" class="on"/>
+    <path d="M-18 24C-7 18 7 18 18 24" stroke="#C8BDEB" stroke-width="4" stroke-linecap="round"/>
+    <text y="68" class="label" fill="#7666B5">衣橱</text>
+    <text y="93" class="caption">选中</text>
+  </g>
+
+  <g transform="translate(430 54)">
+    <path d="M0-22C0-28 5-33 11-33C17-33 22-28 22-22C22-16 17-11 11-11C5-11 0-6 0 0" class="off"/>
+    <path d="M0 0L-29 21C-33 24-31 31-26 31H26C31 31 33 24 29 21L0 0Z" class="off"/>
+    <path d="M25-8V10M16 1H34" class="off"/>
+    <text y="68" class="label" fill="#746E7D">添加衣物</text>
+    <text y="93" class="caption">未选中</text>
+  </g>
+  <g transform="translate(610 54)">
+    <circle r="39" fill="#F0ECFA"/>
+    <path d="M0-22C0-28 5-33 11-33C17-33 22-28 22-22C22-16 17-11 11-11C5-11 0-6 0 0" class="on"/>
+    <path d="M0 0L-29 21C-33 24-31 31-26 31H26C31 31 33 24 29 21L0 0Z" class="on"/>
+    <path d="M25-8V10M16 1H34" class="on"/>
+    <text y="68" class="label" fill="#7666B5">添加衣物</text>
+    <text y="93" class="caption">选中</text>
+  </g>
+
+  <g transform="translate(260 196)">
+    <circle cy="-14" r="13" class="off"/>
+    <path d="M-28 31C-25 11-15 2 0 2C15 2 25 11 28 31" class="off"/>
+    <text y="64" class="label" fill="#746E7D">我的</text>
+    <text y="89" class="caption">未选中</text>
+  </g>
+  <g transform="translate(460 196)">
+    <circle r="39" fill="#F0ECFA"/>
+    <circle cy="-14" r="13" fill="#C8BDEB" class="on"/>
+    <path d="M-28 31C-25 11-15 2 0 2C15 2 25 11 28 31" fill="#F7F3FC" class="on"/>
+    <text y="64" class="label" fill="#7666B5">我的</text>
+    <text y="89" class="caption">选中</text>
+  </g>
+</svg>

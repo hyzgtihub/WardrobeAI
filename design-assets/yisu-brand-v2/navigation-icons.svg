@@ -1,0 +1,57 @@
+<svg width="960" height="420" viewBox="0 0 960 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>衣序 V2 底部导航图标规范与状态</title>
+  <style>
+    .title{font:600 20px 'PingFang SC',sans-serif;fill:#292630}.meta{font:400 13px 'Avenir Next','PingFang SC',sans-serif;fill:#716B78}.label{font:500 13px 'PingFang SC',sans-serif;text-anchor:middle}.off{stroke:#96909D;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}.on{stroke:#594D85;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.grid{stroke:#E5E0EB;stroke-width:.75;stroke-dasharray:2 3}
+  </style>
+  <text x="48" y="48" class="title">Bottom Navigation · 24pt Grid</text>
+  <text x="48" y="74" class="meta">Stroke 1.75 / 2pt · Optical padding 2pt · Touch target 44pt · Label gap 4pt</text>
+
+  <g transform="translate(142 170) scale(3)">
+    <rect x="-12" y="-12" width="24" height="24" class="grid"/>
+    <path d="M-8.5-8.5H8.5C9.881-8.5 11-7.381 11-6V9C11 10.105 10.105 11 9 11H-9C-10.105 11-11 10.105-11 9V-6C-11-7.381-9.881-8.5-8.5-8.5Z" class="off"/>
+    <path d="M0-8.5V11M-6.5-2H-4.75M4.75-2H6.5" class="off"/>
+    <path d="M-5.5 6.5C-2.3 4.3 2.3 4.3 5.5 6.5" class="off" opacity=".72"/>
+  </g>
+  <text x="142" y="242" class="label" fill="#716B78">衣橱</text>
+  <text x="142" y="268" class="meta" text-anchor="middle">Default</text>
+
+  <g transform="translate(366 170) scale(3)">
+    <rect x="-16" y="-16" width="32" height="32" rx="16" fill="#EEEAF6" stroke="none"/>
+    <path d="M-8.5-8.5H8.5C9.881-8.5 11-7.381 11-6V9C11 10.105 10.105 11 9 11H-9C-10.105 11-11 10.105-11 9V-6C-11-7.381-9.881-8.5-8.5-8.5Z" class="on"/>
+    <path d="M0-8.5V11M-6.5-2H-4.75M4.75-2H6.5" class="on"/>
+    <path d="M-5.5 6.5C-2.3 4.3 2.3 4.3 5.5 6.5" stroke="#8B7DB4" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <text x="366" y="242" class="label" fill="#594D85">衣橱</text>
+  <text x="366" y="268" class="meta" text-anchor="middle">Selected</text>
+
+  <g transform="translate(590 170) scale(3)">
+    <rect x="-12" y="-12" width="24" height="24" class="grid"/>
+    <path d="M0-8.5C0-10.157 1.343-11.5 3-11.5C4.657-11.5 6-10.157 6-8.5C6-6.843 4.657-5.5 3-5.5C1.343-5.5 0-4.157 0-2.5V-1" class="off"/>
+    <path d="M0-1L-9.5 5.4C-11.09 6.471-10.332 8.95-8.415 8.95H8.415C10.332 8.95 11.09 6.471 9.5 5.4L0-1Z" class="off"/>
+    <path d="M7-7V-1M4-4H10" class="off"/>
+  </g>
+  <text x="590" y="242" class="label" fill="#716B78">添加衣物</text>
+  <text x="590" y="268" class="meta" text-anchor="middle">Default</text>
+
+  <g transform="translate(814 170) scale(3)">
+    <rect x="-16" y="-16" width="32" height="32" rx="16" fill="#EEEAF6" stroke="none"/>
+    <path d="M0-8.5C0-10.157 1.343-11.5 3-11.5C4.657-11.5 6-10.157 6-8.5C6-6.843 4.657-5.5 3-5.5C1.343-5.5 0-4.157 0-2.5V-1" class="on"/>
+    <path d="M0-1L-9.5 5.4C-11.09 6.471-10.332 8.95-8.415 8.95H8.415C10.332 8.95 11.09 6.471 9.5 5.4L0-1Z" class="on"/>
+    <path d="M7-7V-1M4-4H10" class="on"/>
+  </g>
+  <text x="814" y="242" class="label" fill="#594D85">添加衣物</text>
+  <text x="814" y="268" class="meta" text-anchor="middle">Selected</text>
+
+  <g transform="translate(366 342) scale(3)">
+    <circle cy="-5" r="4.25" class="off"/>
+    <path d="M-9 10C-8.25 3.8-4.85.5 0 .5C4.85.5 8.25 3.8 9 10" class="off"/>
+  </g>
+  <text x="366" y="398" class="label" fill="#716B78">我的 · Default</text>
+
+  <g transform="translate(590 342) scale(3)">
+    <rect x="-16" y="-16" width="32" height="32" rx="16" fill="#EEEAF6" stroke="none"/>
+    <circle cy="-5" r="4.25" fill="#D8D0EA" class="on"/>
+    <path d="M-9 10C-8.25 3.8-4.85.5 0 .5C4.85.5 8.25 3.8 9 10" class="on"/>
+  </g>
+  <text x="590" y="398" class="label" fill="#594D85">我的 · Selected</text>
+</svg>
