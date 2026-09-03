@@ -5,6 +5,13 @@ import Testing
 @Suite("App dependencies")
 struct AppDependenciesTests {
     @Test
+    func addGarmentScenarioUsesUITestDependencies() {
+        #expect(AppDependencies.shouldUseUITestDependencies(
+            arguments: ["-ui-add-garment-scenario", "upload-failure"]
+        ))
+    }
+
+    @Test
     func registrationFailureScenarioPublishesDuplicateEmail() async {
         let dependencies = AppDependencies.uiTest(
             arguments: ["-ui-auth-scenario", "registration-failure"]
