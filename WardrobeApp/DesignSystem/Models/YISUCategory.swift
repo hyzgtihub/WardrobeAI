@@ -1,4 +1,4 @@
-enum YISUCategory: String, CaseIterable, Equatable, Sendable {
+enum YISUCategory: String, Codable, CaseIterable, Equatable, Sendable {
     case all
     case tops
     case pants

@@ -1,31 +1,33 @@
+import Foundation
+
 enum WardrobeSampleData {
     static let garments = [
         GarmentSummary(
-            id: "white-linen-shirt",
+            id: UUID(uuidString: "11111111-1111-1111-1111-111111111101")!,
             title: "白色亚麻衬衫",
             metadata: "春夏 · 上衣",
-            imageName: "garment-white-linen-shirt",
+            imagePath: "garment-white-linen-shirt",
             category: .tops
         ),
         GarmentSummary(
-            id: "powder-blue-knit",
+            id: UUID(uuidString: "11111111-1111-1111-1111-111111111102")!,
             title: "蓝色针织上衣",
             metadata: "春秋 · 上衣",
-            imageName: "garment-powder-blue-knit",
+            imagePath: "garment-powder-blue-knit",
             category: .tops
         ),
         GarmentSummary(
-            id: "beige-trench",
+            id: UUID(uuidString: "11111111-1111-1111-1111-111111111103")!,
             title: "米色风衣",
             metadata: "秋季 · 外套",
-            imageName: "garment-beige-trench",
+            imagePath: "garment-beige-trench",
             category: .outerwear
         ),
         GarmentSummary(
-            id: "black-knit-dress",
+            id: UUID(uuidString: "11111111-1111-1111-1111-111111111104")!,
             title: "黑色针织连衣裙",
             metadata: "秋冬 · 裙子",
-            imageName: "garment-black-knit-dress",
+            imagePath: "garment-black-knit-dress",
             category: .dresses
         )
     ]

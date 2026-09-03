@@ -56,7 +56,7 @@ struct YISUGarmentCard: View {
     }
 
     private var imageBackground: Color {
-        switch item.imageName {
+        switch item.imagePath {
         case "garment-white-linen-shirt": Color(red: 250 / 255, green: 238 / 255, blue: 240 / 255)
         case "garment-powder-blue-knit": Color(red: 232 / 255, green: 241 / 255, blue: 247 / 255)
         case "garment-beige-trench": YISUTheme.Color.surfaceSubtle
@@ -74,8 +74,8 @@ struct YISUGarmentCard: View {
         case .imageError:
             placeholder(symbol: "photo.badge.exclamationmark", label: "图片加载失败")
         case .normal, .pressed:
-            if let imageName = item.imageName {
-                Image(imageName)
+            if let imagePath = item.imagePath {
+                Image(imagePath)
                     .resizable()
                     .scaledToFit()
                     .padding(YISUTheme.Spacing.sm)

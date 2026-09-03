@@ -1,7 +1,7 @@
 import Foundation
 
 struct GarmentDetailDraft: Equatable, Sendable {
-    let id: String
+    let id: UUID
     var name: String
     var subtitle: String
     var imageName: String
@@ -18,7 +18,7 @@ struct GarmentDetailDraft: Equatable, Sendable {
     var styles: [String]
 
     static let whiteLinenShirt = GarmentDetailDraft(
-        id: "white-linen-shirt",
+        id: UUID(uuidString: "11111111-1111-1111-1111-111111111101")!,
         name: "白色亚麻衬衫",
         subtitle: "柔软亚麻 · 适合春夏通勤",
         imageName: "garment-white-linen-shirt",
@@ -40,7 +40,7 @@ struct GarmentDetailDraft: Equatable, Sendable {
             id: id,
             title: name,
             metadata: "\(seasons.map { String($0.prefix(1)) }.joined()) · \(category.title)",
-            imageName: imageName,
+            imagePath: imageName,
             category: category
         )
     }
