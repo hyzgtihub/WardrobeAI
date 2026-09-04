@@ -15,6 +15,8 @@ struct GarmentDetailView: View {
     @State private var pendingCategory: YISUCategory?
     @FocusState private var nameFocused: Bool
     @State private var photoItem: PhotosPickerItem?
+    @State private var pendingPhotoData: Data?
+    @State private var confirmsPhoto = false
 
     var body: some View {
         ScrollView {
@@ -31,6 +33,8 @@ struct GarmentDetailView: View {
                 infoCard(primaryRows)
                 infoCard(secondaryRows)
                 if let message = store.validationMessage { Text(message).font(YISUTheme.Typography.footnote).foregroundStyle(YISUTheme.Color.danger) }
+                if store.state == .failed { YISUButton(title: "重试保存", style: .secondary, state: .normal, accessibilityIdentifier: "garmentDetail.retrySave") { store.retryFailedFields() } }
+                if store.state == .photoFailed, store.canRetryPhoto { YISUButton(title: "重试换图", style: .secondary, state: .normal, accessibilityIdentifier: "garmentDetail.retryPhoto") { Task { await store.retryPhotoReplacement() } } }
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 32)
@@ -51,11 +55,15 @@ struct GarmentDetailView: View {
             Button("继续并清除尺码", role: .destructive) { if let pendingCategory { store.setCategory(pendingCategory, clearSize: true) }; pendingCategory = nil }
             Button("取消", role: .cancel) { pendingCategory = nil }
         }
+        .confirmationDialog("使用这张照片替换当前图片？", isPresented: $confirmsPhoto) {
+            Button("确认换图") { if let pendingPhotoData { Task { await store.replacePhoto(data: pendingPhotoData) } }; pendingPhotoData = nil }
+            Button("取消", role: .cancel) { pendingPhotoData = nil }
+        } message: { Text("确认后将立即上传并自动保存。") }
         .onChange(of: nameFocused) { _, focused in if !focused { Task { await store.flush(.name) } } }
         .onChange(of: photoItem) { _, item in
             guard let item else { return }
             Task {
-                if let data = try? await item.loadTransferable(type: Data.self) { await store.replacePhoto(data: data) }
+                if let data = try? await item.loadTransferable(type: Data.self) { pendingPhotoData = data; confirmsPhoto = true }
                 photoItem = nil
             }
         }

@@ -278,6 +278,7 @@ final class GarmentDetailStore {
     private(set) var state: GarmentAutosaveState = .idle
     private(set) var validationMessage: String?
     private(set) var garment: Garment
+    private(set) var canRetryPhoto = false
 
     private let repository: any GarmentRepository
     private let imageRepository: (any GarmentImageRepository)?
@@ -288,6 +289,9 @@ final class GarmentDetailStore {
     @ObservationIgnored private var debounceTasks: [Field: Task<Void, Never>] = [:]
     @ObservationIgnored private var saveTasks: [Field: Task<Void, Never>] = [:]
     @ObservationIgnored private var pendingFields: Set<Field> = []
+    @ObservationIgnored private var failedFields: Set<Field> = []
+    @ObservationIgnored private var pendingPhotoData: Data?
+    @ObservationIgnored private var isReplacingPhoto = false
 
     init(
         garment: Garment,
@@ -331,25 +335,34 @@ final class GarmentDetailStore {
     }
 
     func retryFailedField(_ field: Field) { enqueue(field) }
+    func retryFailedFields() { for field in failedFields { enqueue(field) } }
+    func retryPhotoReplacement() async { if let pendingPhotoData { await replacePhoto(data: pendingPhotoData) } }
 
     func replacePhoto(data: Data) async {
-        guard saveTasks[.image] == nil, let imageRepository else { return }
+        guard !isReplacingPhoto, let imageRepository else { return }
+        isReplacingPhoto = true
+        defer { isReplacingPhoto = false }
+        pendingPhotoData = data
+        canRetryPhoto = false
         let processed: GarmentImage
-        do { processed = try imageProcessor.process(data) } catch { state = .photoFailed; return }
+        do { processed = try imageProcessor.process(data) } catch { state = .photoFailed; pendingPhotoData = nil; return }
         let oldPath = garment.imagePath
         let newPath = GarmentImage.revisionPath(userID: garment.userID, garmentID: garment.id, revisionID: makeRevisionID())
         state = .saving
-        do { try await imageRepository.uploadJPEG(processed.data, path: newPath) } catch { state = .photoFailed; return }
+        do { try await imageRepository.uploadJPEG(processed.data, path: newPath) } catch { state = .photoFailed; canRetryPhoto = true; return }
         do {
             let saved = try await repository.updateGarment(id: garment.id, changes: GarmentChanges(imagePath: newPath))
             garment.imagePath = saved.imagePath
             draft.imageName = saved.imagePath
             onPersisted(garment)
             state = .saved
+            pendingPhotoData = nil
+            canRetryPhoto = false
             try? await imageRepository.deleteImage(path: oldPath)
         } catch {
             try? await imageRepository.deleteImage(path: newPath)
             state = .photoFailed
+            canRetryPhoto = true
         }
     }
 
@@ -409,9 +422,11 @@ final class GarmentDetailStore {
                 let saved = try await repository.updateGarment(id: garment.id, changes: changes)
                 mergePersistedField(field, from: saved)
                 onPersisted(garment)
+                failedFields.remove(field)
                 state = pendingFields.isEmpty ? .saved : .pending
                 validationMessage = nil
             } catch {
+                failedFields.insert(field)
                 state = .failed
             }
         }
