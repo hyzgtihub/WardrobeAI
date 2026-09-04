@@ -1,5 +1,110 @@
 import Foundation
 
+enum GarmentFieldOptions {
+    static let categories: [YISUCategory] = [.tops, .pants, .dresses, .outerwear, .shoes, .bags, .accessories, .other]
+    static let seasons = ["春季", "夏季", "秋季", "冬季"]
+    static let colors = ["黑色系", "白色系", "灰色系", "红色系", "橙色系", "黄色系", "绿色系", "蓝色系", "紫色系", "粉色系", "棕色系", "裸色系", "金色系", "银色系", "透明/无色", "彩色/多色", "其他"]
+    static let materials = ["棉", "涤纶", "尼龙", "牛仔布", "麻", "丝", "羊毛", "羊绒", "莫代尔", "氨纶", "腨纶", "毛皮", "羽绒", "丝绒", "雪纺", "蕾丝", "欧根纱", "薄纱", "其他"]
+    static let styles = ["简约", "通勤", "休闲", "运动", "复古", "文艺", "中性", "甜美", "优雅", "街头", "学院", "度假", "性感", "民族", "其他"]
+    static let apparelSizes = ["XS", "S", "M", "L", "XL", "XXL", "其他"]
+    static let shoeSizes: [String] = stride(from: 35.0, through: 45.0, by: 0.5).map {
+        $0.rounded() == $0 ? String(Int($0)) : String(format: "%.1f", $0)
+    } + ["其他"]
+    static let storagePrimary = ["主卧衣橱", "次卧衣橱", "玄关柜", "衣帽间", "储物柜", "其他"]
+    static let storageSecondary = ["上层", "中层", "下层", "抽屉", "挂衣区", "叠放区"]
+}
+
+enum GarmentFieldSelectionPolicy {
+    enum SummaryKind { case season, standard }
+    enum SizeDecision: Equatable { case keep, confirmClear, clearWithoutConfirmation }
+
+    static func normalized(_ values: [String]) -> [String] {
+        var seen: Set<String> = []
+        return values.compactMap { raw in
+            let value = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !value.isEmpty, value.count <= 20 else { return nil }
+            let key = value.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: .current)
+            return seen.insert(key).inserted ? value : nil
+        }
+    }
+
+    static func summary(_ values: [String], kind: SummaryKind = .standard) -> String {
+        if kind == .season, Set(values) == Set(GarmentFieldOptions.seasons) { return "四季" }
+        return values.joined(separator: "、")
+    }
+
+    static func sizes(for category: YISUCategory) -> [String] {
+        switch category {
+        case .tops, .pants, .dresses, .outerwear: GarmentFieldOptions.apparelSizes
+        case .shoes: GarmentFieldOptions.shoeSizes
+        case .all, .bags, .accessories, .other: []
+        }
+    }
+
+    static func sizeDecision(from old: YISUCategory, to new: YISUCategory, currentSize: String) -> SizeDecision {
+        let oldGroup = sizeGroup(old)
+        let newGroup = sizeGroup(new)
+        guard oldGroup != newGroup else { return .keep }
+        return currentSize.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? .clearWithoutConfirmation : .confirmClear
+    }
+
+    private static func sizeGroup(_ category: YISUCategory) -> Int {
+        switch category {
+        case .tops, .pants, .dresses, .outerwear: 1
+        case .shoes: 2
+        case .all, .bags, .accessories, .other: 3
+        }
+    }
+}
+
+struct PurchaseDateCalendar: Sendable {
+    struct Cell: Equatable, Sendable {
+        let date: Date
+        let isInDisplayedMonth: Bool
+        let isSelectable: Bool
+        let isToday: Bool
+    }
+
+    let today: Date
+    let displayedMonth: Date
+    let calendar: Calendar
+    let cells: [Cell]
+    let canMoveToNextMonth: Bool
+
+    init(today: Date, displayedMonth: Date, calendar inputCalendar: Calendar = Calendar(identifier: .iso8601)) {
+        var calendar = inputCalendar
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        calendar.firstWeekday = 2
+        self.calendar = calendar
+        self.today = calendar.startOfDay(for: today)
+        let components = calendar.dateComponents([.year, .month], from: displayedMonth)
+        let normalizedMonth = calendar.date(from: components)!
+        self.displayedMonth = normalizedMonth
+        let weekday = calendar.component(.weekday, from: normalizedMonth)
+        let mondayOffset = (weekday + 5) % 7
+        let gridStart = calendar.date(byAdding: .day, value: -mondayOffset, to: normalizedMonth)!
+        cells = (0..<42).map { offset in
+            let date = calendar.date(byAdding: .day, value: offset, to: gridStart)!
+            return Cell(
+                date: date,
+                isInDisplayedMonth: calendar.isDate(date, equalTo: normalizedMonth, toGranularity: .month),
+                isSelectable: calendar.startOfDay(for: date) <= calendar.startOfDay(for: today),
+                isToday: calendar.isDate(date, inSameDayAs: today)
+            )
+        }
+        let nextMonth = calendar.date(byAdding: .month, value: 1, to: normalizedMonth)!
+        canMoveToNextMonth = nextMonth <= calendar.date(from: calendar.dateComponents([.year, .month], from: today))!
+    }
+
+    static func initialMonth(existingDate: Date?, today: Date, calendar inputCalendar: Calendar = Calendar(identifier: .iso8601)) -> Date {
+        var calendar = inputCalendar
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        return calendar.date(from: calendar.dateComponents([.year, .month], from: existingDate ?? today))!
+    }
+
+    static var clearedSelection: Date? { nil }
+}
+
 struct GarmentDetailDraft: Equatable, Sendable {
     let id: UUID
     var name: String
