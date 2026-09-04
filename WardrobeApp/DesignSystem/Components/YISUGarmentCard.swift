@@ -9,7 +9,20 @@ enum YISUGarmentCardPolicy {
 struct YISUGarmentCard: View {
     let item: GarmentSummary
     let state: YISUGarmentCardState
+    let imageRepository: (any GarmentImageRepository)?
     let onSelect: (GarmentSummary) -> Void
+
+    init(
+        item: GarmentSummary,
+        state: YISUGarmentCardState,
+        imageRepository: (any GarmentImageRepository)? = nil,
+        onSelect: @escaping (GarmentSummary) -> Void
+    ) {
+        self.item = item
+        self.state = state
+        self.imageRepository = imageRepository
+        self.onSelect = onSelect
+    }
 
     var body: some View {
         Button {
@@ -51,8 +64,15 @@ struct YISUGarmentCard: View {
         .buttonStyle(.plain)
         .disabled(!YISUGarmentCardPolicy.canOpen(state: state))
         .accessibilityElement(children: .combine)
-        .accessibilityIdentifier("designSystem.garment.\(item.id)")
+        .accessibilityIdentifier(accessibilityIdentifier)
         .accessibilityLabel("\(item.title)，\(item.metadata)")
+    }
+
+    private var accessibilityIdentifier: String {
+        if let path = item.imagePath, path.hasPrefix("garment-") {
+            return "designSystem.garment.\(path.dropFirst("garment-".count))"
+        }
+        return "designSystem.garment.\(item.id.uuidString.lowercased())"
     }
 
     private var imageBackground: Color {
@@ -75,11 +95,17 @@ struct YISUGarmentCard: View {
             placeholder(symbol: "photo.badge.exclamationmark", label: "图片加载失败")
         case .normal, .pressed:
             if let imagePath = item.imagePath {
-                Image(imagePath)
-                    .resizable()
-                    .scaledToFit()
-                    .padding(YISUTheme.Spacing.sm)
-                    .accessibilityHidden(true)
+                if imagePath.contains("/"), let imageRepository {
+                    PrivateGarmentImageView(path: imagePath, repository: imageRepository)
+                        .padding(YISUTheme.Spacing.sm)
+                        .accessibilityHidden(true)
+                } else {
+                    Image(imagePath)
+                        .resizable()
+                        .scaledToFit()
+                        .padding(YISUTheme.Spacing.sm)
+                        .accessibilityHidden(true)
+                }
             } else {
                 placeholder(symbol: "hanger", label: "暂无衣物图片")
             }

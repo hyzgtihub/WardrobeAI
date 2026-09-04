@@ -64,18 +64,37 @@ struct YISUEditableFieldRow: View {
 
 struct YISUPhotoHero: View {
     let imageName: String
+    let imageRepository: (any GarmentImageRepository)?
     let status: GarmentAutosaveState
     let onChangePhoto: () -> Void
+
+    init(
+        imageName: String,
+        imageRepository: (any GarmentImageRepository)? = nil,
+        status: GarmentAutosaveState,
+        onChangePhoto: @escaping () -> Void
+    ) {
+        self.imageName = imageName
+        self.imageRepository = imageRepository
+        self.status = status
+        self.onChangePhoto = onChangePhoto
+    }
 
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 32, style: .continuous)
                 .fill(Color(red: 247 / 255, green: 233 / 255, blue: 236 / 255))
-            Image(imageName)
-                .resizable()
-                .scaledToFit()
-                .padding(26)
-                .accessibilityHidden(true)
+            if imageName.contains("/"), let imageRepository {
+                PrivateGarmentImageView(path: imageName, repository: imageRepository)
+                    .padding(26)
+                    .accessibilityHidden(true)
+            } else {
+                Image(imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .padding(26)
+                    .accessibilityHidden(true)
+            }
             VStack {
                 HStack { YISUAutosaveStatus(state: status); Spacer() }
                 Spacer()

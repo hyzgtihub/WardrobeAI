@@ -2,6 +2,8 @@ import SwiftUI
 
 struct WardrobeHomeView: View {
     let items: [GarmentSummary]
+    let state: GarmentStore.State
+    let imageRepository: (any GarmentImageRepository)?
     let onSearch: () -> Void
     let onAdd: () -> Void
     let onSelectGarment: (GarmentSummary) -> Void
@@ -11,12 +13,16 @@ struct WardrobeHomeView: View {
 
     init(
         items: [GarmentSummary] = WardrobeSampleData.garments,
+        state: GarmentStore.State = .loaded,
+        imageRepository: (any GarmentImageRepository)? = nil,
         onSearch: @escaping () -> Void = {},
         onAdd: @escaping () -> Void = {},
         onSelectGarment: @escaping (GarmentSummary) -> Void = { _ in },
         onProfile: @escaping () -> Void = {}
     ) {
         self.items = items
+        self.state = state
+        self.imageRepository = imageRepository
         self.onSearch = onSearch
         self.onAdd = onAdd
         self.onSelectGarment = onSelectGarment
@@ -76,8 +82,11 @@ struct WardrobeHomeView: View {
     }
 
     @ViewBuilder private var content: some View {
-        let items = WardrobeHomePolicy.items(items, matching: category)
-        if items.isEmpty {
+        if state == .loading || state == .idle {
+            YISUContentStateView(state: .loading, title: "正在载入衣橱", message: "请稍候…", actionTitle: nil, action: nil)
+        } else if state == .failed {
+            YISUContentStateView(state: .error, title: "无法载入衣橱", message: "请检查网络后重试。", actionTitle: nil, action: nil)
+        } else if filteredItems.isEmpty {
             YISUContentStateView(
                 state: .noResults,
                 title: "还没有这类衣物",
@@ -87,8 +96,17 @@ struct WardrobeHomeView: View {
                 actionAccessibilityIdentifier: "wardrobe.empty.add"
             )
         } else {
-            YISUGarmentGrid(items: items, stateForItem: { _ in .normal }, onSelect: onSelectGarment)
+            YISUGarmentGrid(
+                items: filteredItems,
+                stateForItem: { _ in .normal },
+                imageRepository: imageRepository,
+                onSelect: onSelectGarment
+            )
         }
+    }
+
+    private var filteredItems: [GarmentSummary] {
+        WardrobeHomePolicy.items(items, matching: category)
     }
 }
 

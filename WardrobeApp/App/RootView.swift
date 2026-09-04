@@ -5,9 +5,9 @@ struct RootView: View {
 
     @State private var route: AppRoute
     @State private var setupState: WardrobeSetupState
-    @State private var garments = WardrobeSampleData.garments
     @State private var selectedGarment = GarmentDetailDraft.whiteLinenShirt
     @State private var addGarmentStore: AddGarmentStore
+    @State private var garmentStore: GarmentStore
     @State private var photoPickerCancelRoute: AppRoute = .wardrobe
     private let forcedScreen: String?
 
@@ -29,6 +29,7 @@ struct RootView: View {
             garmentRepository: dependencies.garmentRepository,
             imageRepository: dependencies.garmentImageRepository
         ))
+        _garmentStore = State(initialValue: GarmentStore(repository: dependencies.garmentRepository))
     }
 
     private var sessionStore: SessionStore { dependencies.sessionStore }
@@ -115,7 +116,7 @@ struct RootView: View {
         } else if route == .garmentPhotoPicker || route == .garmentPhotoPreview || route == .addGarment {
             addGarmentContent(account: account)
         } else {
-            wardrobe
+            wardrobe(account: account)
         }
     }
 
@@ -138,7 +139,7 @@ struct RootView: View {
                 }
             )
         case .wardrobe, .profile:
-            wardrobe
+            wardrobe(account: Self.uiTestAccount)
         case .garmentPhotoPicker, .garmentPhotoPreview, .addGarment:
             addGarmentContent(account: Self.uiTestAccount)
         case .garmentDetail:
@@ -146,21 +147,26 @@ struct RootView: View {
         }
     }
 
-    private var wardrobe: some View {
+    private func wardrobe(account: UserAccount) -> some View {
         WardrobeHomeView(
-            items: garments,
+            items: garmentStore.garments.map(\.summary),
+            state: garmentStore.state,
+            imageRepository: dependencies.garmentImageRepository,
             onAdd: {
                 photoPickerCancelRoute = .wardrobe
                 route = .garmentPhotoPicker
             },
             onSelectGarment: { garment in
-                if garment.id == GarmentDetailDraft.whiteLinenShirt.id {
-                    selectedGarment = .whiteLinenShirt
+                if let persisted = garmentStore.garments.first(where: { $0.id == garment.id }) {
+                    selectedGarment = GarmentDetailDraft(garment: persisted)
                     route = .garmentDetail
                 }
             },
             onProfile: { route = .profile }
         )
+        .task(id: account.defaultWardrobe.id) {
+            await garmentStore.load(wardrobeID: account.defaultWardrobe.id)
+        }
     }
 
     @ViewBuilder private func addGarmentContent(account: UserAccount) -> some View {
@@ -204,7 +210,8 @@ struct RootView: View {
                     route = .garmentPhotoPicker
                 },
                 onCreated: { garment in
-                    selectedGarment = Self.detailDraft(from: garment)
+                    garmentStore.insertCreated(garment)
+                    selectedGarment = GarmentDetailDraft(garment: garment)
                     route = .garmentDetail
                 }
             )
@@ -217,11 +224,9 @@ struct RootView: View {
         GarmentDetailView(
             garment: selectedGarment,
             onBack: { route = .wardrobe },
+            imageRepository: dependencies.garmentImageRepository,
             onChange: { updated in
                 selectedGarment = updated
-                if let index = garments.firstIndex(where: { $0.id == updated.id }) {
-                    garments[index] = updated.summary
-                }
             },
             onDelete: { route = .wardrobe }
         )
@@ -288,23 +293,4 @@ struct RootView: View {
         )
     )
 
-    private static func detailDraft(from garment: Garment) -> GarmentDetailDraft {
-        GarmentDetailDraft(
-            id: garment.id,
-            name: garment.name,
-            subtitle: garment.brand ?? garment.category.title,
-            imageName: "garment-white-linen-shirt",
-            category: garment.category,
-            seasons: garment.seasons,
-            storageLocation: garment.storageLocation ?? "",
-            notes: garment.notes ?? "",
-            colors: garment.colors,
-            brand: garment.brand ?? "",
-            price: garment.price.map { "¥\($0)" } ?? "",
-            size: garment.size ?? "",
-            purchaseDate: garment.purchaseDate.map { $0.formatted(date: .numeric, time: .omitted) } ?? "",
-            materials: garment.material.map { [$0] } ?? [],
-            styles: garment.style.map { [$0] } ?? []
-        )
-    }
 }

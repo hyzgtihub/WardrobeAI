@@ -118,11 +118,12 @@ private struct UITestWardrobeRepository: WardrobeRepository {
 
 private actor UITestGarmentRepository: GarmentRepository {
     let scenario: String
-    private var garments: [Garment] = []
+    private var garments: [Garment]
     private var createAttempts = 0
 
     init(scenario: String) {
         self.scenario = scenario
+        garments = Self.samples
     }
 
     func fetchGarments(wardrobeID: UUID) async throws -> [Garment] {
@@ -159,6 +160,44 @@ private actor UITestGarmentRepository: GarmentRepository {
         )
         garments.insert(garment, at: 0)
         return garment
+    }
+
+    private static let samples: [Garment] = [
+        sample(id: "11111111-1111-1111-1111-111111111101", name: "白色亚麻衬衫", path: "garment-white-linen-shirt", category: .tops, seasons: ["春季", "夏季"]),
+        sample(id: "11111111-1111-1111-1111-111111111102", name: "蓝色针织上衣", path: "garment-powder-blue-knit", category: .tops, seasons: ["春季", "秋季"]),
+        sample(id: "11111111-1111-1111-1111-111111111103", name: "米色风衣", path: "garment-beige-trench", category: .outerwear, seasons: ["秋季"]),
+        sample(id: "11111111-1111-1111-1111-111111111104", name: "黑色针织连衣裙", path: "garment-black-knit-dress", category: .dresses, seasons: ["秋季", "冬季"]),
+    ]
+
+    private static func sample(
+        id: String,
+        name: String,
+        path: String,
+        category: YISUCategory,
+        seasons: [String]
+    ) -> Garment {
+        let timestamp = Date(timeIntervalSince1970: 0)
+        return Garment(
+            id: UUID(uuidString: id)!,
+            userID: UUID(uuidString: "11111111-1111-1111-1111-111111111111")!,
+            wardrobeID: UUID(uuidString: "22222222-2222-2222-2222-222222222222")!,
+            imagePath: path,
+            name: name,
+            category: category,
+            seasons: seasons,
+            colors: [],
+            brand: nil,
+            price: nil,
+            size: nil,
+            purchaseDate: nil,
+            material: nil,
+            style: nil,
+            storageLocation: nil,
+            notes: nil,
+            createdAt: timestamp,
+            updatedAt: timestamp,
+            deletedAt: nil
+        )
     }
 }
 

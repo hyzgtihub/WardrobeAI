@@ -21,4 +21,19 @@ final class GarmentDetailTests: XCTestCase {
         XCTAssertTrue(app.buttons["garmentDetail.field.category"].exists)
         XCTAssertFalse(app.buttons["garmentDetail.save"].exists)
     }
+
+    @MainActor
+    func testAnyPersistedCardOpensItsOwnDetail() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-ui-screen", "wardrobe"]
+        app.launch()
+
+        let card = app.buttons["designSystem.garment.beige-trench"]
+        XCTAssertTrue(card.waitForExistence(timeout: 3))
+        card.tap()
+
+        let name = app.textFields["garmentDetail.name"]
+        XCTAssertTrue(name.waitForExistence(timeout: 3))
+        XCTAssertEqual(name.value as? String, "米色风衣")
+    }
 }

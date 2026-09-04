@@ -8,17 +8,20 @@ struct GarmentDetailView: View {
     @FocusState private var nameFocused: Bool
 
     let onBack: () -> Void
+    let imageRepository: (any GarmentImageRepository)?
     let onChange: (GarmentDetailDraft) -> Void
     let onDelete: () -> Void
 
     init(
         garment: GarmentDetailDraft,
         onBack: @escaping () -> Void = {},
+        imageRepository: (any GarmentImageRepository)? = nil,
         onChange: @escaping (GarmentDetailDraft) -> Void = { _ in },
         onDelete: @escaping () -> Void = {}
     ) {
         _draft = State(initialValue: garment)
         self.onBack = onBack
+        self.imageRepository = imageRepository
         self.onChange = onChange
         self.onDelete = onDelete
     }
@@ -27,7 +30,7 @@ struct GarmentDetailView: View {
         ScrollView {
             VStack(spacing: YISUTheme.Spacing.lg) {
                 header
-                YISUPhotoHero(imageName: draft.imageName, status: autosaveState) {
+                YISUPhotoHero(imageName: draft.imageName, imageRepository: imageRepository, status: autosaveState) {
                     autosaveState = .photoFailed
                 }
                 identity
@@ -89,6 +92,7 @@ struct GarmentDetailView: View {
                     .foregroundStyle(YISUTheme.Color.textPrimary)
                     .focused($nameFocused)
                     .accessibilityLabel("衣物名称")
+                    .accessibilityIdentifier("garmentDetail.name")
                 Button { nameFocused = true } label: {
                     Image(systemName: "pencil")
                         .frame(width: 44, height: 44)

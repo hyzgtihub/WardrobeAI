@@ -3,7 +3,20 @@ import SwiftUI
 struct YISUGarmentGrid: View {
     let items: [GarmentSummary]
     let stateForItem: (GarmentSummary) -> YISUGarmentCardState
+    let imageRepository: (any GarmentImageRepository)?
     let onSelect: (GarmentSummary) -> Void
+
+    init(
+        items: [GarmentSummary],
+        stateForItem: @escaping (GarmentSummary) -> YISUGarmentCardState,
+        imageRepository: (any GarmentImageRepository)? = nil,
+        onSelect: @escaping (GarmentSummary) -> Void
+    ) {
+        self.items = items
+        self.stateForItem = stateForItem
+        self.imageRepository = imageRepository
+        self.onSelect = onSelect
+    }
 
     private let columns = [
         GridItem(.flexible(), spacing: YISUTheme.Spacing.md),
@@ -13,7 +26,12 @@ struct YISUGarmentGrid: View {
     var body: some View {
         LazyVGrid(columns: columns, alignment: .leading, spacing: YISUTheme.Spacing.md) {
             ForEach(items) { item in
-                YISUGarmentCard(item: item, state: stateForItem(item), onSelect: onSelect)
+                YISUGarmentCard(
+                    item: item,
+                    state: stateForItem(item),
+                    imageRepository: imageRepository,
+                    onSelect: onSelect
+                )
             }
         }
         .accessibilityIdentifier("designSystem.garmentGrid")
