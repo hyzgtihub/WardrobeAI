@@ -112,6 +112,30 @@ struct AddGarmentStoreTests {
         #expect(await repositories.image.uploadCount == 1)
         #expect(await repositories.garment.inputs.count == 1)
     }
+
+    @Test
+    func startingSecondFlowClearsEveryFieldFromSuccessfulFirstFlow() async {
+        let repositories = Repositories()
+        let store = repositories.makeStore(draft: .validFixture)
+        #expect(await store.submit(account: .fixture) != nil)
+
+        store.startNewFlow()
+
+        #expect(store.draft == AddGarmentDraft())
+        #expect(store.state == .idle)
+        #expect(store.issue == nil)
+    }
+
+    @Test
+    func discardDraftClearsUnsubmittedFlow() {
+        let repositories = Repositories()
+        let store = repositories.makeStore(draft: .validFixture)
+
+        store.discardDraft()
+
+        #expect(store.draft == AddGarmentDraft())
+        #expect(store.state == .idle)
+    }
 }
 
 private struct Repositories {
@@ -224,8 +248,8 @@ private extension AddGarmentDraft {
         price: "199.90",
         size: "M",
         purchaseDate: Date(timeIntervalSince1970: 0),
-        material: "棉",
-        style: "通勤",
+        materials: ["棉"],
+        styles: ["通勤"],
         storageLocation: "主衣柜",
         notes: "常穿"
     )

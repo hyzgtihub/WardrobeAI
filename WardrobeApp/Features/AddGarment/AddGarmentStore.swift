@@ -40,6 +40,16 @@ final class AddGarmentStore {
         }
     }
 
+    func startNewFlow() { reset() }
+
+    func discardDraft() { reset() }
+
+    private func reset() {
+        draft = AddGarmentDraft()
+        issue = nil
+        state = .idle
+    }
+
     func submit(account: UserAccount) async -> Garment? {
         guard !isSubmitting else { return nil }
         state = .validating
@@ -75,8 +85,8 @@ final class AddGarmentStore {
             price: validated.price,
             size: trimmedOptional(draft.size),
             purchaseDate: draft.purchaseDate,
-            materials: trimmedOptional(draft.material).map { [$0] } ?? [],
-            styles: trimmedOptional(draft.style).map { [$0] } ?? [],
+            materials: GarmentFieldSelectionPolicy.normalized(draft.materials),
+            styles: GarmentFieldSelectionPolicy.normalized(draft.styles),
             storageLocation: trimmedOptional(draft.storageLocation),
             notes: trimmedOptional(draft.notes)
         )

@@ -9,6 +9,8 @@ struct AddGarmentView: View {
     let onCreated: (Garment) -> Void
 
     @State private var confirmsDiscard = false
+    @State private var picker: PickerKind?
+    @State private var pendingCategory: YISUCategory?
 
     var body: some View {
         VStack(spacing: 0) {
@@ -29,6 +31,16 @@ struct AddGarmentView: View {
         } message: {
             Text("已选择的照片和填写内容不会被保存。")
         }
+        .confirmationDialog("更改分类将清除当前尺码", isPresented: Binding(
+            get: { pendingCategory != nil }, set: { if !$0 { pendingCategory = nil } }
+        )) {
+            Button("继续并清除尺码", role: .destructive) {
+                if let pendingCategory { store.draft.category = pendingCategory; store.draft.size = "" }
+                pendingCategory = nil
+            }
+            Button("取消", role: .cancel) { pendingCategory = nil }
+        }
+        .sheet(item: $picker, content: pickerSheet)
     }
 
     private var header: some View {
@@ -80,27 +92,8 @@ struct AddGarmentView: View {
         Section("必填信息") {
             labeledField("名称", prompt: "例如：白色亚麻衬衫", text: $store.draft.name, id: "addGarment.name")
 
-            VStack(alignment: .leading, spacing: YISUTheme.Spacing.sm) {
-                Text("分类").font(YISUTheme.Typography.callout.weight(.semibold))
-                flexibleButtons(YISUCategory.allCases.filter { $0 != .all }) { category in
-                    selectionButton(
-                        category.title,
-                        selected: store.draft.category == category,
-                        id: "addGarment.category.\(category.rawValue)"
-                    ) { store.draft.category = category }
-                }
-            }
-
-            VStack(alignment: .leading, spacing: YISUTheme.Spacing.sm) {
-                Text("季节").font(YISUTheme.Typography.callout.weight(.semibold))
-                flexibleButtons(Season.allCases) { season in
-                    selectionButton(
-                        season.title,
-                        selected: store.draft.seasons.contains(season.rawValue),
-                        id: "addGarment.season.\(season.rawValue)"
-                    ) { toggleSeason(season.rawValue) }
-                }
-            }
+            selectionRow("分类", value: store.draft.category?.title, id: "addGarment.category") { picker = .category }
+            selectionRow("季节", value: GarmentFieldSelectionPolicy.summary(store.draft.seasons, kind: .season), id: "addGarment.seasons") { picker = .seasons }
 
             if let message = issueMessage {
                 Text(message)
@@ -113,21 +106,17 @@ struct AddGarmentView: View {
 
     private var optionalSection: some View {
         Section("更多信息") {
-            labeledField("收纳位置", prompt: "例如：主卧衣橱上层", text: $store.draft.storageLocation)
+            selectionRow("收纳位置", value: store.draft.storageLocation, id: "addGarment.storage") { picker = .storage }
             labeledField("备注", prompt: "记录搭配或护理信息", text: $store.draft.notes)
-            labeledField("颜色", prompt: "多个颜色用顿号分隔", text: Binding(
-                get: { store.draft.colors.joined(separator: "、") },
-                set: { store.draft.colors = split($0) }
-            ))
+            selectionRow("颜色", value: GarmentFieldSelectionPolicy.summary(store.draft.colors), id: "addGarment.colors") { picker = .colors }
             labeledField("品牌", prompt: "品牌", text: $store.draft.brand)
             labeledField("价格", prompt: "人民币", text: $store.draft.price, keyboard: .decimalPad)
-            labeledField("尺码", prompt: "尺码", text: $store.draft.size)
-            DatePicker("购买日期", selection: Binding(
-                get: { store.draft.purchaseDate ?? Date() },
-                set: { store.draft.purchaseDate = $0 }
-            ), displayedComponents: .date)
-            labeledField("材质", prompt: "材质", text: $store.draft.material)
-            labeledField("风格", prompt: "风格", text: $store.draft.style)
+            if let category = store.draft.category, !GarmentFieldSelectionPolicy.sizes(for: category).isEmpty {
+                selectionRow("尺码", value: store.draft.size, id: "addGarment.size") { picker = .size }
+            }
+            selectionRow("购买日期", value: dateText(store.draft.purchaseDate), id: "addGarment.purchaseDate") { picker = .purchaseDate }
+            selectionRow("材质", value: GarmentFieldSelectionPolicy.summary(store.draft.materials), id: "addGarment.materials") { picker = .materials }
+            selectionRow("风格", value: GarmentFieldSelectionPolicy.summary(store.draft.styles), id: "addGarment.styles") { picker = .styles }
         }
     }
 
@@ -164,6 +153,54 @@ struct AddGarmentView: View {
                 .accessibilityLabel(label)
                 .accessibilityIdentifier(id ?? "")
         }
+    }
+
+    private func selectionRow(_ label: String, value: String?, id: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            HStack {
+                Text(label).font(YISUTheme.Typography.callout.weight(.semibold)).foregroundStyle(YISUTheme.Color.textPrimary)
+                Spacer()
+                Text(value.flatMap { $0.isEmpty ? nil : $0 } ?? "请选择").foregroundStyle(value?.isEmpty == false ? YISUTheme.Color.textSecondary : YISUTheme.Color.textPlaceholder).lineLimit(1)
+                Image(systemName: "chevron.right").foregroundStyle(YISUTheme.Color.textPlaceholder)
+            }
+            .frame(minHeight: 44)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier(id)
+    }
+
+    @ViewBuilder private func pickerSheet(_ kind: PickerKind) -> some View {
+        switch kind {
+        case .category:
+            GarmentSingleSelectSheet(title: "选择分类", options: GarmentFieldOptions.categories.map(\.title), selected: store.draft.category?.title, accessibilityPrefix: "picker.category") { title in
+                guard let category = GarmentFieldOptions.categories.first(where: { $0.title == title }) else { return }
+                if let old = store.draft.category, GarmentFieldSelectionPolicy.sizeDecision(from: old, to: category, currentSize: store.draft.size) == .confirmClear {
+                    pendingCategory = category
+                } else {
+                    if let old = store.draft.category, GarmentFieldSelectionPolicy.sizeDecision(from: old, to: category, currentSize: store.draft.size) == .clearWithoutConfirmation { store.draft.size = "" }
+                    store.draft.category = category
+                }
+            }
+        case .size:
+            GarmentSingleSelectSheet(title: "选择尺码", options: store.draft.category.map(GarmentFieldSelectionPolicy.sizes) ?? [], selected: store.draft.size, accessibilityPrefix: "picker.size") { store.draft.size = $0 }
+        case .seasons: multiSheet("选择季节", GarmentFieldOptions.seasons, store.draft.seasons, "picker.seasons") { store.draft.seasons = $0 }
+        case .colors: multiSheet("选择颜色", GarmentFieldOptions.colors, store.draft.colors, "picker.colors") { store.draft.colors = $0 }
+        case .materials: multiSheet("选择材质", GarmentFieldOptions.materials, store.draft.materials, "picker.materials") { store.draft.materials = $0 }
+        case .styles: multiSheet("选择风格", GarmentFieldOptions.styles, store.draft.styles, "picker.styles") { store.draft.styles = $0 }
+        case .storage: GarmentStorageLocationSheet(value: store.draft.storageLocation.isEmpty ? nil : store.draft.storageLocation) { store.draft.storageLocation = $0 ?? "" }
+        case .purchaseDate: YISUPurchaseDateSheet(date: store.draft.purchaseDate) { store.draft.purchaseDate = $0 }
+        }
+    }
+
+    private func multiSheet(_ title: String, _ options: [String], _ selection: [String], _ prefix: String, completion: @escaping ([String]) -> Void) -> some View {
+        GarmentMultiSelectSheet(title: title, options: options, selection: selection, accessibilityPrefix: prefix, onComplete: completion)
+    }
+
+    private func dateText(_ date: Date?) -> String? {
+        guard let date else { return nil }
+        let formatter = DateFormatter(); formatter.locale = Locale(identifier: "zh_CN"); formatter.dateFormat = "yyyy.MM.dd"
+        return formatter.string(from: date)
     }
 
     private func flexibleButtons<Item: RandomAccessCollection, Content: View>(
@@ -219,6 +256,11 @@ struct AddGarmentView: View {
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
             .filter { !$0.isEmpty }
     }
+}
+
+private enum PickerKind: String, Identifiable {
+    case category, seasons, colors, size, materials, styles, storage, purchaseDate
+    var id: String { rawValue }
 }
 
 private enum Season: String, CaseIterable {

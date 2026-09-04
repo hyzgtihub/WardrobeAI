@@ -31,8 +31,8 @@ struct AddGarmentDraft: Equatable, Sendable {
     var price: String
     var size: String
     var purchaseDate: Date?
-    var material: String
-    var style: String
+    var materials: [String]
+    var styles: [String]
     var storageLocation: String
     var notes: String
 
@@ -46,8 +46,8 @@ struct AddGarmentDraft: Equatable, Sendable {
         price: String = "",
         size: String = "",
         purchaseDate: Date? = nil,
-        material: String = "",
-        style: String = "",
+        materials: [String] = [],
+        styles: [String] = [],
         storageLocation: String = "",
         notes: String = ""
     ) {
@@ -60,8 +60,8 @@ struct AddGarmentDraft: Equatable, Sendable {
         self.price = price
         self.size = size
         self.purchaseDate = purchaseDate
-        self.material = material
-        self.style = style
+        self.materials = materials
+        self.styles = styles
         self.storageLocation = storageLocation
         self.notes = notes
     }

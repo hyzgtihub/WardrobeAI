@@ -153,6 +153,7 @@ struct RootView: View {
             state: garmentStore.state,
             imageRepository: dependencies.garmentImageRepository,
             onAdd: {
+                addGarmentStore.startNewFlow()
                 photoPickerCancelRoute = .wardrobe
                 route = .garmentPhotoPicker
             },
@@ -204,7 +205,10 @@ struct RootView: View {
             AddGarmentView(
                 store: addGarmentStore,
                 account: account,
-                onBack: { route = .wardrobe },
+                onBack: {
+                    addGarmentStore.discardDraft()
+                    route = .wardrobe
+                },
                 onReselectPhoto: {
                     photoPickerCancelRoute = .addGarment
                     route = .garmentPhotoPicker
