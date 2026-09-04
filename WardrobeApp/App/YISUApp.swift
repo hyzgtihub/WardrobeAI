@@ -16,7 +16,7 @@ struct YISUApp: App {
     var body: some Scene {
         WindowGroup {
             if let dependencies {
-                RootView(sessionStore: dependencies.sessionStore)
+                RootView(dependencies: dependencies)
                     .task { await dependencies.sessionStore.restore() }
             } else {
                 ConfigurationErrorView()

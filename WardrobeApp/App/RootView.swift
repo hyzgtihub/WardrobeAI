@@ -1,28 +1,37 @@
 import SwiftUI
 
 struct RootView: View {
-    let sessionStore: SessionStore
+    let dependencies: AppDependencies
 
     @State private var route: AppRoute
     @State private var setupState: WardrobeSetupState
     @State private var garments = WardrobeSampleData.garments
     @State private var selectedGarment = GarmentDetailDraft.whiteLinenShirt
+    @State private var addGarmentStore: AddGarmentStore
+    @State private var photoPickerCancelRoute: AppRoute = .wardrobe
     private let forcedScreen: String?
 
-    init(sessionStore: SessionStore, arguments: [String] = ProcessInfo.processInfo.arguments) {
-        self.sessionStore = sessionStore
+    init(dependencies: AppDependencies, arguments: [String] = ProcessInfo.processInfo.arguments) {
+        self.dependencies = dependencies
         let screen = Self.argument(after: "-ui-screen", in: arguments)
         forcedScreen = screen
         let stateValue = Self.argument(after: "-ui-state", in: arguments)
         let initialRoute: AppRoute = switch screen {
         case "onboarding": .onboarding
         case "wardrobe": .wardrobe
+        case "add-garment": .garmentPhotoPicker
         case "garment-detail": .garmentDetail
         default: .signIn
         }
         _route = State(initialValue: initialRoute)
         _setupState = State(initialValue: WardrobeSetupState(rawValue: stateValue ?? "") ?? .creating)
+        _addGarmentStore = State(initialValue: AddGarmentStore(
+            garmentRepository: dependencies.garmentRepository,
+            imageRepository: dependencies.garmentImageRepository
+        ))
     }
+
+    private var sessionStore: SessionStore { dependencies.sessionStore }
 
     var body: some View {
         if ProcessInfo.processInfo.arguments.contains("-design-system-gallery") {
@@ -103,6 +112,8 @@ struct RootView: View {
             )
         } else if route == .garmentDetail {
             garmentDetail
+        } else if route == .garmentPhotoPicker || route == .garmentPhotoPreview || route == .addGarment {
+            addGarmentContent(account: account)
         } else {
             wardrobe
         }
@@ -128,6 +139,8 @@ struct RootView: View {
             )
         case .wardrobe, .profile:
             wardrobe
+        case .garmentPhotoPicker, .garmentPhotoPreview, .addGarment:
+            addGarmentContent(account: Self.uiTestAccount)
         case .garmentDetail:
             garmentDetail
         }
@@ -136,6 +149,10 @@ struct RootView: View {
     private var wardrobe: some View {
         WardrobeHomeView(
             items: garments,
+            onAdd: {
+                photoPickerCancelRoute = .wardrobe
+                route = .garmentPhotoPicker
+            },
             onSelectGarment: { garment in
                 if garment.id == GarmentDetailDraft.whiteLinenShirt.id {
                     selectedGarment = .whiteLinenShirt
@@ -144,6 +161,56 @@ struct RootView: View {
             },
             onProfile: { route = .profile }
         )
+    }
+
+    @ViewBuilder private func addGarmentContent(account: UserAccount) -> some View {
+        switch route {
+        case .garmentPhotoPicker:
+            GarmentPhotoPickerView(
+                injectedPhotoData: dependencies.addGarmentFixtureData,
+                onPhotoSelected: { data in
+                    addGarmentStore.processPhoto(data)
+                    if addGarmentStore.state == .editing { route = .garmentPhotoPreview }
+                },
+                onCancel: { route = photoPickerCancelRoute }
+            )
+        case .garmentPhotoPreview:
+            if let photo = addGarmentStore.draft.photo {
+                GarmentPhotoPreviewView(
+                    photo: photo,
+                    onReselect: {
+                        photoPickerCancelRoute = .garmentPhotoPreview
+                        route = .garmentPhotoPicker
+                    },
+                    onUsePhoto: { route = .addGarment }
+                )
+            } else {
+                GarmentPhotoPickerView(
+                    injectedPhotoData: dependencies.addGarmentFixtureData,
+                    onPhotoSelected: { data in
+                        addGarmentStore.processPhoto(data)
+                        if addGarmentStore.state == .editing { route = .garmentPhotoPreview }
+                    },
+                    onCancel: { route = photoPickerCancelRoute }
+                )
+            }
+        case .addGarment:
+            AddGarmentView(
+                store: addGarmentStore,
+                account: account,
+                onBack: { route = .wardrobe },
+                onReselectPhoto: {
+                    photoPickerCancelRoute = .addGarment
+                    route = .garmentPhotoPicker
+                },
+                onCreated: { garment in
+                    selectedGarment = Self.detailDraft(from: garment)
+                    route = .garmentDetail
+                }
+            )
+        default:
+            EmptyView()
+        }
     }
 
     private var garmentDetail: some View {
@@ -197,5 +264,47 @@ struct RootView: View {
     private static func argument(after flag: String, in arguments: [String]) -> String? {
         guard let index = arguments.firstIndex(of: flag), arguments.indices.contains(index + 1) else { return nil }
         return arguments[index + 1]
+    }
+
+    private static let uiTestAccount = UserAccount(
+        user: AuthenticatedUser(
+            id: UUID(uuidString: "11111111-1111-1111-1111-111111111111")!,
+            email: "mia@example.com"
+        ),
+        profile: UserProfile(
+            id: UUID(uuidString: "11111111-1111-1111-1111-111111111111")!,
+            nickname: "Mia",
+            avatarPath: nil,
+            languageCode: "zh-CN",
+            notificationsEnabled: true,
+            createdAt: Date(timeIntervalSince1970: 0),
+            updatedAt: Date(timeIntervalSince1970: 0)
+        ),
+        defaultWardrobe: WardrobeIdentity(
+            id: UUID(uuidString: "22222222-2222-2222-2222-222222222222")!,
+            ownerID: UUID(uuidString: "11111111-1111-1111-1111-111111111111")!,
+            name: "我",
+            isDefault: true
+        )
+    )
+
+    private static func detailDraft(from garment: Garment) -> GarmentDetailDraft {
+        GarmentDetailDraft(
+            id: garment.id,
+            name: garment.name,
+            subtitle: garment.brand ?? garment.category.title,
+            imageName: "garment-white-linen-shirt",
+            category: garment.category,
+            seasons: garment.seasons,
+            storageLocation: garment.storageLocation ?? "",
+            notes: garment.notes ?? "",
+            colors: garment.colors,
+            brand: garment.brand ?? "",
+            price: garment.price.map { "¥\($0)" } ?? "",
+            size: garment.size ?? "",
+            purchaseDate: garment.purchaseDate.map { $0.formatted(date: .numeric, time: .omitted) } ?? "",
+            materials: garment.material.map { [$0] } ?? [],
+            styles: garment.style.map { [$0] } ?? []
+        )
     }
 }

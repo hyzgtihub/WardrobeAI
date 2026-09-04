@@ -5,6 +5,7 @@ struct AppDependencies {
     let sessionStore: SessionStore
     let garmentRepository: any GarmentRepository
     let garmentImageRepository: any GarmentImageRepository
+    let addGarmentFixtureData: Data?
 
     static func live() throws -> Self {
         let configuration = try SupabaseConfiguration.load()
@@ -16,7 +17,8 @@ struct AppDependencies {
                 wardrobeRepository: SupabaseWardrobeRepository(client: client)
             ),
             garmentRepository: SupabaseGarmentRepository(client: client),
-            garmentImageRepository: SupabaseGarmentImageRepository(client: client)
+            garmentImageRepository: SupabaseGarmentImageRepository(client: client),
+            addGarmentFixtureData: nil
         )
     }
 
@@ -31,7 +33,11 @@ struct AppDependencies {
                 sleep: { _ in }
             ),
             garmentRepository: UITestGarmentRepository(scenario: addGarmentScenario),
-            garmentImageRepository: UITestGarmentImageRepository(scenario: addGarmentScenario)
+            garmentImageRepository: UITestGarmentImageRepository(scenario: addGarmentScenario),
+            addGarmentFixtureData: Bundle.main.url(
+                forResource: "garment-photo-metadata",
+                withExtension: "jpg"
+            ).flatMap { try? Data(contentsOf: $0) }
         )
     }
 
@@ -113,6 +119,7 @@ private struct UITestWardrobeRepository: WardrobeRepository {
 private actor UITestGarmentRepository: GarmentRepository {
     let scenario: String
     private var garments: [Garment] = []
+    private var createAttempts = 0
 
     init(scenario: String) {
         self.scenario = scenario
@@ -123,7 +130,11 @@ private actor UITestGarmentRepository: GarmentRepository {
     }
 
     func createGarment(_ input: NewGarment) async throws -> Garment {
-        guard scenario != "create-failure" else { throw GarmentRepositoryError.unknown }
+        createAttempts += 1
+        try? await Task.sleep(for: .milliseconds(350))
+        if scenario == "create-failure", createAttempts == 1 {
+            throw GarmentRepositoryError.unknown
+        }
         let timestamp = Date(timeIntervalSince1970: 0)
         let garment = Garment(
             id: input.id,
@@ -154,13 +165,18 @@ private actor UITestGarmentRepository: GarmentRepository {
 private actor UITestGarmentImageRepository: GarmentImageRepository {
     let scenario: String
     private var images: [String: Data] = [:]
+    private var uploadAttempts = 0
 
     init(scenario: String) {
         self.scenario = scenario
     }
 
     func uploadJPEG(_ data: Data, path: String) async throws {
-        guard scenario != "upload-failure" else { throw GarmentRepositoryError.networkUnavailable }
+        uploadAttempts += 1
+        try? await Task.sleep(for: .milliseconds(350))
+        if scenario == "upload-failure", uploadAttempts == 1 {
+            throw GarmentRepositoryError.networkUnavailable
+        }
         images[path] = data
     }
 

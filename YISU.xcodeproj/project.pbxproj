@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		0069F4C190E3C843F7E86DAB /* CurrentWardrobeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B042293BE06012AAB28F451 /* CurrentWardrobeView.swift */; };
+		016AF5D201B3C547698A0B2C /* AddGarmentFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176BF6D312C4E6587A9B0C2D /* AddGarmentFlowTests.swift */; };
+		026BF6D312C4E6587A9B0C2D /* GarmentPhotoPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287C07E423D5F7698A0B1C3D /* GarmentPhotoPickerView.swift */; };
+		036CF7E423D5F7698A0B1C3D /* GarmentPhotoPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398D18F534E6077A9B0C2D4E /* GarmentPhotoPreviewView.swift */; };
+		046DF8F534E6077A9B0C2D4E /* AddGarmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9E290645F7188B0C1D3E5F /* AddGarmentView.swift */; };
+		056EF90645F7188B0C1D3E5F /* garment-photo-metadata.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6E8A0B2C4D6F8193A5E7F9C1 /* garment-photo-metadata.jpg */; };
 		02729C5611C224621113DF2C /* GarmentDetailTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2352787C60645DBA33DA9CF /* GarmentDetailTests.swift */; };
 		02F4D24DBC073C86A6C0456C /* WardrobeHomePolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5C8A4C3418D6B4C37E1C2C /* WardrobeHomePolicyTests.swift */; };
 		03EBBD3BC6EC356DBFF0B6E2 /* SupabaseConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32828918AE6D675CF62A06E /* SupabaseConfigurationTests.swift */; };
@@ -109,6 +114,10 @@
 		063904435C870A2D29CF1E26 /* AppRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRoute.swift; sourceTree = "<group>"; };
 		0CC1FDB49AF03AC690A0B6A8 /* YISUContentStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUContentStateView.swift; sourceTree = "<group>"; };
 		0D959CC576383CD94CD9975A /* AuthSubmissionStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSubmissionStateTests.swift; sourceTree = "<group>"; };
+		176BF6D312C4E6587A9B0C2D /* AddGarmentFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGarmentFlowTests.swift; sourceTree = "<group>"; };
+		287C07E423D5F7698A0B1C3D /* GarmentPhotoPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentPhotoPickerView.swift; sourceTree = "<group>"; };
+		398D18F534E6077A9B0C2D4E /* GarmentPhotoPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentPhotoPreviewView.swift; sourceTree = "<group>"; };
+		4A9E290645F7188B0C1D3E5F /* AddGarmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGarmentView.swift; sourceTree = "<group>"; };
 		186F4DA5E18B28ED85E9CD16 /* FoundationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationTests.swift; sourceTree = "<group>"; };
 		1B64E05C66A1089FE5C1BAFB /* YISUCategoryFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUCategoryFilter.swift; sourceTree = "<group>"; };
 		1E9DB435246FE769FEAB25D9 /* ModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
@@ -220,7 +229,10 @@
 			children = (
 				60A9C1E3F5B7D8092A4C6E8F /* AddGarmentModels.swift */,
 				61B0D2F4A6C8E8193B5D7F90 /* AddGarmentStore.swift */,
+				4A9E290645F7188B0C1D3E5F /* AddGarmentView.swift */,
 				69B8D0F2A4C6E8193B5D7F01 /* GarmentImageProcessor.swift */,
+				287C07E423D5F7698A0B1C3D /* GarmentPhotoPickerView.swift */,
+				398D18F534E6077A9B0C2D4E /* GarmentPhotoPreviewView.swift */,
 			);
 			path = AddGarment;
 			sourceTree = "<group>";
@@ -497,6 +509,7 @@
 		F696BB093A6FEBEA31EE003D /* WardrobeAppUITests */ = {
 			isa = PBXGroup;
 			children = (
+				176BF6D312C4E6587A9B0C2D /* AddGarmentFlowTests.swift */,
 				CB7062A69595B7F9A8B4D7F5 /* AuthSessionFlowTests.swift */,
 				469FA0AB02377F1B56792DD2 /* DesignSystemGalleryTests.swift */,
 				F2352787C60645DBA33DA9CF /* GarmentDetailTests.swift */,
@@ -651,6 +664,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C6BD65ABF2D9A7D783608E0 /* Assets.xcassets in Resources */,
+				056EF90645F7188B0C1D3E5F /* garment-photo-metadata.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -661,6 +675,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				016AF5D201B3C547698A0B2C /* AddGarmentFlowTests.swift in Sources */,
 				14541358F539BB2C4F6BDA24 /* AuthSessionFlowTests.swift in Sources */,
 				49E3A161E4E039076FA192D3 /* DesignSystemGalleryTests.swift in Sources */,
 				02729C5611C224621113DF2C /* GarmentDetailTests.swift in Sources */,
@@ -700,6 +715,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				046DF8F534E6077A9B0C2D4E /* AddGarmentView.swift in Sources */,
 				9AEE4713E74DBC2E465ABB9A /* AccountModels.swift in Sources */,
 				ED09DA92CB1711C22D6AB9C6 /* AccountRepositories.swift in Sources */,
 				11400DC336C7CCDB4EA8CC7D /* AppDependencies.swift in Sources */,
@@ -715,6 +731,8 @@
 				59B8D0F2A4C6E8193B5D7F01 /* AddGarmentModels.swift in Sources */,
 				5AB9D1F3A5C7E8092B4D6F81 /* AddGarmentStore.swift in Sources */,
 				58A7C9E1F3B5D7092A4C6E80 /* GarmentImageProcessor.swift in Sources */,
+				026BF6D312C4E6587A9B0C2D /* GarmentPhotoPickerView.swift in Sources */,
+				036CF7E423D5F7698A0B1C3D /* GarmentPhotoPreviewView.swift in Sources */,
 				1451829F825E013892749F7E /* GarmentRepositories.swift in Sources */,
 				BE9EFA9F1087483698262764 /* GarmentSummary.swift in Sources */,
 				EE2C7E1205D3734FA225EF6F /* ProfileView.swift in Sources */,
