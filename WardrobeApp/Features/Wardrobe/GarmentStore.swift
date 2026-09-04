@@ -37,4 +37,13 @@ final class GarmentStore {
         garments.insert(garment, at: 0)
         state = .loaded
     }
+
+    func replacePersisted(_ garment: Garment) {
+        guard let index = garments.firstIndex(where: { $0.id == garment.id }) else { return }
+        garments[index] = garment
+    }
+
+    func removePersisted(id: UUID) {
+        garments.removeAll { $0.id == id }
+    }
 }

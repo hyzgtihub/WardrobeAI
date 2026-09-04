@@ -162,6 +162,39 @@ private actor UITestGarmentRepository: GarmentRepository {
         return garment
     }
 
+    func fetchGarment(id: UUID) async throws -> Garment {
+        guard let garment = garments.first(where: { $0.id == id }) else { throw GarmentRepositoryError.notFound }
+        return garment
+    }
+
+    func updateGarment(id: UUID, changes: GarmentChanges) async throws -> Garment {
+        guard let index = garments.firstIndex(where: { $0.id == id }) else { throw GarmentRepositoryError.notFound }
+        var value = garments[index]
+        if let imagePath = changes.imagePath { value.imagePath = imagePath }
+        if let name = changes.name { value.name = name }
+        if let category = changes.category { value.category = category }
+        if let seasons = changes.seasons { value.seasons = seasons }
+        if let colors = changes.colors { value.colors = colors }
+        if let materials = changes.materials { value.materials = materials }
+        if let styles = changes.styles { value.styles = styles }
+        value.brand = apply(changes.brand, current: value.brand)
+        value.price = apply(changes.price, current: value.price)
+        value.size = apply(changes.size, current: value.size)
+        value.purchaseDate = apply(changes.purchaseDate, current: value.purchaseDate)
+        value.storageLocation = apply(changes.storageLocation, current: value.storageLocation)
+        value.notes = apply(changes.notes, current: value.notes)
+        value.updatedAt = Date()
+        garments[index] = value
+        return value
+    }
+
+    func deleteGarment(id: UUID) async throws { garments.removeAll { $0.id == id } }
+
+    private func apply<Value>(_ change: NullableChange<Value>?, current: Value?) -> Value? {
+        guard let change else { return current }
+        return switch change { case .value(let value): value; case .clear: nil }
+    }
+
     private static let samples: [Garment] = [
         sample(id: "11111111-1111-1111-1111-111111111101", name: "白色亚麻衬衫", path: "garment-white-linen-shirt", category: .tops, seasons: ["春季", "夏季"]),
         sample(id: "11111111-1111-1111-1111-111111111102", name: "蓝色针织上衣", path: "garment-powder-blue-knit", category: .tops, seasons: ["春季", "秋季"]),

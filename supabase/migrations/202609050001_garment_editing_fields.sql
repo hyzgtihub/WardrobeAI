@@ -15,6 +15,21 @@ set
 
 alter table public.garments
 drop column material,
-drop column style,
-add constraint garments_materials_no_blank check (array_position(materials, '') is null),
-add constraint garments_styles_no_blank check (array_position(styles, '') is null);
+drop column style;
+
+create function public.garment_tags_are_valid(values_to_check text[])
+returns boolean
+language sql
+immutable
+set search_path = ''
+as $$
+  select cardinality(values_to_check) <= 20
+    and coalesce(bool_and(length(btrim(value)) between 1 and 20), true)
+  from unnest(values_to_check) as value;
+$$;
+
+revoke all on function public.garment_tags_are_valid(text[]) from public;
+
+alter table public.garments
+add constraint garments_materials_valid check (public.garment_tags_are_valid(materials)),
+add constraint garments_styles_valid check (public.garment_tags_are_valid(styles));

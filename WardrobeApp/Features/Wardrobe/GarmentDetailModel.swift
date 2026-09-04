@@ -1,4 +1,5 @@
 import Foundation
+import Observation
 
 enum GarmentFieldOptions {
     static let categories: [YISUCategory] = [.tops, .pants, .dresses, .outerwear, .shoes, .bags, .accessories, .other]
@@ -266,4 +267,216 @@ enum GarmentAutosaveState: Equatable, Sendable {
         case .loadingFailed: "衣物信息加载失败"
         }
     }
+}
+
+@MainActor
+@Observable
+final class GarmentDetailStore {
+    enum Field: Hashable, Sendable { case name, category, seasons, colors, brand, price, size, purchaseDate, materials, styles, storage, notes, image }
+
+    var draft: GarmentDetailDraft
+    private(set) var state: GarmentAutosaveState = .idle
+    private(set) var validationMessage: String?
+    private(set) var garment: Garment
+
+    private let repository: any GarmentRepository
+    private let imageRepository: (any GarmentImageRepository)?
+    private let imageProcessor: GarmentImageProcessor
+    private let makeRevisionID: () -> UUID
+    private let debounceNanoseconds: UInt64
+    private var onPersisted: (Garment) -> Void
+    @ObservationIgnored private var debounceTasks: [Field: Task<Void, Never>] = [:]
+    @ObservationIgnored private var saveTasks: [Field: Task<Void, Never>] = [:]
+    @ObservationIgnored private var pendingFields: Set<Field> = []
+
+    init(
+        garment: Garment,
+        repository: any GarmentRepository,
+        imageRepository: (any GarmentImageRepository)? = nil,
+        imageProcessor: GarmentImageProcessor = GarmentImageProcessor(),
+        makeRevisionID: @escaping () -> UUID = UUID.init,
+        debounceNanoseconds: UInt64 = GarmentDetailPolicy.textDebounceNanoseconds,
+        onPersisted: @escaping (Garment) -> Void = { _ in }
+    ) {
+        self.garment = garment
+        draft = GarmentDetailDraft(garment: garment)
+        self.repository = repository
+        self.imageRepository = imageRepository
+        self.imageProcessor = imageProcessor
+        self.makeRevisionID = makeRevisionID
+        self.debounceNanoseconds = debounceNanoseconds
+        self.onPersisted = onPersisted
+    }
+
+    func setOnPersisted(_ action: @escaping (Garment) -> Void) { onPersisted = action }
+
+    func editName(_ value: String) { draft.name = value; schedule(.name) }
+    func editBrand(_ value: String) { draft.brand = value; schedule(.brand) }
+    func editPrice(_ value: String) { draft.price = value; schedule(.price) }
+    func editNotes(_ value: String) { draft.notes = value; schedule(.notes) }
+    func setCategory(_ value: YISUCategory, clearSize: Bool = false) { draft.category = value; if clearSize { draft.size = "" }; enqueue(.category) }
+    func setSeasons(_ value: [String]) { draft.seasons = value; enqueue(.seasons) }
+    func setColors(_ value: [String]) { draft.colors = value; enqueue(.colors) }
+    func setSize(_ value: String?) { draft.size = value ?? ""; enqueue(.size) }
+    func setPurchaseDate(_ value: Date?) { draft.purchaseDate = Self.dateText(value); enqueue(.purchaseDate) }
+    func setMaterials(_ value: [String]) { draft.materials = value; enqueue(.materials) }
+    func setStyles(_ value: [String]) { draft.styles = value; enqueue(.styles) }
+    func setStorage(_ value: String?) { draft.storageLocation = value ?? ""; enqueue(.storage) }
+
+    func flush(_ field: Field) async {
+        debounceTasks[field]?.cancel()
+        debounceTasks[field] = nil
+        enqueue(field)
+        await waitForSaves()
+    }
+
+    func retryFailedField(_ field: Field) { enqueue(field) }
+
+    func replacePhoto(data: Data) async {
+        guard saveTasks[.image] == nil, let imageRepository else { return }
+        let processed: GarmentImage
+        do { processed = try imageProcessor.process(data) } catch { state = .photoFailed; return }
+        let oldPath = garment.imagePath
+        let newPath = GarmentImage.revisionPath(userID: garment.userID, garmentID: garment.id, revisionID: makeRevisionID())
+        state = .saving
+        do { try await imageRepository.uploadJPEG(processed.data, path: newPath) } catch { state = .photoFailed; return }
+        do {
+            let saved = try await repository.updateGarment(id: garment.id, changes: GarmentChanges(imagePath: newPath))
+            garment.imagePath = saved.imagePath
+            draft.imageName = saved.imagePath
+            onPersisted(garment)
+            state = .saved
+            try? await imageRepository.deleteImage(path: oldPath)
+        } catch {
+            try? await imageRepository.deleteImage(path: newPath)
+            state = .photoFailed
+        }
+    }
+
+    func delete() async -> Bool {
+        guard state != .saving else { return false }
+        state = .saving
+        do {
+            try await repository.deleteGarment(id: garment.id)
+            try? await imageRepository?.deleteImage(path: garment.imagePath)
+            state = .saved
+            return true
+        } catch {
+            state = .failed
+            return false
+        }
+    }
+
+    func waitForSaves() async {
+        while !saveTasks.isEmpty || !debounceTasks.isEmpty || !pendingFields.isEmpty {
+            try? await Task.sleep(nanoseconds: 1_000_000)
+        }
+    }
+
+    private func schedule(_ field: Field) {
+        debounceTasks[field]?.cancel()
+        state = .pending
+        validationMessage = nil
+        debounceTasks[field] = Task { [weak self] in
+            guard let self else { return }
+            try? await Task.sleep(nanoseconds: debounceNanoseconds)
+            guard !Task.isCancelled else { return }
+            debounceTasks[field] = nil
+            enqueue(field)
+        }
+    }
+
+    private func enqueue(_ field: Field) {
+        pendingFields.insert(field)
+        state = .pending
+        guard saveTasks[field] == nil else { return }
+        saveTasks[field] = Task { [weak self] in await self?.runSaveLoop(field) }
+    }
+
+    private func runSaveLoop(_ field: Field) async {
+        while pendingFields.remove(field) != nil {
+            guard let changes = changes(for: field) else {
+                state = .failed
+                continue
+            }
+            if changes.isEmpty {
+                state = pendingFields.isEmpty ? .saved : .pending
+                validationMessage = nil
+                continue
+            }
+            state = .saving
+            do {
+                let saved = try await repository.updateGarment(id: garment.id, changes: changes)
+                mergePersistedField(field, from: saved)
+                onPersisted(garment)
+                state = pendingFields.isEmpty ? .saved : .pending
+                validationMessage = nil
+            } catch {
+                state = .failed
+            }
+        }
+        saveTasks[field] = nil
+    }
+
+    private func changes(for field: Field) -> GarmentChanges? {
+        switch field {
+        case .name:
+            let value = draft.name.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !value.isEmpty else { validationMessage = "名称不能为空"; return nil }
+            return value == garment.name ? GarmentChanges() : GarmentChanges(name: value)
+        case .category:
+            guard draft.category != garment.category || draft.size != (garment.size ?? "") else { return GarmentChanges() }
+            return GarmentChanges(category: draft.category, size: draft.size.isEmpty ? .clear : nil)
+        case .seasons:
+            guard !draft.seasons.isEmpty else { validationMessage = "请至少选择一个季节"; return nil }
+            return draft.seasons == garment.seasons ? GarmentChanges() : GarmentChanges(seasons: draft.seasons)
+        case .colors: return draft.colors == garment.colors ? GarmentChanges() : GarmentChanges(colors: draft.colors)
+        case .brand: return draft.brand == (garment.brand ?? "") ? GarmentChanges() : GarmentChanges(brand: nullable(draft.brand))
+        case .price:
+            let value = draft.price.replacingOccurrences(of: "¥", with: "").trimmingCharacters(in: .whitespaces)
+            if value.isEmpty { return garment.price == nil ? GarmentChanges() : GarmentChanges(price: .clear) }
+            guard value.range(of: #"^\d+(?:\.\d{1,2})?$"#, options: .regularExpression) != nil, let price = Decimal(string: value), price >= 0 else { validationMessage = "价格格式不正确"; return nil }
+            return price == garment.price ? GarmentChanges() : GarmentChanges(price: .value(price))
+        case .size: return draft.size == (garment.size ?? "") ? GarmentChanges() : GarmentChanges(size: nullable(draft.size))
+        case .purchaseDate:
+            let date = Self.date(draft.purchaseDate)
+            if draft.purchaseDate.isEmpty { return garment.purchaseDate == nil ? GarmentChanges() : GarmentChanges(purchaseDate: .clear) }
+            return date == garment.purchaseDate ? GarmentChanges() : GarmentChanges(purchaseDate: date.map(NullableChange.value))
+        case .materials: return draft.materials == garment.materials ? GarmentChanges() : GarmentChanges(materials: draft.materials)
+        case .styles: return draft.styles == garment.styles ? GarmentChanges() : GarmentChanges(styles: draft.styles)
+        case .storage: return draft.storageLocation == (garment.storageLocation ?? "") ? GarmentChanges() : GarmentChanges(storageLocation: nullable(draft.storageLocation))
+        case .notes: return draft.notes == (garment.notes ?? "") ? GarmentChanges() : GarmentChanges(notes: nullable(draft.notes))
+        case .image: return GarmentChanges(imagePath: draft.imageName)
+        }
+    }
+
+    private func nullable(_ value: String) -> NullableChange<String> {
+        let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? .clear : .value(trimmed)
+    }
+
+    private func mergePersistedField(_ field: Field, from saved: Garment) {
+        switch field {
+        case .name: garment.name = saved.name
+        case .category: garment.category = saved.category; garment.size = saved.size
+        case .seasons: garment.seasons = saved.seasons
+        case .colors: garment.colors = saved.colors
+        case .brand: garment.brand = saved.brand
+        case .price: garment.price = saved.price
+        case .size: garment.size = saved.size
+        case .purchaseDate: garment.purchaseDate = saved.purchaseDate
+        case .materials: garment.materials = saved.materials
+        case .styles: garment.styles = saved.styles
+        case .storage: garment.storageLocation = saved.storageLocation
+        case .notes: garment.notes = saved.notes
+        case .image: garment.imagePath = saved.imagePath
+        }
+        garment.updatedAt = max(garment.updatedAt, saved.updatedAt)
+    }
+
+    private static func dateText(_ date: Date?) -> String {
+        guard let date else { return "" }; return displayDateFormatter.string(from: date)
+    }
+    private static func date(_ text: String) -> Date? { displayDateFormatter.date(from: text) }
+    private static let displayDateFormatter: DateFormatter = { let f = DateFormatter(); f.calendar = Calendar(identifier: .iso8601); f.locale = Locale(identifier: "en_US_POSIX"); f.timeZone = TimeZone(secondsFromGMT: 0); f.dateFormat = "yyyy.MM.dd"; return f }()
 }

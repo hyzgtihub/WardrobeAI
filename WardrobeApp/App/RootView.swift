@@ -6,6 +6,7 @@ struct RootView: View {
     @State private var route: AppRoute
     @State private var setupState: WardrobeSetupState
     @State private var selectedGarment = GarmentDetailDraft.whiteLinenShirt
+    @State private var garmentDetailStore: GarmentDetailStore
     @State private var addGarmentStore: AddGarmentStore
     @State private var garmentStore: GarmentStore
     @State private var photoPickerCancelRoute: AppRoute = .wardrobe
@@ -30,6 +31,11 @@ struct RootView: View {
             imageRepository: dependencies.garmentImageRepository
         ))
         _garmentStore = State(initialValue: GarmentStore(repository: dependencies.garmentRepository))
+        _garmentDetailStore = State(initialValue: GarmentDetailStore(
+            garment: Self.uiTestGarment,
+            repository: dependencies.garmentRepository,
+            imageRepository: dependencies.garmentImageRepository
+        ))
     }
 
     private var sessionStore: SessionStore { dependencies.sessionStore }
@@ -159,8 +165,7 @@ struct RootView: View {
             },
             onSelectGarment: { garment in
                 if let persisted = garmentStore.garments.first(where: { $0.id == garment.id }) {
-                    selectedGarment = GarmentDetailDraft(garment: persisted)
-                    route = .garmentDetail
+                    openDetail(persisted)
                 }
             },
             onProfile: { route = .profile }
@@ -215,8 +220,7 @@ struct RootView: View {
                 },
                 onCreated: { garment in
                     garmentStore.insertCreated(garment)
-                    selectedGarment = GarmentDetailDraft(garment: garment)
-                    route = .garmentDetail
+                    openDetail(garment)
                 }
             )
         default:
@@ -226,14 +230,31 @@ struct RootView: View {
 
     private var garmentDetail: some View {
         GarmentDetailView(
-            garment: selectedGarment,
+            store: garmentDetailStore,
             onBack: { route = .wardrobe },
             imageRepository: dependencies.garmentImageRepository,
-            onChange: { updated in
-                selectedGarment = updated
-            },
-            onDelete: { route = .wardrobe }
+            onChangePhoto: {},
+            onDelete: {
+                Task {
+                    if await garmentDetailStore.delete() {
+                        garmentStore.removePersisted(id: garmentDetailStore.draft.id)
+                        route = .wardrobe
+                    }
+                }
+            }
         )
+    }
+
+    private func openDetail(_ garment: Garment) {
+        let detail = GarmentDetailStore(
+            garment: garment,
+            repository: dependencies.garmentRepository,
+            imageRepository: dependencies.garmentImageRepository
+        )
+        detail.setOnPersisted { persisted in garmentStore.replacePersisted(persisted) }
+        garmentDetailStore = detail
+        selectedGarment = GarmentDetailDraft(garment: garment)
+        route = .garmentDetail
     }
 
     private func progress(title: String) -> some View {
@@ -295,6 +316,16 @@ struct RootView: View {
             name: "我",
             isDefault: true
         )
+    )
+
+    private static let uiTestGarment = Garment(
+        id: UUID(uuidString: "11111111-1111-1111-1111-111111111101")!,
+        userID: UUID(uuidString: "11111111-1111-1111-1111-111111111111")!,
+        wardrobeID: UUID(uuidString: "22222222-2222-2222-2222-222222222222")!,
+        imagePath: "garment-white-linen-shirt", name: "白色亚麻衬衫", category: .tops,
+        seasons: ["春季", "夏季"], colors: ["白色系"], brand: "MUJI", price: 299, size: "M",
+        purchaseDate: nil, materials: ["麻", "棉"], styles: ["通勤", "简约"],
+        storageLocation: "主卧衣橱 · 上层", notes: "适合搭配浅色长裤", createdAt: Date(), updatedAt: Date(), deletedAt: nil
     )
 
 }

@@ -5,7 +5,7 @@ struct Garment: Codable, Equatable, Sendable, Identifiable {
     let id: UUID
     let userID: UUID
     let wardrobeID: UUID
-    let imagePath: String
+    var imagePath: String
     var name: String
     var category: YISUCategory
     var seasons: [String]
@@ -211,6 +211,12 @@ struct GarmentChanges: Encodable, Equatable, Sendable {
     var storageLocation: NullableChange<String>?
     var notes: NullableChange<String>?
 
+    var isEmpty: Bool {
+        imagePath == nil && name == nil && category == nil && seasons == nil && colors == nil &&
+        brand == nil && price == nil && size == nil && purchaseDate == nil && materials == nil &&
+        styles == nil && storageLocation == nil && notes == nil
+    }
+
     init(
         imagePath: String? = nil,
         name: String? = nil,
@@ -293,6 +299,10 @@ struct GarmentImage: Equatable, Sendable {
 
     static func objectPath(userID: UUID, garmentID: UUID) -> String {
         "\(userID.uuidString.lowercased())/\(garmentID.uuidString.lowercased())/original.jpg"
+    }
+
+    static func revisionPath(userID: UUID, garmentID: UUID, revisionID: UUID) -> String {
+        "\(userID.uuidString.lowercased())/\(garmentID.uuidString.lowercased())/\(revisionID.uuidString.lowercased()).jpg"
     }
 }
 

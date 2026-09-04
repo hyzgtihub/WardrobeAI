@@ -1,4 +1,5 @@
 import SwiftUI
+import PhotosUI
 
 struct YISUAutosaveStatus: View {
     let state: GarmentAutosaveState
@@ -67,17 +68,20 @@ struct YISUPhotoHero: View {
     let imageRepository: (any GarmentImageRepository)?
     let status: GarmentAutosaveState
     let onChangePhoto: () -> Void
+    let photoSelection: Binding<PhotosPickerItem?>?
 
     init(
         imageName: String,
         imageRepository: (any GarmentImageRepository)? = nil,
         status: GarmentAutosaveState,
-        onChangePhoto: @escaping () -> Void
+        onChangePhoto: @escaping () -> Void,
+        photoSelection: Binding<PhotosPickerItem?>? = nil
     ) {
         self.imageName = imageName
         self.imageRepository = imageRepository
         self.status = status
         self.onChangePhoto = onChangePhoto
+        self.photoSelection = photoSelection
     }
 
     var body: some View {
@@ -100,16 +104,26 @@ struct YISUPhotoHero: View {
                 Spacer()
                 HStack {
                     Spacer()
-                    Button("换图", action: onChangePhoto)
-                        .font(YISUTheme.Typography.callout.weight(.semibold))
-                        .frame(width: 84, height: 44)
-                        .background(YISUTheme.Color.surface, in: Capsule())
-                        .foregroundStyle(YISUTheme.Color.brandEmphasis)
-                        .accessibilityIdentifier("garmentDetail.changePhoto")
+                    if let photoSelection {
+                        PhotosPicker(selection: photoSelection, matching: .images) { changePhotoLabel }
+                            .simultaneousGesture(TapGesture().onEnded(onChangePhoto))
+                            .accessibilityIdentifier("garmentDetail.changePhoto")
+                    } else {
+                        Button(action: onChangePhoto) { changePhotoLabel }
+                            .accessibilityIdentifier("garmentDetail.changePhoto")
+                    }
                 }
             }
             .padding(16)
         }
         .frame(height: 300)
+    }
+
+    private var changePhotoLabel: some View {
+        Text("换图")
+            .font(YISUTheme.Typography.callout.weight(.semibold))
+            .frame(width: 84, height: 44)
+            .background(YISUTheme.Color.surface, in: Capsule())
+            .foregroundStyle(YISUTheme.Color.brandEmphasis)
     }
 }
