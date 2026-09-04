@@ -116,8 +116,8 @@ flowchart TD
 | `price` | `numeric(12,2)` | 可空且不小于 0 |
 | `size` | `text` | 可空 |
 | `purchase_date` | `date` | 可空 |
-| `material` | `text` | 可空 |
-| `style` | `text` | 可空 |
+| `materials` | `text[]` | 非空数组，默认 `{}`；至多 20 项，每项去空白后 1–20 字符 |
+| `styles` | `text[]` | 非空数组，默认 `{}`；至多 20 项，每项去空白后 1–20 字符 |
 | `storage_location` | `text` | 可空 |
 | `notes` | `text` | 可空 |
 | `created_at` | `timestamptz` | 非空，默认当前时间 |
