@@ -31,7 +31,11 @@
 		524A1B1FCE81D179F977601B /* WardrobeSampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D16DB641F6A9DF785B71AC6 /* WardrobeSampleData.swift */; };
 		55E820685356BBFC7E2A0332 /* CollectionBehaviorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437130D898E88B896F0C71EF /* CollectionBehaviorTests.swift */; };
 		57A36F6A5939EFE27C26BF64 /* AppDependenciesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743D2B331AAB8EA6C3E0782F /* AppDependenciesTests.swift */; };
+		58A7C9E1F3B5D7092A4C6E80 /* GarmentImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69B8D0F2A4C6E8193B5D7F01 /* GarmentImageProcessor.swift */; };
 		5A7B9C1D3E5F708192A4B6C8 /* SupabaseGarmentRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8CAD1E3F507192A4B6C8D0 /* SupabaseGarmentRepositoryTests.swift */; };
+		5B7D9F1A3C5E708294B6D8F0 /* GarmentImageProcessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8E0A2B4D6F8193A5C7E9F1 /* GarmentImageProcessorTests.swift */; };
+		5C7E9A1B3D5F708294B6C8E0 /* garment-photo-landscape.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6D8F0A2B4C6E8193A5D7F9B1 /* garment-photo-landscape.jpg */; };
+		5D7F9B1C3E5A708294C6D8F0 /* garment-photo-metadata.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6E8A0B2C4D6F8193A5E7F9C1 /* garment-photo-metadata.jpg */; };
 		5A6149836D677442BC5EE0F3 /* SupabaseWardrobeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A3057C6D8A237F646E4E2E /* SupabaseWardrobeRepository.swift */; };
 		5FF8D4BEFD214325A5A5F0CA /* SupabaseAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D18F0E054E741DF8ADEC34 /* SupabaseAuthRepository.swift */; };
 		62A7AE88027C37BBB5DF10F1 /* YISUCategoryFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B64E05C66A1089FE5C1BAFB /* YISUCategoryFilter.swift */; };
@@ -121,7 +125,11 @@
 		6B0B77FB37F8803F9B56D380 /* SupabaseProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseProfileRepository.swift; sourceTree = "<group>"; };
 		6B81D2C7BE7469893128BD69 /* YISUGarmentGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUGarmentGrid.swift; sourceTree = "<group>"; };
 		6B8CAD1E3F507192A4B6C8D0 /* SupabaseGarmentRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseGarmentRepositoryTests.swift; sourceTree = "<group>"; };
+		6C8E0A2B4D6F8193A5C7E9F1 /* GarmentImageProcessorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGarment/GarmentImageProcessorTests.swift; sourceTree = "<group>"; };
+		6D8F0A2B4C6E8193A5D7F9B1 /* garment-photo-landscape.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Fixtures/garment-photo-landscape.jpg; sourceTree = "<group>"; };
+		6E8A0B2C4D6F8193A5E7F9C1 /* garment-photo-metadata.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Fixtures/garment-photo-metadata.jpg; sourceTree = "<group>"; };
 		6D45B77C991C3AC93E3AE5A1 /* SupabaseClientFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseClientFactory.swift; sourceTree = "<group>"; };
+		69B8D0F2A4C6E8193B5D7F01 /* GarmentImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentImageProcessor.swift; sourceTree = "<group>"; };
 		743D2B331AAB8EA6C3E0782F /* AppDependenciesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependenciesTests.swift; sourceTree = "<group>"; };
 		785FDCFE4EB06900146D66F1 /* SupabaseConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseConfiguration.swift; sourceTree = "<group>"; };
 		78D0C35C55E844FAA10DD295 /* GarmentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentDetailView.swift; sourceTree = "<group>"; };
@@ -192,12 +200,21 @@
 			isa = PBXGroup;
 			children = (
 				68BB3521C6C1BDF5FB18CD44 /* Account */,
+				7A9C1E3F5B7D8092A4C6E8F0 /* AddGarment */,
 				6BF305C0BED43066B2D784B3 /* Auth */,
 				FAFEEF5A8492B51F8EE69BD6 /* Onboarding */,
 				89828E03A9FF637841FA327F /* Profile */,
 				B3ED9CB159883534AA1B10B2 /* Wardrobe */,
 			);
 			path = Features;
+			sourceTree = "<group>";
+		};
+		7A9C1E3F5B7D8092A4C6E8F0 /* AddGarment */ = {
+			isa = PBXGroup;
+			children = (
+				69B8D0F2A4C6E8193B5D7F01 /* GarmentImageProcessor.swift */,
+			);
+			path = AddGarment;
 			sourceTree = "<group>";
 		};
 		0DD4555A64E2D0EC8E4BA79C = {
@@ -434,6 +451,9 @@
 			isa = PBXGroup;
 			children = (
 				D8C12093FFA6C8AB6E318FA5 /* SmokeTests.swift */,
+				6C8E0A2B4D6F8193A5C7E9F1 /* GarmentImageProcessorTests.swift */,
+				6D8F0A2B4C6E8193A5D7F9B1 /* garment-photo-landscape.jpg */,
+				6E8A0B2C4D6F8193A5E7F9C1 /* garment-photo-metadata.jpg */,
 				7CC748481F302F5F9954EF5E /* Account */,
 				3CE89CBB41FB8B68544B77B1 /* App */,
 				5BC7F9B6FFF2AF6D9B10429E /* Auth */,
@@ -530,6 +550,7 @@
 			buildConfigurationList = 2E3FFE5747EA59C7A1C4A609 /* Build configuration list for PBXNativeTarget "YISUTests" */;
 			buildPhases = (
 				A913041B030AAB0DF432D928 /* Sources */,
+				7F9B1C3D5E708294A6C8E0F2 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -607,6 +628,15 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		7F9B1C3D5E708294A6C8E0F2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C7E9A1B3D5F708294B6C8E0 /* garment-photo-landscape.jpg in Resources */,
+				5D7F9B1C3E5A708294C6D8F0 /* garment-photo-metadata.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C201A9B86D3233B102D6BC42 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -644,6 +674,7 @@
 				83516AFD1C87246D83CCF380 /* FoundationTests.swift in Sources */,
 				2E3E1D17375A7D72213BA1B6 /* GarmentDetailPolicyTests.swift in Sources */,
 				21EB3D64E795C85800EB3AFB /* GarmentModelCodingTests.swift in Sources */,
+				5B7D9F1A3C5E708294B6D8F0 /* GarmentImageProcessorTests.swift in Sources */,
 				04C3191FB0C2365FC5F5312D /* ModelTests.swift in Sources */,
 				8E36D96068B8D968286BB481 /* SessionStoreTests.swift in Sources */,
 				F27F3783968E54D4DD12D6E4 /* SmokeTests.swift in Sources */,
@@ -671,6 +702,7 @@
 				C4F176BD9B1D23C01889CBF2 /* GarmentDetailModel.swift in Sources */,
 				A21E664F8450304ECE6ECD2B /* GarmentDetailView.swift in Sources */,
 				863DF5D077654E8384BDDDA5 /* GarmentModels.swift in Sources */,
+				58A7C9E1F3B5D7092A4C6E80 /* GarmentImageProcessor.swift in Sources */,
 				1451829F825E013892749F7E /* GarmentRepositories.swift in Sources */,
 				BE9EFA9F1087483698262764 /* GarmentSummary.swift in Sources */,
 				EE2C7E1205D3734FA225EF6F /* ProfileView.swift in Sources */,
