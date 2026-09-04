@@ -14,6 +14,14 @@ struct SupabaseGarmentRepository: GarmentRepository {
         }
     }
 
+    struct UpdatePayload: Encodable, Equatable, Sendable {
+        let changes: GarmentChanges
+
+        func encode(to encoder: Encoder) throws {
+            try changes.encode(to: encoder)
+        }
+    }
+
     func fetchGarments(wardrobeID: UUID) async throws -> [Garment] {
         do {
             let response = try await client
@@ -38,6 +46,48 @@ struct SupabaseGarmentRepository: GarmentRepository {
                 .single()
                 .execute()
             return try JSONDecoder.supabase.decode(Garment.self, from: response.data)
+        } catch {
+            throw SupabaseGarmentErrorMapper.map(error)
+        }
+    }
+
+    func fetchGarment(id: UUID) async throws -> Garment {
+        do {
+            let response = try await client
+                .from("garments")
+                .select()
+                .eq("id", value: id)
+                .is("deleted_at", value: nil)
+                .single()
+                .execute()
+            return try JSONDecoder.supabase.decode(Garment.self, from: response.data)
+        } catch {
+            throw SupabaseGarmentErrorMapper.map(error)
+        }
+    }
+
+    func updateGarment(id: UUID, changes: GarmentChanges) async throws -> Garment {
+        do {
+            let response = try await client
+                .from("garments")
+                .update(UpdatePayload(changes: changes))
+                .eq("id", value: id)
+                .select()
+                .single()
+                .execute()
+            return try JSONDecoder.supabase.decode(Garment.self, from: response.data)
+        } catch {
+            throw SupabaseGarmentErrorMapper.map(error)
+        }
+    }
+
+    func deleteGarment(id: UUID) async throws {
+        do {
+            try await client
+                .from("garments")
+                .delete()
+                .eq("id", value: id)
+                .execute()
         } catch {
             throw SupabaseGarmentErrorMapper.map(error)
         }

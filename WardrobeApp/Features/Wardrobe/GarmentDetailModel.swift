@@ -67,8 +67,8 @@ struct GarmentDetailDraft: Equatable, Sendable {
         price = Self.priceText(garment.price)
         size = garment.size ?? ""
         purchaseDate = garment.purchaseDate.map { Self.dateFormatter.string(from: $0) } ?? ""
-        materials = garment.material.map { [$0] } ?? []
-        styles = garment.style.map { [$0] } ?? []
+        materials = garment.materials
+        styles = garment.styles
     }
 
     static let whiteLinenShirt = GarmentDetailDraft(

@@ -14,8 +14,8 @@ struct Garment: Codable, Equatable, Sendable, Identifiable {
     var price: Decimal?
     var size: String?
     var purchaseDate: Date?
-    var material: String?
-    var style: String?
+    var materials: [String]
+    var styles: [String]
     var storageLocation: String?
     var notes: String?
     let createdAt: Date
@@ -35,8 +35,8 @@ struct Garment: Codable, Equatable, Sendable, Identifiable {
         case price
         case size
         case purchaseDate = "purchase_date"
-        case material
-        case style
+        case materials
+        case styles
         case storageLocation = "storage_location"
         case notes
         case createdAt = "created_at"
@@ -57,8 +57,8 @@ struct Garment: Codable, Equatable, Sendable, Identifiable {
         price: Decimal?,
         size: String?,
         purchaseDate: Date?,
-        material: String?,
-        style: String?,
+        materials: [String],
+        styles: [String],
         storageLocation: String?,
         notes: String?,
         createdAt: Date,
@@ -77,8 +77,8 @@ struct Garment: Codable, Equatable, Sendable, Identifiable {
         self.price = price
         self.size = size
         self.purchaseDate = purchaseDate
-        self.material = material
-        self.style = style
+        self.materials = materials
+        self.styles = styles
         self.storageLocation = storageLocation
         self.notes = notes
         self.createdAt = createdAt
@@ -100,8 +100,8 @@ struct Garment: Codable, Equatable, Sendable, Identifiable {
         price = try container.decodeIfPresent(Decimal.self, forKey: .price)
         size = try container.decodeIfPresent(String.self, forKey: .size)
         purchaseDate = try DateOnlyCoding.decodeIfPresent(from: container, forKey: .purchaseDate)
-        material = try container.decodeIfPresent(String.self, forKey: .material)
-        style = try container.decodeIfPresent(String.self, forKey: .style)
+        materials = try container.decodeIfPresent([String].self, forKey: .materials) ?? []
+        styles = try container.decodeIfPresent([String].self, forKey: .styles) ?? []
         storageLocation = try container.decodeIfPresent(String.self, forKey: .storageLocation)
         notes = try container.decodeIfPresent(String.self, forKey: .notes)
         createdAt = try container.decode(Date.self, forKey: .createdAt)
@@ -123,8 +123,8 @@ struct Garment: Codable, Equatable, Sendable, Identifiable {
         try container.encodeIfPresent(price, forKey: .price)
         try container.encodeIfPresent(size, forKey: .size)
         try DateOnlyCoding.encodeIfPresent(purchaseDate, to: &container, forKey: .purchaseDate)
-        try container.encodeIfPresent(material, forKey: .material)
-        try container.encodeIfPresent(style, forKey: .style)
+        try container.encode(materials, forKey: .materials)
+        try container.encode(styles, forKey: .styles)
         try container.encodeIfPresent(storageLocation, forKey: .storageLocation)
         try container.encodeIfPresent(notes, forKey: .notes)
         try container.encode(createdAt, forKey: .createdAt)
@@ -146,8 +146,8 @@ struct NewGarment: Encodable, Equatable, Sendable {
     let price: Decimal?
     let size: String?
     let purchaseDate: Date?
-    let material: String?
-    let style: String?
+    let materials: [String]
+    let styles: [String]
     let storageLocation: String?
     let notes: String?
 
@@ -164,8 +164,8 @@ struct NewGarment: Encodable, Equatable, Sendable {
         case price
         case size
         case purchaseDate = "purchase_date"
-        case material
-        case style
+        case materials
+        case styles
         case storageLocation = "storage_location"
         case notes
     }
@@ -184,10 +184,106 @@ struct NewGarment: Encodable, Equatable, Sendable {
         try container.encodeIfPresentOrNull(price, forKey: .price)
         try container.encodeIfPresentOrNull(size, forKey: .size)
         try DateOnlyCoding.encodeIfPresentOrNull(purchaseDate, to: &container, forKey: .purchaseDate)
-        try container.encodeIfPresentOrNull(material, forKey: .material)
-        try container.encodeIfPresentOrNull(style, forKey: .style)
+        try container.encode(materials, forKey: .materials)
+        try container.encode(styles, forKey: .styles)
         try container.encodeIfPresentOrNull(storageLocation, forKey: .storageLocation)
         try container.encodeIfPresentOrNull(notes, forKey: .notes)
+    }
+}
+
+enum NullableChange<Value: Encodable & Equatable & Sendable>: Equatable, Sendable {
+    case value(Value)
+    case clear
+}
+
+struct GarmentChanges: Encodable, Equatable, Sendable {
+    var imagePath: String?
+    var name: String?
+    var category: YISUCategory?
+    var seasons: [String]?
+    var colors: [String]?
+    var brand: NullableChange<String>?
+    var price: NullableChange<Decimal>?
+    var size: NullableChange<String>?
+    var purchaseDate: NullableChange<Date>?
+    var materials: [String]?
+    var styles: [String]?
+    var storageLocation: NullableChange<String>?
+    var notes: NullableChange<String>?
+
+    init(
+        imagePath: String? = nil,
+        name: String? = nil,
+        category: YISUCategory? = nil,
+        seasons: [String]? = nil,
+        colors: [String]? = nil,
+        brand: NullableChange<String>? = nil,
+        price: NullableChange<Decimal>? = nil,
+        size: NullableChange<String>? = nil,
+        purchaseDate: NullableChange<Date>? = nil,
+        materials: [String]? = nil,
+        styles: [String]? = nil,
+        storageLocation: NullableChange<String>? = nil,
+        notes: NullableChange<String>? = nil
+    ) {
+        self.imagePath = imagePath
+        self.name = name
+        self.category = category
+        self.seasons = seasons
+        self.colors = colors
+        self.brand = brand
+        self.price = price
+        self.size = size
+        self.purchaseDate = purchaseDate
+        self.materials = materials
+        self.styles = styles
+        self.storageLocation = storageLocation
+        self.notes = notes
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case imagePath = "image_path"
+        case name, category, seasons, colors, brand, price, size
+        case purchaseDate = "purchase_date"
+        case materials, styles
+        case storageLocation = "storage_location"
+        case notes
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(imagePath, forKey: .imagePath)
+        try container.encodeIfPresent(name, forKey: .name)
+        try container.encodeIfPresent(category, forKey: .category)
+        try container.encodeIfPresent(seasons, forKey: .seasons)
+        try container.encodeIfPresent(colors, forKey: .colors)
+        try Self.encode(brand, to: &container, forKey: .brand)
+        try Self.encode(price, to: &container, forKey: .price)
+        try Self.encode(size, to: &container, forKey: .size)
+        if let purchaseDate {
+            switch purchaseDate {
+            case .value(let date):
+                try DateOnlyCoding.encodeIfPresent(date, to: &container, forKey: .purchaseDate)
+            case .clear:
+                try container.encodeNil(forKey: .purchaseDate)
+            }
+        }
+        try container.encodeIfPresent(materials, forKey: .materials)
+        try container.encodeIfPresent(styles, forKey: .styles)
+        try Self.encode(storageLocation, to: &container, forKey: .storageLocation)
+        try Self.encode(notes, to: &container, forKey: .notes)
+    }
+
+    private static func encode<Value: Encodable & Equatable & Sendable>(
+        _ change: NullableChange<Value>?,
+        to container: inout KeyedEncodingContainer<CodingKeys>,
+        forKey key: CodingKeys
+    ) throws {
+        guard let change else { return }
+        switch change {
+        case .value(let value): try container.encode(value, forKey: key)
+        case .clear: try container.encodeNil(forKey: key)
+        }
     }
 }
 

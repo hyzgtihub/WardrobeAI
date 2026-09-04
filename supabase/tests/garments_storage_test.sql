@@ -3,9 +3,13 @@ begin;
 create extension if not exists pgtap with schema extensions;
 set search_path = public, extensions;
 
-select plan(15);
+select plan(19);
 
 select has_table('public', 'garments', 'garments exists');
+select has_column('public', 'garments', 'materials', 'garments has multi-value materials');
+select has_column('public', 'garments', 'styles', 'garments has multi-value styles');
+select col_type_is('public', 'garments', 'materials', 'text[]', 'materials is a text array');
+select col_type_is('public', 'garments', 'styles', 'text[]', 'styles is a text array');
 select is(
   (select count(*) from storage.buckets where id = 'garment-images'),
   1::bigint,

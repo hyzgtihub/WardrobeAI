@@ -19,8 +19,8 @@ struct SupabaseGarmentRepositoryTests {
             price: Decimal(string: "199.90"),
             size: nil,
             purchaseDate: nil,
-            material: nil,
-            style: nil,
+            materials: [],
+            styles: [],
             storageLocation: nil,
             notes: nil
         )
@@ -36,6 +36,20 @@ struct SupabaseGarmentRepositoryTests {
         #expect(object["category"] as? String == "tops")
         #expect(object["seasons"] as? [String] == ["spring"])
         #expect((object["price"] as? NSNumber)?.decimalValue == Decimal(string: "199.90"))
+    }
+
+    @Test
+    func updatePayloadForwardsOnlyRequestedChanges() throws {
+        let payload = SupabaseGarmentRepository.UpdatePayload(
+            changes: GarmentChanges(name: "米色风衣", styles: ["通勤"])
+        )
+
+        let data = try JSONEncoder.supabase.encode(payload)
+        let object = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
+
+        #expect(object["name"] as? String == "米色风衣")
+        #expect(object["styles"] as? [String] == ["通勤"])
+        #expect(object["colors"] == nil)
     }
 
     @Test

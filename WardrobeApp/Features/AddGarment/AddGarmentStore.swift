@@ -75,8 +75,8 @@ final class AddGarmentStore {
             price: validated.price,
             size: trimmedOptional(draft.size),
             purchaseDate: draft.purchaseDate,
-            material: trimmedOptional(draft.material),
-            style: trimmedOptional(draft.style),
+            materials: trimmedOptional(draft.material).map { [$0] } ?? [],
+            styles: trimmedOptional(draft.style).map { [$0] } ?? [],
             storageLocation: trimmedOptional(draft.storageLocation),
             notes: trimmedOptional(draft.notes)
         )
