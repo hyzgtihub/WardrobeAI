@@ -105,7 +105,13 @@ struct YISUPhotoHero: View {
                 HStack {
                     Spacer()
                     if let photoSelection {
-                        PhotosPicker(selection: photoSelection, matching: .images) { changePhotoLabel }
+                        PhotosPicker(selection: photoSelection, matching: .images) {
+                            Text("换图")
+                                .font(YISUTheme.Typography.callout.weight(.semibold))
+                                .frame(width: 84, height: 44)
+                                .background(YISUTheme.Color.surface, in: Capsule())
+                                .foregroundStyle(YISUTheme.Color.brandEmphasis)
+                        }
                             .simultaneousGesture(TapGesture().onEnded(onChangePhoto))
                             .accessibilityIdentifier("garmentDetail.changePhoto")
                     } else {
