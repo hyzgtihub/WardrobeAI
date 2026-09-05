@@ -46,7 +46,17 @@ struct RootView: View {
         } else {
             NavigationStack { content }
                 .onChange(of: sessionStore.state) { _, state in
-                    if forcedScreen == nil, state == .signedOut { route = .signIn }
+                    guard forcedScreen == nil else { return }
+                    switch state {
+                    case .signedOut:
+                        garmentDetailStore.cancelPendingWork()
+                        route = .signIn
+                    case .ready(let account) where garmentDetailStore.garmentUserID != account.user.id:
+                        garmentDetailStore.cancelPendingWork()
+                        route = .wardrobe
+                    default:
+                        break
+                    }
                 }
         }
     }

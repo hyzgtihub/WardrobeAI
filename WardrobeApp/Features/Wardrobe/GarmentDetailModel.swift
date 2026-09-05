@@ -5,7 +5,7 @@ enum GarmentFieldOptions {
     static let categories: [YISUCategory] = [.tops, .pants, .dresses, .outerwear, .shoes, .bags, .accessories, .other]
     static let seasons = ["春季", "夏季", "秋季", "冬季"]
     static let colors = ["黑色系", "白色系", "灰色系", "红色系", "橙色系", "黄色系", "绿色系", "蓝色系", "紫色系", "粉色系", "棕色系", "裸色系", "金色系", "银色系", "透明/无色", "彩色/多色", "其他"]
-    static let materials = ["棉", "涤纶", "尼龙", "牛仔布", "麻", "丝", "羊毛", "羊绒", "莫代尔", "氨纶", "腨纶", "毛皮", "羽绒", "丝绒", "雪纺", "蕾丝", "欧根纱", "薄纱", "其他"]
+    static let materials = ["棉", "涤纶", "尼龙", "牛仔布", "麻", "丝", "羊毛", "羊绒", "莫代尔", "氨纶", "腈纶", "毛皮", "羽绒", "丝绒", "雪纺", "蕾丝", "欧根纱", "薄纱", "其他"]
     static let styles = ["简约", "通勤", "休闲", "运动", "复古", "文艺", "中性", "甜美", "优雅", "街头", "学院", "度假", "性感", "民族", "其他"]
     static let apparelSizes = ["XS", "S", "M", "L", "XL", "XXL", "其他"]
     static let shoeSizes: [String] = stride(from: 35.0, through: 45.0, by: 0.5).map {
@@ -279,6 +279,7 @@ final class GarmentDetailStore {
     private(set) var validationMessage: String?
     private(set) var garment: Garment
     private(set) var canRetryPhoto = false
+    var garmentUserID: UUID { garment.userID }
 
     private let repository: any GarmentRepository
     private let imageRepository: (any GarmentImageRepository)?
@@ -321,7 +322,7 @@ final class GarmentDetailStore {
     func setCategory(_ value: YISUCategory, clearSize: Bool = false) { draft.category = value; if clearSize { draft.size = "" }; enqueue(.category) }
     func setSeasons(_ value: [String]) { draft.seasons = value; enqueue(.seasons) }
     func setColors(_ value: [String]) { draft.colors = value; enqueue(.colors) }
-    func setSize(_ value: String?) { draft.size = value ?? ""; enqueue(.size) }
+    func setSize(_ value: String?) { draft.size = value ?? ""; enqueue(.category) }
     func setPurchaseDate(_ value: Date?) { draft.purchaseDate = Self.dateText(value); enqueue(.purchaseDate) }
     func setMaterials(_ value: [String]) { draft.materials = value; enqueue(.materials) }
     func setStyles(_ value: [String]) { draft.styles = value; enqueue(.styles) }
@@ -337,6 +338,15 @@ final class GarmentDetailStore {
     func retryFailedField(_ field: Field) { enqueue(field) }
     func retryFailedFields() { for field in failedFields { enqueue(field) } }
     func retryPhotoReplacement() async { if let pendingPhotoData { await replacePhoto(data: pendingPhotoData) } }
+
+    func cancelPendingWork() {
+        debounceTasks.values.forEach { $0.cancel() }
+        saveTasks.values.forEach { $0.cancel() }
+        debounceTasks.removeAll()
+        saveTasks.removeAll()
+        pendingFields.removeAll()
+        failedFields.removeAll()
+    }
 
     func replacePhoto(data: Data) async {
         guard !isReplacingPhoto, let imageRepository else { return }
@@ -370,8 +380,8 @@ final class GarmentDetailStore {
         guard state != .saving else { return false }
         state = .saving
         do {
+            try await imageRepository?.deleteImage(path: garment.imagePath)
             try await repository.deleteGarment(id: garment.id)
-            try? await imageRepository?.deleteImage(path: garment.imagePath)
             state = .saved
             return true
         } catch {
@@ -441,7 +451,10 @@ final class GarmentDetailStore {
             return value == garment.name ? GarmentChanges() : GarmentChanges(name: value)
         case .category:
             guard draft.category != garment.category || draft.size != (garment.size ?? "") else { return GarmentChanges() }
-            return GarmentChanges(category: draft.category, size: draft.size.isEmpty ? .clear : nil)
+            return GarmentChanges(
+                category: draft.category == garment.category ? nil : draft.category,
+                size: draft.size == (garment.size ?? "") ? nil : nullable(draft.size)
+            )
         case .seasons:
             guard !draft.seasons.isEmpty else { validationMessage = "请至少选择一个季节"; return nil }
             return draft.seasons == garment.seasons ? GarmentChanges() : GarmentChanges(seasons: draft.seasons)

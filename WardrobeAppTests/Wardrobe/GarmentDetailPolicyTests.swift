@@ -147,6 +147,14 @@ struct GarmentDetailStoreTests {
         #expect(await repository.changes.isEmpty)
     }
 
+    @Test func categoryAndSizeShareOneSerializedLogicalPatch() async {
+        let repository = DetailRecordingRepository(garment: .detailFixture)
+        let store = GarmentDetailStore(garment: .detailFixture, repository: repository, debounceNanoseconds: 1)
+        store.setCategory(.shoes, clearSize: true)
+        await store.waitForSaves()
+        #expect(await repository.changes == [GarmentChanges(category: .shoes, size: .clear)])
+    }
+
     @Test func photoReplacementUploadsRevisionPatchesThenCleansOldObject() async throws {
         let repository = DetailRecordingRepository(garment: .detailFixture)
         let images = DetailRecordingImageRepository()
@@ -204,7 +212,9 @@ private actor DetailRecordingRepository: GarmentRepository {
         if let updateError { throw updateError }
         if let imagePath = changes.imagePath { garment.imagePath = imagePath }
         if let name = changes.name { garment.name = name }
+        if let category = changes.category { garment.category = category }
         if let colors = changes.colors { garment.colors = colors }
+        if let size = changes.size { switch size { case .value(let value): garment.size = value; case .clear: garment.size = nil } }
         garment.updatedAt = Date()
         return garment
     }
