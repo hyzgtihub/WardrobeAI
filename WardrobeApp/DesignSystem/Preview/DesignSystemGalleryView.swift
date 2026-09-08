@@ -6,8 +6,8 @@ struct DesignSystemGalleryView: View {
     @State private var actionCount = 0
 
     private let garments = [
-        GarmentSummary(id: "linen-shirt", title: "白色亚麻长袖衬衫轻薄通勤版型", metadata: "春夏 · 上衣", imageName: nil, category: .tops),
-        GarmentSummary(id: "trench-coat", title: "米色短款风衣", metadata: "秋季 · 外套", imageName: nil, category: .outerwear)
+        GarmentSummary(id: UUID(uuidString: "22222222-2222-2222-2222-222222222201")!, title: "白色亚麻长袖衬衫轻薄通勤版型", metadata: "春夏 · 上衣", imagePath: nil, category: .tops),
+        GarmentSummary(id: UUID(uuidString: "22222222-2222-2222-2222-222222222202")!, title: "米色短款风衣", metadata: "秋季 · 外套", imagePath: nil, category: .outerwear)
     ]
 
     var body: some View {
@@ -103,7 +103,7 @@ struct DesignSystemGalleryView: View {
 
             YISUGarmentGrid(
                 items: garments,
-                stateForItem: { item in item.id == "trench-coat" ? .imageError : .normal },
+                stateForItem: { item in item.id == UUID(uuidString: "22222222-2222-2222-2222-222222222202")! ? .imageError : .normal },
                 onSelect: { _ in actionCount += 1 }
             )
         }

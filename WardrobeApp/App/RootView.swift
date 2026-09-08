@@ -1,28 +1,44 @@
 import SwiftUI
 
 struct RootView: View {
-    let sessionStore: SessionStore
+    let dependencies: AppDependencies
 
     @State private var route: AppRoute
     @State private var setupState: WardrobeSetupState
-    @State private var garments = WardrobeSampleData.garments
     @State private var selectedGarment = GarmentDetailDraft.whiteLinenShirt
+    @State private var garmentDetailStore: GarmentDetailStore
+    @State private var addGarmentStore: AddGarmentStore
+    @State private var garmentStore: GarmentStore
+    @State private var photoPickerCancelRoute: AppRoute = .wardrobe
     private let forcedScreen: String?
 
-    init(sessionStore: SessionStore, arguments: [String] = ProcessInfo.processInfo.arguments) {
-        self.sessionStore = sessionStore
+    init(dependencies: AppDependencies, arguments: [String] = ProcessInfo.processInfo.arguments) {
+        self.dependencies = dependencies
         let screen = Self.argument(after: "-ui-screen", in: arguments)
         forcedScreen = screen
         let stateValue = Self.argument(after: "-ui-state", in: arguments)
         let initialRoute: AppRoute = switch screen {
         case "onboarding": .onboarding
         case "wardrobe": .wardrobe
+        case "add-garment": .garmentPhotoPicker
         case "garment-detail": .garmentDetail
         default: .signIn
         }
         _route = State(initialValue: initialRoute)
         _setupState = State(initialValue: WardrobeSetupState(rawValue: stateValue ?? "") ?? .creating)
+        _addGarmentStore = State(initialValue: AddGarmentStore(
+            garmentRepository: dependencies.garmentRepository,
+            imageRepository: dependencies.garmentImageRepository
+        ))
+        _garmentStore = State(initialValue: GarmentStore(repository: dependencies.garmentRepository))
+        _garmentDetailStore = State(initialValue: GarmentDetailStore(
+            garment: Self.uiTestGarment,
+            repository: dependencies.garmentRepository,
+            imageRepository: dependencies.garmentImageRepository
+        ))
     }
+
+    private var sessionStore: SessionStore { dependencies.sessionStore }
 
     var body: some View {
         if ProcessInfo.processInfo.arguments.contains("-design-system-gallery") {
@@ -30,7 +46,17 @@ struct RootView: View {
         } else {
             NavigationStack { content }
                 .onChange(of: sessionStore.state) { _, state in
-                    if forcedScreen == nil, state == .signedOut { route = .signIn }
+                    guard forcedScreen == nil else { return }
+                    switch state {
+                    case .signedOut:
+                        garmentDetailStore.cancelPendingWork()
+                        route = .signIn
+                    case .ready(let account) where garmentDetailStore.garmentUserID != account.user.id:
+                        garmentDetailStore.cancelPendingWork()
+                        route = .wardrobe
+                    default:
+                        break
+                    }
                 }
         }
     }
@@ -103,8 +129,10 @@ struct RootView: View {
             )
         } else if route == .garmentDetail {
             garmentDetail
+        } else if route == .garmentPhotoPicker || route == .garmentPhotoPreview || route == .addGarment {
+            addGarmentContent(account: account)
         } else {
-            wardrobe
+            wardrobe(account: account)
         }
     }
 
@@ -127,37 +155,116 @@ struct RootView: View {
                 }
             )
         case .wardrobe, .profile:
-            wardrobe
+            wardrobe(account: Self.uiTestAccount)
+        case .garmentPhotoPicker, .garmentPhotoPreview, .addGarment:
+            addGarmentContent(account: Self.uiTestAccount)
         case .garmentDetail:
             garmentDetail
         }
     }
 
-    private var wardrobe: some View {
+    private func wardrobe(account: UserAccount) -> some View {
         WardrobeHomeView(
-            items: garments,
+            items: garmentStore.garments.map(\.summary),
+            state: garmentStore.state,
+            imageRepository: dependencies.garmentImageRepository,
+            onAdd: {
+                addGarmentStore.startNewFlow()
+                photoPickerCancelRoute = .wardrobe
+                route = .garmentPhotoPicker
+            },
             onSelectGarment: { garment in
-                if garment.id == GarmentDetailDraft.whiteLinenShirt.id {
-                    selectedGarment = .whiteLinenShirt
-                    route = .garmentDetail
+                if let persisted = garmentStore.garments.first(where: { $0.id == garment.id }) {
+                    openDetail(persisted)
                 }
             },
             onProfile: { route = .profile }
         )
+        .task(id: account.defaultWardrobe.id) {
+            await garmentStore.load(wardrobeID: account.defaultWardrobe.id)
+        }
+    }
+
+    @ViewBuilder private func addGarmentContent(account: UserAccount) -> some View {
+        switch route {
+        case .garmentPhotoPicker:
+            GarmentPhotoPickerView(
+                injectedPhotoData: dependencies.addGarmentFixtureData,
+                onPhotoSelected: { data in
+                    addGarmentStore.processPhoto(data)
+                    if addGarmentStore.state == .editing { route = .garmentPhotoPreview }
+                },
+                onCancel: { route = photoPickerCancelRoute }
+            )
+        case .garmentPhotoPreview:
+            if let photo = addGarmentStore.draft.photo {
+                GarmentPhotoPreviewView(
+                    photo: photo,
+                    onReselect: {
+                        photoPickerCancelRoute = .garmentPhotoPreview
+                        route = .garmentPhotoPicker
+                    },
+                    onUsePhoto: { route = .addGarment }
+                )
+            } else {
+                GarmentPhotoPickerView(
+                    injectedPhotoData: dependencies.addGarmentFixtureData,
+                    onPhotoSelected: { data in
+                        addGarmentStore.processPhoto(data)
+                        if addGarmentStore.state == .editing { route = .garmentPhotoPreview }
+                    },
+                    onCancel: { route = photoPickerCancelRoute }
+                )
+            }
+        case .addGarment:
+            AddGarmentView(
+                store: addGarmentStore,
+                account: account,
+                onBack: {
+                    addGarmentStore.discardDraft()
+                    route = .wardrobe
+                },
+                onReselectPhoto: {
+                    photoPickerCancelRoute = .addGarment
+                    route = .garmentPhotoPicker
+                },
+                onCreated: { garment in
+                    garmentStore.insertCreated(garment)
+                    openDetail(garment)
+                }
+            )
+        default:
+            EmptyView()
+        }
     }
 
     private var garmentDetail: some View {
         GarmentDetailView(
-            garment: selectedGarment,
+            store: garmentDetailStore,
             onBack: { route = .wardrobe },
-            onChange: { updated in
-                selectedGarment = updated
-                if let index = garments.firstIndex(where: { $0.id == updated.id }) {
-                    garments[index] = updated.summary
+            imageRepository: dependencies.garmentImageRepository,
+            onChangePhoto: {},
+            onDelete: {
+                Task {
+                    if await garmentDetailStore.delete() {
+                        garmentStore.removePersisted(id: garmentDetailStore.draft.id)
+                        route = .wardrobe
+                    }
                 }
-            },
-            onDelete: { route = .wardrobe }
+            }
         )
+    }
+
+    private func openDetail(_ garment: Garment) {
+        let detail = GarmentDetailStore(
+            garment: garment,
+            repository: dependencies.garmentRepository,
+            imageRepository: dependencies.garmentImageRepository
+        )
+        detail.setOnPersisted { persisted in garmentStore.replacePersisted(persisted) }
+        garmentDetailStore = detail
+        selectedGarment = GarmentDetailDraft(garment: garment)
+        route = .garmentDetail
     }
 
     private func progress(title: String) -> some View {
@@ -198,4 +305,37 @@ struct RootView: View {
         guard let index = arguments.firstIndex(of: flag), arguments.indices.contains(index + 1) else { return nil }
         return arguments[index + 1]
     }
+
+    private static let uiTestAccount = UserAccount(
+        user: AuthenticatedUser(
+            id: UUID(uuidString: "11111111-1111-1111-1111-111111111111")!,
+            email: "mia@example.com"
+        ),
+        profile: UserProfile(
+            id: UUID(uuidString: "11111111-1111-1111-1111-111111111111")!,
+            nickname: "Mia",
+            avatarPath: nil,
+            languageCode: "zh-CN",
+            notificationsEnabled: true,
+            createdAt: Date(timeIntervalSince1970: 0),
+            updatedAt: Date(timeIntervalSince1970: 0)
+        ),
+        defaultWardrobe: WardrobeIdentity(
+            id: UUID(uuidString: "22222222-2222-2222-2222-222222222222")!,
+            ownerID: UUID(uuidString: "11111111-1111-1111-1111-111111111111")!,
+            name: "我",
+            isDefault: true
+        )
+    )
+
+    private static let uiTestGarment = Garment(
+        id: UUID(uuidString: "11111111-1111-1111-1111-111111111101")!,
+        userID: UUID(uuidString: "11111111-1111-1111-1111-111111111111")!,
+        wardrobeID: UUID(uuidString: "22222222-2222-2222-2222-222222222222")!,
+        imagePath: "garment-white-linen-shirt", name: "白色亚麻衬衫", category: .tops,
+        seasons: ["春季", "夏季"], colors: ["白色系"], brand: "MUJI", price: 299, size: "M",
+        purchaseDate: nil, materials: ["麻", "棉"], styles: ["通勤", "简约"],
+        storageLocation: "主卧衣橱 · 上层", notes: "适合搭配浅色长裤", createdAt: Date(), updatedAt: Date(), deletedAt: nil
+    )
+
 }

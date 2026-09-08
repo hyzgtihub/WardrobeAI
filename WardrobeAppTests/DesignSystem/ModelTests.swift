@@ -1,3 +1,4 @@
+import Foundation
 import Testing
 @testable import YISU
 
@@ -22,15 +23,15 @@ struct ModelTests {
     @Test("衣物摘要仅承载展示数据")
     func garmentSummaryKeepsPresentationDataOnly() {
         let item = GarmentSummary(
-            id: "linen-shirt",
+            id: UUID(uuidString: "44444444-4444-4444-4444-444444444401")!,
             title: "白色亚麻衬衫",
             metadata: "春夏 · 上衣",
-            imageName: nil,
+            imagePath: nil,
             category: .tops
         )
 
         #expect(item.title == "白色亚麻衬衫")
-        #expect(item.imageName == nil)
+        #expect(item.imagePath == nil)
         #expect(item.category == .tops)
     }
 }

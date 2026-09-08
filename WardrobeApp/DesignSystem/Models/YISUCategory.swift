@@ -1,10 +1,11 @@
-enum YISUCategory: String, CaseIterable, Equatable, Sendable {
+enum YISUCategory: String, Codable, CaseIterable, Equatable, Sendable {
     case all
     case tops
     case pants
     case outerwear
     case dresses
     case shoes
+    case bags
     case accessories
     case other
 
@@ -14,8 +15,9 @@ enum YISUCategory: String, CaseIterable, Equatable, Sendable {
         case .tops: "上衣"
         case .pants: "裤子"
         case .outerwear: "外套"
-        case .dresses: "裙子"
-        case .shoes: "鞋子"
+        case .dresses: "连衣裙"
+        case .shoes: "鞋履"
+        case .bags: "包袋"
         case .accessories: "配饰"
         case .other: "其他"
         }

@@ -1,4 +1,5 @@
 import SwiftUI
+import PhotosUI
 
 struct YISUAutosaveStatus: View {
     let state: GarmentAutosaveState
@@ -64,33 +65,71 @@ struct YISUEditableFieldRow: View {
 
 struct YISUPhotoHero: View {
     let imageName: String
+    let imageRepository: (any GarmentImageRepository)?
     let status: GarmentAutosaveState
     let onChangePhoto: () -> Void
+    let photoSelection: Binding<PhotosPickerItem?>?
+
+    init(
+        imageName: String,
+        imageRepository: (any GarmentImageRepository)? = nil,
+        status: GarmentAutosaveState,
+        onChangePhoto: @escaping () -> Void,
+        photoSelection: Binding<PhotosPickerItem?>? = nil
+    ) {
+        self.imageName = imageName
+        self.imageRepository = imageRepository
+        self.status = status
+        self.onChangePhoto = onChangePhoto
+        self.photoSelection = photoSelection
+    }
 
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 32, style: .continuous)
                 .fill(Color(red: 247 / 255, green: 233 / 255, blue: 236 / 255))
-            Image(imageName)
-                .resizable()
-                .scaledToFit()
-                .padding(26)
-                .accessibilityHidden(true)
+            if imageName.contains("/"), let imageRepository {
+                PrivateGarmentImageView(path: imageName, repository: imageRepository)
+                    .padding(26)
+                    .accessibilityHidden(true)
+            } else {
+                Image(imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .padding(26)
+                    .accessibilityHidden(true)
+            }
             VStack {
                 HStack { YISUAutosaveStatus(state: status); Spacer() }
                 Spacer()
                 HStack {
                     Spacer()
-                    Button("换图", action: onChangePhoto)
-                        .font(YISUTheme.Typography.callout.weight(.semibold))
-                        .frame(width: 84, height: 44)
-                        .background(YISUTheme.Color.surface, in: Capsule())
-                        .foregroundStyle(YISUTheme.Color.brandEmphasis)
-                        .accessibilityIdentifier("garmentDetail.changePhoto")
+                    if let photoSelection {
+                        PhotosPicker(selection: photoSelection, matching: .images) {
+                            Text("换图")
+                                .font(YISUTheme.Typography.callout.weight(.semibold))
+                                .frame(width: 84, height: 44)
+                                .background(YISUTheme.Color.surface, in: Capsule())
+                                .foregroundStyle(YISUTheme.Color.brandEmphasis)
+                        }
+                            .simultaneousGesture(TapGesture().onEnded(onChangePhoto))
+                            .accessibilityIdentifier("garmentDetail.changePhoto")
+                    } else {
+                        Button(action: onChangePhoto) { changePhotoLabel }
+                            .accessibilityIdentifier("garmentDetail.changePhoto")
+                    }
                 }
             }
             .padding(16)
         }
         .frame(height: 300)
+    }
+
+    private var changePhotoLabel: some View {
+        Text("换图")
+            .font(YISUTheme.Typography.callout.weight(.semibold))
+            .frame(width: 84, height: 44)
+            .background(YISUTheme.Color.surface, in: Capsule())
+            .foregroundStyle(YISUTheme.Color.brandEmphasis)
     }
 }
