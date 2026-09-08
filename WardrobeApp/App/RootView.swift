@@ -87,9 +87,16 @@ struct RootView: View {
                 error: nil,
                 passwordTextContentType: .none,
                 onBack: { route = .signIn },
-                onCreated: { email, password in
-                    await sessionStore.signUp(email: email, password: password)
-                    if sessionStore.submissionError == nil { route = .signIn }
+                onRequestCode: { email, password in
+                    await sessionStore.requestSignUpVerification(email: email, password: password)
+                    return sessionStore.submissionError
+                },
+                onResendCode: { email in
+                    await sessionStore.resendSignUpVerification(email: email)
+                    return sessionStore.submissionError
+                },
+                onVerifyCode: { email, code in
+                    await sessionStore.verifySignUp(email: email, code: code)
                     return sessionStore.submissionError
                 }
             )
@@ -141,7 +148,7 @@ struct RootView: View {
         case .signIn:
             SignInView(onRegister: { route = .signUp }, onSubmit: { _, _ in route = .wardrobe })
         case .signUp:
-            SignUpView(onBack: { route = .signIn }, onCreated: { _, _ in
+            SignUpView(onBack: { route = .signIn }, onVerifyCode: { _, _ in
                 route = .wardrobe
                 return nil
             })

@@ -18,7 +18,9 @@ enum AccountError: Error, Equatable, Sendable {
 protocol AuthRepository: Sendable {
     func sessionEvents() -> AsyncStream<AuthSessionEvent>
     func currentUser() async throws -> AuthenticatedUser?
-    func signUp(email: String, password: String) async throws -> AuthenticatedUser
+    func requestSignUpVerification(email: String, password: String) async throws
+    func resendSignUpVerification(email: String) async throws
+    func verifySignUp(email: String, code: String) async throws -> AuthenticatedUser
     func signIn(email: String, password: String) async throws -> AuthenticatedUser
     func signOut() async throws
 }

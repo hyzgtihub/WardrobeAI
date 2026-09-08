@@ -65,8 +65,14 @@ private struct UITestAuthRepository: AuthRepository {
         scenario == "signed-in" ? Self.user : nil
     }
 
-    func signUp(email: String, password: String) async throws -> AuthenticatedUser {
+    func requestSignUpVerification(email: String, password: String) async throws {
         guard scenario != "registration-failure" else { throw AccountError.emailAlreadyRegistered }
+    }
+
+    func resendSignUpVerification(email: String) async throws {}
+
+    func verifySignUp(email: String, code: String) async throws -> AuthenticatedUser {
+        guard scenario != "verification-failure" else { throw AccountError.invalidCredentials }
         return Self.user
     }
 

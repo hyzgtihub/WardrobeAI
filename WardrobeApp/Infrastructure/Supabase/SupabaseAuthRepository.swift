@@ -45,13 +45,31 @@ struct SupabaseAuthRepository: AuthRepository {
         }
     }
 
-    func signUp(email: String, password: String) async throws -> AuthenticatedUser {
+    func requestSignUpVerification(email: String, password: String) async throws {
         do {
-            let response = try await client.auth.signUp(email: email, password: password)
-            guard let user = Self.domainUser(from: response.user) else {
-                throw AccountError.unknown
+            _ = try await client.auth.signUp(email: email, password: password)
+        } catch {
+            throw SupabaseErrorMapper.map(error)
+        }
+    }
+
+    func resendSignUpVerification(email: String) async throws {
+        do {
+            try await client.auth.resend(email: email, type: .signup)
+        } catch {
+            throw SupabaseErrorMapper.map(error)
+        }
+    }
+
+    func verifySignUp(email: String, code: String) async throws -> AuthenticatedUser {
+        do {
+            let response = try await client.auth.verifyOTP(email: email, token: code, type: .signup)
+            let user: User = switch response {
+            case let .session(session): session.user
+            case let .user(user): user
             }
-            return user
+            guard let domainUser = Self.domainUser(from: user) else { throw AccountError.unknown }
+            return domainUser
         } catch {
             throw SupabaseErrorMapper.map(error)
         }

@@ -40,12 +40,27 @@ final class AuthSessionFlowTests: XCTestCase {
         confirmation.tap()
         confirmation.typeText("password")
         app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.08)).tap()
-        let submit = app.buttons["auth.signUp.submit"]
-        XCTAssertTrue(submit.isEnabled)
-        submit.tap()
+        app.buttons["auth.signUp.requestCode"].tap()
 
         XCTAssertTrue(element("auth.error", in: app).waitForExistence(timeout: 3))
         XCTAssertEqual(email.value as? String, "mia@example.com")
+    }
+
+    @MainActor
+    func testSignupCodeVerificationReachesWardrobe() {
+        let app = launch(scenario: "registration-success")
+        app.buttons["auth.register"].tap()
+
+        enterSignUpCredentials(in: app)
+        app.buttons["auth.signUp.requestCode"].tap()
+
+        let code = app.textFields["auth.signUp.code"]
+        XCTAssertTrue(code.waitForExistence(timeout: 3))
+        code.tap()
+        code.typeText("123456")
+        app.buttons["auth.signUp.submit"].tap()
+
+        XCTAssertTrue(app.staticTexts["wardrobe.title"].waitForExistence(timeout: 3))
     }
 
     @MainActor
@@ -78,6 +93,23 @@ final class AuthSessionFlowTests: XCTestCase {
         let password = app.secureTextFields["auth.password"]
         password.tap()
         password.typeText("password")
+    }
+
+    @MainActor
+    private func enterSignUpCredentials(in app: XCUIApplication) {
+        let email = app.textFields["auth.signUp.email"]
+        XCTAssertTrue(email.waitForExistence(timeout: 3))
+        email.tap()
+        email.typeText("mia@example.com")
+        app.buttons["auth.signUp.password"].tap()
+        let password = app.textFields["auth.signUp.password"]
+        password.tap()
+        password.typeText("password")
+        app.buttons["auth.signUp.confirmation"].tap()
+        let confirmation = app.textFields["auth.signUp.confirmation"]
+        confirmation.tap()
+        confirmation.typeText("password")
+        app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.08)).tap()
     }
 
     @MainActor

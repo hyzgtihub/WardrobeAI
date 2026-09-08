@@ -41,6 +41,29 @@ struct SessionStoreTests {
     }
 
     @Test @MainActor
+    func requestingSignupCodeKeepsSessionSignedOut() async {
+        let dependencies = TestAccountDependencies(currentUser: .success(nil))
+        let store = dependencies.makeStore()
+        await store.restore()
+
+        await store.requestSignUpVerification(email: "mia@example.com", password: "password")
+
+        #expect(store.state == .signedOut)
+        #expect(store.submissionError == nil)
+    }
+
+    @Test @MainActor
+    func verifyingSignupCodeLoadsAccount() async {
+        let dependencies = TestAccountDependencies(currentUser: .success(nil))
+        let store = dependencies.makeStore()
+        await store.restore()
+
+        await store.verifySignUp(email: "mia@example.com", code: "123456")
+
+        #expect(store.state == .ready(.fixture))
+    }
+
+    @Test @MainActor
     func accountLoadRetriesThreeTimesBeforeFailure() async {
         let dependencies = TestAccountDependencies(
             currentUser: .success(.fixture),
@@ -255,7 +278,9 @@ private final class AuthRepositorySpy: AuthRepository, @unchecked Sendable {
 
     func sessionEvents() -> AsyncStream<AuthSessionEvent> { stream }
     func currentUser() async throws -> AuthenticatedUser? { try currentUserResult.get() }
-    func signUp(email: String, password: String) async throws -> AuthenticatedUser { try signUpResult.get() }
+    func requestSignUpVerification(email: String, password: String) async throws {}
+    func resendSignUpVerification(email: String) async throws {}
+    func verifySignUp(email: String, code: String) async throws -> AuthenticatedUser { try signUpResult.get() }
     func signIn(email: String, password: String) async throws -> AuthenticatedUser { try signInResult.get() }
     func signOut() async throws { try signOutResult.get() }
     func send(_ event: AuthSessionEvent) { queue.sync { continuation.yield(event) } }
