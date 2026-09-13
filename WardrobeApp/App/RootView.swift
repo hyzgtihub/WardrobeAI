@@ -100,18 +100,6 @@ struct RootView: View {
                     return sessionStore.submissionError
                 }
             )
-            .overlay(alignment: .top) {
-                if let message = registrationErrorMessage {
-                    Text(message)
-                        .font(YISUTheme.Typography.footnote)
-                        .foregroundStyle(YISUTheme.Color.danger)
-                        .padding(YISUTheme.Spacing.md)
-                        .background(YISUTheme.Color.dangerSubtle)
-                        .clipShape(RoundedRectangle(cornerRadius: YISUTheme.Radius.small))
-                        .padding(.top, YISUTheme.Spacing.lg)
-                        .accessibilityIdentifier("auth.error")
-                }
-            }
         } else {
             SignInView(
                 isSubmitting: sessionStore.isSubmitting,
@@ -296,16 +284,6 @@ struct RootView: View {
         )
         .padding(YISUTheme.Spacing.lg)
         .background(YISUTheme.Color.background.ignoresSafeArea())
-    }
-
-    private var registrationErrorMessage: String? {
-        switch sessionStore.submissionError {
-        case .emailAlreadyRegistered: "该邮箱已注册，请直接登录"
-        case .networkUnavailable: "网络连接不可用，请稍后重试"
-        case .invalidCredentials, .accountDataUnavailable, .invalidConfiguration, .unknown:
-            "服务暂时不可用，请稍后重试"
-        case nil: nil
-        }
     }
 
     private static func argument(after flag: String, in arguments: [String]) -> String? {

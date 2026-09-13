@@ -42,8 +42,34 @@ final class AuthSessionFlowTests: XCTestCase {
         app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.08)).tap()
         app.buttons["auth.signUp.requestCode"].tap()
 
-        XCTAssertTrue(element("auth.error", in: app).waitForExistence(timeout: 3))
+        XCTAssertTrue(element("auth.signUp.email.error", in: app).waitForExistence(timeout: 3))
         XCTAssertEqual(email.value as? String, "mia@example.com")
+    }
+
+    @MainActor
+    func testRegisteredEmailBlocksDetailsUntilEmailChanges() {
+        let app = launch(scenario: "registration-failure")
+        app.buttons["auth.register"].tap()
+
+        enterSignUpCredentials(in: app)
+        app.buttons["auth.signUp.requestCode"].tap()
+
+        let email = app.textFields["auth.signUp.email"]
+        let password = app.textFields["auth.signUp.password"]
+        let confirmation = app.textFields["auth.signUp.confirmation"]
+        let requestCode = app.buttons["auth.signUp.requestCode"]
+        XCTAssertTrue(element("auth.signUp.email.error", in: app).waitForExistence(timeout: 3))
+        XCTAssertTrue(email.isEnabled)
+        XCTAssertFalse(password.isEnabled)
+        XCTAssertFalse(confirmation.isEnabled)
+        XCTAssertFalse(requestCode.isEnabled)
+
+        email.tap()
+        email.typeText("x")
+
+        XCTAssertTrue(password.isEnabled)
+        XCTAssertTrue(confirmation.isEnabled)
+        XCTAssertTrue(requestCode.isEnabled)
     }
 
     @MainActor
@@ -61,6 +87,33 @@ final class AuthSessionFlowTests: XCTestCase {
         app.buttons["auth.signUp.submit"].tap()
 
         XCTAssertTrue(app.staticTexts["wardrobe.title"].waitForExistence(timeout: 3))
+    }
+
+    @MainActor
+    func testSuccessfulCodeRequestUsesEnumerationSafeMessage() {
+        let app = launch(scenario: "registration-success")
+        app.buttons["auth.register"].tap()
+
+        enterSignUpCredentials(in: app)
+        app.buttons["auth.signUp.requestCode"].tap()
+
+        let message = element("auth.signUp.codeRequestNotice", in: app)
+        XCTAssertTrue(message.waitForExistence(timeout: 3))
+        XCTAssertEqual(
+            message.label,
+            "如果该邮箱尚未注册，验证码已发送；如果已经注册，请直接登录。"
+        )
+    }
+
+    @MainActor
+    func testSignupCodeFieldUsesConcisePromptWithoutChangeEmailButton() {
+        let app = launch(scenario: "registration-success")
+        app.buttons["auth.register"].tap()
+
+        let code = app.textFields["auth.signUp.code"]
+        XCTAssertTrue(code.waitForExistence(timeout: 3))
+        XCTAssertEqual(code.placeholderValue, "请输入邮件验证码")
+        XCTAssertFalse(app.buttons["auth.signUp.changeEmail"].exists)
     }
 
     @MainActor

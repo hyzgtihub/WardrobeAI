@@ -6,11 +6,25 @@ enum AuthSubmissionState: Equatable, Sendable {
 
     var allowsSubmission: Bool { self == .idle }
 
+    var blocksRegistrationDetails: Bool { self == .emailExists }
+
     var recovered: Self {
         switch self {
         case .emailExists, .serviceFailure: .idle
         case .idle, .submitting: self
         }
+    }
+}
+
+struct SignUpOperationGeneration: Equatable, Sendable {
+    private(set) var current = 0
+
+    mutating func invalidate() {
+        current &+= 1
+    }
+
+    func accepts(_ operation: Int) -> Bool {
+        operation == current
     }
 }
 
@@ -20,12 +34,14 @@ enum SignUpVerificationState: Equatable, Sendable {
     case codeSent(secondsRemaining: Int)
     case verifying
 
-    var locksCredentials: Bool {
+    var locksPasswords: Bool {
         switch self {
         case .sending, .codeSent, .verifying: true
         case .idle: false
         }
     }
+
+    var locksEmail: Bool { self == .verifying }
 
     var allowsVerification: Bool {
         if case .codeSent = self { return true }

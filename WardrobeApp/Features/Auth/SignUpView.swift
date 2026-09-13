@@ -19,6 +19,7 @@ struct SignUpView: View {
     @State private var validationIssue: SignUpIssue?
     @State private var verificationState: SignUpVerificationState = .idle
     @State private var verificationError: AccountError?
+    @State private var operationGeneration = SignUpOperationGeneration()
 
     init(
         isSubmitting: Bool = false,
@@ -89,13 +90,13 @@ struct SignUpView: View {
                         label: "邮箱",
                         placeholder: "name@example.com",
                         systemImage: "envelope",
-                        text: binding(for: $email),
+                        text: emailBinding,
                         errorMessage: emailError,
                         textContentType: .emailAddress,
                         keyboardType: .emailAddress,
                         accessibilityIdentifier: "auth.signUp.email"
                     )
-                    .disabled(verificationState.locksCredentials)
+                    .disabled(verificationState.locksEmail)
                     YISUPasswordField(
                         label: "密码",
                         placeholder: "至少 8 位",
@@ -104,7 +105,7 @@ struct SignUpView: View {
                         textContentType: passwordTextContentType,
                         accessibilityIdentifier: "auth.signUp.password"
                     )
-                    .disabled(verificationState.locksCredentials)
+                    .disabled(verificationState.locksPasswords || submissionState.blocksRegistrationDetails)
                     YISUPasswordField(
                         label: "确认密码",
                         placeholder: "再次输入密码",
@@ -113,13 +114,13 @@ struct SignUpView: View {
                         textContentType: passwordTextContentType,
                         accessibilityIdentifier: "auth.signUp.confirmation"
                     )
-                    .disabled(verificationState.locksCredentials)
+                    .disabled(verificationState.locksPasswords || submissionState.blocksRegistrationDetails)
 
                     HStack(alignment: .bottom, spacing: YISUTheme.Spacing.sm) {
                         YISUAuthField(
                             label: "邮箱验证码",
-                            placeholder: "请输入邮件中的验证码",
-                            systemImage: "number",
+                            placeholder: "请输入邮件验证码",
+                            systemImage: nil,
                             text: $verificationCode,
                             errorMessage: verificationError == nil ? nil : "验证码无效或已过期，请重试",
                             textContentType: .oneTimeCode,
@@ -132,19 +133,20 @@ struct SignUpView: View {
                             .font(YISUTheme.Typography.footnote)
                             .foregroundStyle(YISUTheme.Color.brandEmphasis)
                             .frame(minWidth: 92, minHeight: 44)
-                            .disabled(!verificationState.allowsCodeRequest || isSubmitting)
+                            .disabled(
+                                !verificationState.allowsCodeRequest ||
+                                    submissionState.blocksRegistrationDetails ||
+                                    isSubmitting
+                            )
                             .accessibilityIdentifier("auth.signUp.requestCode")
                     }
 
-                    if verificationState.locksCredentials {
-                        Button("修改邮箱") {
-                            verificationState.reset()
-                            verificationCode = ""
-                            verificationError = nil
-                        }
-                        .font(YISUTheme.Typography.footnote)
-                        .foregroundStyle(YISUTheme.Color.brandEmphasis)
-                        .accessibilityIdentifier("auth.signUp.changeEmail")
+                    if verificationState.allowsVerification {
+                        Text("如果该邮箱尚未注册，验证码已发送；如果已经注册，请直接登录。")
+                            .font(YISUTheme.Typography.footnote)
+                            .foregroundStyle(YISUTheme.Color.textSecondary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .accessibilityIdentifier("auth.signUp.codeRequestNotice")
                     }
                 }
 
@@ -226,6 +228,20 @@ struct SignUpView: View {
         }
     }
 
+    private var emailBinding: Binding<String> {
+        Binding(get: { email }) { value in
+            let didChange = value != email
+            email = value
+            validationIssue = nil
+            submissionState = submissionState.recovered
+            guard didChange else { return }
+            verificationState.reset()
+            verificationCode = ""
+            verificationError = nil
+            operationGeneration.invalidate()
+        }
+    }
+
     private func requestCode() {
         guard verificationState.allowsCodeRequest else { return }
         let isResend: Bool
@@ -240,10 +256,14 @@ struct SignUpView: View {
             return
         }
         verificationState = .sending
+        let requestedEmail = email
+        let requestedPassword = password
+        let requestGeneration = operationGeneration.current
         Task {
             let result = isResend
-                ? await onResendCode(email)
-                : await onRequestCode(email, password)
+                ? await onResendCode(requestedEmail)
+                : await onRequestCode(requestedEmail, requestedPassword)
+            guard operationGeneration.accepts(requestGeneration), email == requestedEmail else { return }
             switch result {
             case .emailAlreadyRegistered:
                 submissionState = .emailExists
@@ -263,8 +283,11 @@ struct SignUpView: View {
         guard !code.isEmpty else { return }
         verificationState = .verifying
         verificationError = nil
+        let submittedEmail = email
+        let verificationGeneration = operationGeneration.current
         Task {
-            let result = await onVerifyCode(email, code)
+            let result = await onVerifyCode(submittedEmail, code)
+            guard operationGeneration.accepts(verificationGeneration), email == submittedEmail else { return }
             if let result {
                 verificationError = result
                 verificationState = .codeSent(secondsRemaining: 0)

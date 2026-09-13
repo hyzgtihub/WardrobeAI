@@ -12,16 +12,22 @@ struct AuthSubmissionStateTests {
         #expect(state.recovered == .idle)
     }
 
-    @Test func sentCodeLocksCredentialsAndEnablesVerification() {
+    @Test func sentCodeLocksPasswordsButKeepsEmailEditableAndEnablesVerification() {
         let state = SignUpVerificationState.codeSent(secondsRemaining: 60)
 
-        #expect(state.locksCredentials)
+        #expect(state.locksPasswords)
+        #expect(!state.locksEmail)
         #expect(state.allowsVerification)
         #expect(!state.allowsCodeRequest)
     }
 
-    @Test func sendingCodeLocksCredentials() {
-        #expect(SignUpVerificationState.sending.locksCredentials)
+    @Test func sendingCodeLocksPasswordsButKeepsEmailEditable() {
+        #expect(SignUpVerificationState.sending.locksPasswords)
+        #expect(!SignUpVerificationState.sending.locksEmail)
+    }
+
+    @Test func verifyingLocksEmailUntilTheSubmittedCodeFinishes() {
+        #expect(SignUpVerificationState.verifying.locksEmail)
     }
 
     @Test func countdownEnablesResendAtZero() {
@@ -39,6 +45,22 @@ struct AuthSubmissionStateTests {
         state.reset()
 
         #expect(state == .idle)
-        #expect(!state.locksCredentials)
+        #expect(!state.locksPasswords)
+    }
+
+    @Test func registeredEmailBlocksRegistrationDetailsUntilEmailChanges() {
+        #expect(AuthSubmissionState.emailExists.blocksRegistrationDetails)
+        #expect(!AuthSubmissionState.idle.blocksRegistrationDetails)
+    }
+
+    @Test func editingEmailInvalidatesAnEarlierOperationEvenIfTheTextReturnsToItsOriginalValue() {
+        var generation = SignUpOperationGeneration()
+        let earlierOperation = generation.current
+
+        generation.invalidate()
+        generation.invalidate()
+
+        #expect(!generation.accepts(earlierOperation))
+        #expect(generation.accepts(generation.current))
     }
 }
