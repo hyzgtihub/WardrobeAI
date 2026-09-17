@@ -10,6 +10,8 @@ struct RootView: View {
     @State private var addGarmentStore: AddGarmentStore
     @State private var garmentStore: GarmentStore
     @State private var photoPickerCancelRoute: AppRoute = .wardrobe
+    @State private var wardrobeFilter = WardrobeFilter()
+    @State private var filterOwnerUserID: UUID?
     private let forcedScreen: String?
 
     init(dependencies: AppDependencies, arguments: [String] = ProcessInfo.processInfo.arguments) {
@@ -50,10 +52,17 @@ struct RootView: View {
                     switch state {
                     case .signedOut:
                         garmentDetailStore.cancelPendingWork()
+                        resetWardrobeFilter()
                         route = .signIn
-                    case .ready(let account) where garmentDetailStore.garmentUserID != account.user.id:
-                        garmentDetailStore.cancelPendingWork()
-                        route = .wardrobe
+                    case .ready(let account):
+                        if filterOwnerUserID != account.user.id {
+                            wardrobeFilter = WardrobeFilter()
+                            filterOwnerUserID = account.user.id
+                        }
+                        if garmentDetailStore.garmentUserID != account.user.id {
+                            garmentDetailStore.cancelPendingWork()
+                            route = .wardrobe
+                        }
                     default:
                         break
                     }
@@ -160,7 +169,8 @@ struct RootView: View {
 
     private func wardrobe(account: UserAccount) -> some View {
         WardrobeHomeView(
-            items: garmentStore.garments.map(\.summary),
+            garments: garmentStore.garments,
+            filter: wardrobeFilterBinding(for: account.user.id),
             state: garmentStore.state,
             imageRepository: dependencies.garmentImageRepository,
             onAdd: {
@@ -176,8 +186,37 @@ struct RootView: View {
             onProfile: { route = .profile }
         )
         .task(id: account.defaultWardrobe.id) {
+            prepareWardrobeFilter(for: account.user.id)
             await garmentStore.load(wardrobeID: account.defaultWardrobe.id)
         }
+    }
+
+    private func wardrobeFilterBinding(for userID: UUID) -> Binding<WardrobeFilter> {
+        Binding(
+            get: {
+                guard filterOwnerUserID == nil || filterOwnerUserID == userID else {
+                    return WardrobeFilter()
+                }
+                return wardrobeFilter
+            },
+            set: { newValue in
+                if filterOwnerUserID != userID {
+                    filterOwnerUserID = userID
+                }
+                wardrobeFilter = newValue
+            }
+        )
+    }
+
+    private func prepareWardrobeFilter(for userID: UUID) {
+        guard filterOwnerUserID != userID else { return }
+        wardrobeFilter = WardrobeFilter()
+        filterOwnerUserID = userID
+    }
+
+    private func resetWardrobeFilter() {
+        wardrobeFilter = WardrobeFilter()
+        filterOwnerUserID = nil
     }
 
     @ViewBuilder private func addGarmentContent(account: UserAccount) -> some View {
