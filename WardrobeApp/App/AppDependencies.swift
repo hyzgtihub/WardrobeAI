@@ -208,10 +208,54 @@ private actor UITestGarmentRepository: GarmentRepository {
     }
 
     private static let samples: [Garment] = [
-        sample(id: "11111111-1111-1111-1111-111111111101", name: "白色亚麻衬衫", path: "garment-white-linen-shirt", category: .tops, seasons: ["春季", "夏季"]),
-        sample(id: "11111111-1111-1111-1111-111111111102", name: "蓝色针织上衣", path: "garment-powder-blue-knit", category: .tops, seasons: ["春季", "秋季"]),
-        sample(id: "11111111-1111-1111-1111-111111111103", name: "米色风衣", path: "garment-beige-trench", category: .outerwear, seasons: ["秋季"]),
-        sample(id: "11111111-1111-1111-1111-111111111104", name: "黑色针织连衣裙", path: "garment-black-knit-dress", category: .dresses, seasons: ["秋季", "冬季"]),
+        sample(
+            id: "11111111-1111-1111-1111-111111111101",
+            name: "白色亚麻衬衫",
+            path: "garment-white-linen-shirt",
+            category: .tops,
+            seasons: ["春季", "夏季"],
+            colors: ["白色"],
+            materials: ["亚麻"],
+            styles: ["通勤"],
+            size: "M",
+            storageLocation: "主卧衣柜"
+        ),
+        sample(
+            id: "11111111-1111-1111-1111-111111111102",
+            name: "蓝色针织上衣",
+            path: "garment-powder-blue-knit",
+            category: .tops,
+            seasons: ["春季", "秋季"],
+            colors: ["蓝色"],
+            materials: ["羊毛"],
+            styles: ["休闲"],
+            size: "S",
+            storageLocation: "次卧衣柜"
+        ),
+        sample(
+            id: "11111111-1111-1111-1111-111111111103",
+            name: "米色风衣",
+            path: "garment-beige-trench",
+            category: .outerwear,
+            seasons: ["秋季"],
+            colors: ["米色"],
+            materials: ["棉"],
+            styles: ["通勤"],
+            size: "L",
+            storageLocation: "主卧衣柜"
+        ),
+        sample(
+            id: "11111111-1111-1111-1111-111111111104",
+            name: "黑色针织连衣裙",
+            path: "garment-black-knit-dress",
+            category: .dresses,
+            seasons: ["秋季", "冬季"],
+            colors: ["黑色"],
+            materials: ["针织"],
+            styles: ["优雅"],
+            size: "M",
+            storageLocation: "次卧衣柜"
+        ),
     ]
 
     private static func sample(
@@ -219,7 +263,12 @@ private actor UITestGarmentRepository: GarmentRepository {
         name: String,
         path: String,
         category: YISUCategory,
-        seasons: [String]
+        seasons: [String],
+        colors: [String],
+        materials: [String],
+        styles: [String],
+        size: String,
+        storageLocation: String
     ) -> Garment {
         let timestamp = Date(timeIntervalSince1970: 0)
         return Garment(
@@ -230,14 +279,14 @@ private actor UITestGarmentRepository: GarmentRepository {
             name: name,
             category: category,
             seasons: seasons,
-            colors: [],
+            colors: colors,
             brand: nil,
             price: nil,
-            size: nil,
+            size: size,
             purchaseDate: nil,
-            materials: [],
-            styles: [],
-            storageLocation: nil,
+            materials: materials,
+            styles: styles,
+            storageLocation: storageLocation,
             notes: nil,
             createdAt: timestamp,
             updatedAt: timestamp,
