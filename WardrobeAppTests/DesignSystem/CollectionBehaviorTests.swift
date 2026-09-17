@@ -21,4 +21,14 @@ struct CollectionBehaviorTests {
         #expect(YISUTab.allCases == [.wardrobe, .addGarment, .profile])
         #expect(YISUTab.allCases.map(\.title) == ["衣橱", "添加衣物", "我的"])
     }
+
+    @Test("单分类浏览替换已有的多分类选择")
+    func selectingSingleCategoryReplacesMultipleSelection() {
+        #expect(WardrobeCategorySelection.replacing([.tops, .pants], with: .dresses) == [.dresses])
+    }
+
+    @Test("全部分类浏览清空分类限制")
+    func selectingAllClearsCategoryRestriction() {
+        #expect(WardrobeCategorySelection.replacing([.tops], with: nil).isEmpty)
+    }
 }
