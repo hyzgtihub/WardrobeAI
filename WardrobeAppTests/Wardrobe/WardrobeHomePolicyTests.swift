@@ -1,5 +1,4 @@
 import Foundation
-import SwiftUI
 import Testing
 @testable import YISU
 
@@ -40,13 +39,31 @@ struct WardrobeHomePolicyTests {
     }
 
     @Test
-    func homeAcceptsFullGarmentsAndAnAppliedFilterBinding() {
-        let filter = WardrobeFilter(categories: [.tops])
+    func anOldSheetDraftCannotApplyAfterSwitchingAccounts() {
+        let userA = UUID(uuidString: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")!
+        let userB = UUID(uuidString: "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb")!
+        let oldSheetDraft = WardrobeFilter(seasons: ["夏季"])
+        var session = WardrobeFilterSession()
 
-        _ = WardrobeHomeView(
-            garments: Self.fixtures,
-            filter: .constant(filter)
-        )
+        session.prepare(for: userA)
+        session.prepare(for: userB)
+        session.apply(oldSheetDraft, for: userA)
+
+        #expect(session.ownerUserID == userB)
+        #expect(session.filter(for: userB).isEmpty)
+    }
+
+    @Test
+    func preparingTheSameAccountPreservesItsAppliedFilter() {
+        let userID = UUID(uuidString: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")!
+        let applied = WardrobeFilter(categories: [.tops], seasons: ["夏季"])
+        var session = WardrobeFilterSession()
+
+        session.prepare(for: userID)
+        session.apply(applied, for: userID)
+        session.prepare(for: userID)
+
+        #expect(session.filter(for: userID) == applied)
     }
 
     private static let fixtures = [

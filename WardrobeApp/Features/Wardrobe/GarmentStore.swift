@@ -15,18 +15,51 @@ final class GarmentStore {
     private(set) var garments: [Garment] = []
 
     private let repository: any GarmentRepository
+    private var sessionOwner: SessionOwner?
+    private var loadGeneration = 0
 
     init(repository: any GarmentRepository) {
         self.repository = repository
     }
 
-    func load(wardrobeID: UUID) async {
-        guard state != .loading else { return }
+    func prepareForSession(userID: UUID, wardrobeID: UUID) {
+        let owner = SessionOwner(userID: userID, wardrobeID: wardrobeID)
+        guard sessionOwner != owner else { return }
+        sessionOwner = owner
+        loadGeneration += 1
+        garments = []
+        state = .idle
+    }
+
+    func resetSession() {
+        sessionOwner = nil
+        loadGeneration += 1
+        garments = []
+        state = .idle
+    }
+
+    func garments(forUserID userID: UUID, wardrobeID: UUID) -> [Garment] {
+        sessionOwner == SessionOwner(userID: userID, wardrobeID: wardrobeID) ? garments : []
+    }
+
+    func state(forUserID userID: UUID, wardrobeID: UUID) -> State {
+        sessionOwner == SessionOwner(userID: userID, wardrobeID: wardrobeID) ? state : .idle
+    }
+
+    func load(userID: UUID, wardrobeID: UUID) async {
+        let owner = SessionOwner(userID: userID, wardrobeID: wardrobeID)
+        if sessionOwner == owner, state == .loading { return }
+        prepareForSession(userID: userID, wardrobeID: wardrobeID)
+        loadGeneration += 1
+        let generation = loadGeneration
         state = .loading
         do {
-            garments = try await repository.fetchGarments(wardrobeID: wardrobeID)
+            let loadedGarments = try await repository.fetchGarments(wardrobeID: wardrobeID)
+            guard sessionOwner == owner, loadGeneration == generation else { return }
+            garments = loadedGarments
             state = .loaded
         } catch {
+            guard sessionOwner == owner, loadGeneration == generation else { return }
             garments = []
             state = .failed
         }
@@ -45,5 +78,10 @@ final class GarmentStore {
 
     func removePersisted(id: UUID) {
         garments.removeAll { $0.id == id }
+    }
+
+    private struct SessionOwner: Equatable {
+        let userID: UUID
+        let wardrobeID: UUID
     }
 }

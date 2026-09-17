@@ -1,5 +1,30 @@
 import SwiftUI
 
+struct WardrobeFilterSession: Equatable {
+    private(set) var ownerUserID: UUID?
+    private var appliedFilter = WardrobeFilter()
+
+    mutating func prepare(for userID: UUID) {
+        guard ownerUserID != userID else { return }
+        ownerUserID = userID
+        appliedFilter = WardrobeFilter()
+    }
+
+    mutating func reset() {
+        ownerUserID = nil
+        appliedFilter = WardrobeFilter()
+    }
+
+    func filter(for userID: UUID) -> WardrobeFilter {
+        ownerUserID == userID ? appliedFilter : WardrobeFilter()
+    }
+
+    mutating func apply(_ filter: WardrobeFilter, for userID: UUID) {
+        guard ownerUserID == userID else { return }
+        appliedFilter = filter
+    }
+}
+
 struct RootView: View {
     let dependencies: AppDependencies
 
@@ -10,8 +35,7 @@ struct RootView: View {
     @State private var addGarmentStore: AddGarmentStore
     @State private var garmentStore: GarmentStore
     @State private var photoPickerCancelRoute: AppRoute = .wardrobe
-    @State private var wardrobeFilter = WardrobeFilter()
-    @State private var filterOwnerUserID: UUID?
+    @State private var wardrobeFilterSession = WardrobeFilterSession()
     private let forcedScreen: String?
 
     init(dependencies: AppDependencies, arguments: [String] = ProcessInfo.processInfo.arguments) {
@@ -52,13 +76,15 @@ struct RootView: View {
                     switch state {
                     case .signedOut:
                         garmentDetailStore.cancelPendingWork()
-                        resetWardrobeFilter()
+                        garmentStore.resetSession()
+                        wardrobeFilterSession.reset()
                         route = .signIn
                     case .ready(let account):
-                        if filterOwnerUserID != account.user.id {
-                            wardrobeFilter = WardrobeFilter()
-                            filterOwnerUserID = account.user.id
-                        }
+                        garmentStore.prepareForSession(
+                            userID: account.user.id,
+                            wardrobeID: account.defaultWardrobe.id
+                        )
+                        wardrobeFilterSession.prepare(for: account.user.id)
                         if garmentDetailStore.garmentUserID != account.user.id {
                             garmentDetailStore.cancelPendingWork()
                             route = .wardrobe
@@ -168,10 +194,12 @@ struct RootView: View {
     }
 
     private func wardrobe(account: UserAccount) -> some View {
-        WardrobeHomeView(
-            garments: garmentStore.garments,
-            filter: wardrobeFilterBinding(for: account.user.id),
-            state: garmentStore.state,
+        let userID = account.user.id
+        let wardrobeID = account.defaultWardrobe.id
+        return WardrobeHomeView(
+            garments: garmentStore.garments(forUserID: userID, wardrobeID: wardrobeID),
+            filter: wardrobeFilterBinding(for: userID),
+            state: garmentStore.state(forUserID: userID, wardrobeID: wardrobeID),
             imageRepository: dependencies.garmentImageRepository,
             onAdd: {
                 addGarmentStore.startNewFlow()
@@ -185,38 +213,20 @@ struct RootView: View {
             },
             onProfile: { route = .profile }
         )
-        .task(id: account.defaultWardrobe.id) {
-            prepareWardrobeFilter(for: account.user.id)
-            await garmentStore.load(wardrobeID: account.defaultWardrobe.id)
+        .id(userID)
+        .task(id: wardrobeID) {
+            wardrobeFilterSession.prepare(for: userID)
+            await garmentStore.load(userID: userID, wardrobeID: wardrobeID)
         }
     }
 
     private func wardrobeFilterBinding(for userID: UUID) -> Binding<WardrobeFilter> {
         Binding(
-            get: {
-                guard filterOwnerUserID == nil || filterOwnerUserID == userID else {
-                    return WardrobeFilter()
-                }
-                return wardrobeFilter
-            },
+            get: { wardrobeFilterSession.filter(for: userID) },
             set: { newValue in
-                if filterOwnerUserID != userID {
-                    filterOwnerUserID = userID
-                }
-                wardrobeFilter = newValue
+                wardrobeFilterSession.apply(newValue, for: userID)
             }
         )
-    }
-
-    private func prepareWardrobeFilter(for userID: UUID) {
-        guard filterOwnerUserID != userID else { return }
-        wardrobeFilter = WardrobeFilter()
-        filterOwnerUserID = userID
-    }
-
-    private func resetWardrobeFilter() {
-        wardrobeFilter = WardrobeFilter()
-        filterOwnerUserID = nil
     }
 
     @ViewBuilder private func addGarmentContent(account: UserAccount) -> some View {
@@ -359,7 +369,8 @@ struct RootView: View {
         imagePath: "garment-white-linen-shirt", name: "白色亚麻衬衫", category: .tops,
         seasons: ["春季", "夏季"], colors: ["白色系"], brand: "MUJI", price: 299, size: "M",
         purchaseDate: nil, materials: ["麻", "棉"], styles: ["通勤", "简约"],
-        storageLocation: "主卧衣橱 · 上层", notes: "适合搭配浅色长裤", createdAt: Date(), updatedAt: Date(), deletedAt: nil
+        storageLocation: "主卧衣橱 · 上层", notes: "适合搭配浅色长裤",
+        createdAt: Date(timeIntervalSince1970: 0), updatedAt: Date(timeIntervalSince1970: 0), deletedAt: nil
     )
 
 }

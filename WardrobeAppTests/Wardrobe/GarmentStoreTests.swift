@@ -9,10 +9,11 @@ struct GarmentStoreTests {
     func loadForwardsWardrobeAndTransitionsToLoaded() async {
         let repository = ControlledGarmentRepository(result: .success([.fixture]), blocksFetch: true)
         let store = GarmentStore(repository: repository)
+        let userID = UUID(uuidString: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")!
         let wardrobeID = UUID(uuidString: "11111111-1111-1111-1111-111111111111")!
 
         #expect(store.state == .idle)
-        let load = Task { await store.load(wardrobeID: wardrobeID) }
+        let load = Task { await store.load(userID: userID, wardrobeID: wardrobeID) }
         await repository.waitUntilFetchStarts()
         #expect(store.state == .loading)
         await repository.releaseFetch()
@@ -27,12 +28,52 @@ struct GarmentStoreTests {
     func failedLoadClearsStaleItems() async {
         let repository = ControlledGarmentRepository(result: .failure(TestFailure.fetch))
         let store = GarmentStore(repository: repository)
+        store.prepareForSession(
+            userID: Garment.fixture.userID,
+            wardrobeID: Garment.fixture.wardrobeID
+        )
         store.insertCreated(.fixture)
 
-        await store.load(wardrobeID: UUID())
+        await store.load(userID: Garment.fixture.userID, wardrobeID: Garment.fixture.wardrobeID)
 
         #expect(store.state == .failed)
         #expect(store.garments.isEmpty)
+    }
+
+    @Test
+    func switchingSessionsClearsDisplayedGarmentsAndRejectsThePreviousLateLoad() async {
+        let userA = UUID(uuidString: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")!
+        let userB = UUID(uuidString: "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb")!
+        let wardrobeA = UUID(uuidString: "11111111-1111-1111-1111-111111111111")!
+        let wardrobeB = UUID(uuidString: "22222222-2222-2222-2222-222222222222")!
+        let garmentA = Garment.fixture(name: "A 的衬衫", userID: userA, wardrobeID: wardrobeA)
+        let garmentB = Garment.fixture(name: "B 的外套", userID: userB, wardrobeID: wardrobeB)
+        let repository = SwitchingGarmentRepository(
+            results: [wardrobeA: [garmentA], wardrobeB: [garmentB]],
+            blockedWardrobeID: wardrobeA
+        )
+        let store = GarmentStore(repository: repository)
+
+        store.prepareForSession(userID: userA, wardrobeID: wardrobeA)
+        store.insertCreated(garmentA)
+        let loadA = Task { await store.load(userID: userA, wardrobeID: wardrobeA) }
+        await repository.waitUntilBlockedFetchStarts()
+
+        store.prepareForSession(userID: userB, wardrobeID: wardrobeB)
+
+        #expect(store.state == .idle)
+        #expect(store.garments.isEmpty)
+
+        await store.load(userID: userB, wardrobeID: wardrobeB)
+        #expect(store.state == .loaded)
+        #expect(store.garments.map(\.name) == ["B 的外套"])
+
+        await repository.releaseBlockedFetch()
+        await loadA.value
+
+        #expect(store.state == .loaded)
+        #expect(store.garments.map(\.name) == ["B 的外套"])
+        #expect(await repository.requestedWardrobeIDs == [wardrobeA, wardrobeB])
     }
 
     @Test
@@ -102,6 +143,43 @@ private actor ControlledGarmentRepository: GarmentRepository {
     }
 }
 
+private actor SwitchingGarmentRepository: GarmentRepository {
+    private(set) var requestedWardrobeIDs: [UUID] = []
+    private let results: [UUID: [Garment]]
+    private let blockedWardrobeID: UUID
+    private var didStartBlockedFetch = false
+    private var startedContinuation: CheckedContinuation<Void, Never>?
+    private var releaseContinuation: CheckedContinuation<Void, Never>?
+
+    init(results: [UUID: [Garment]], blockedWardrobeID: UUID) {
+        self.results = results
+        self.blockedWardrobeID = blockedWardrobeID
+    }
+
+    func fetchGarments(wardrobeID: UUID) async throws -> [Garment] {
+        requestedWardrobeIDs.append(wardrobeID)
+        if wardrobeID == blockedWardrobeID {
+            didStartBlockedFetch = true
+            startedContinuation?.resume()
+            startedContinuation = nil
+            await withCheckedContinuation { releaseContinuation = $0 }
+        }
+        return results[wardrobeID, default: []]
+    }
+
+    func createGarment(_ input: NewGarment) async throws -> Garment { .fixture }
+
+    func waitUntilBlockedFetchStarts() async {
+        if didStartBlockedFetch { return }
+        await withCheckedContinuation { startedContinuation = $0 }
+    }
+
+    func releaseBlockedFetch() {
+        releaseContinuation?.resume()
+        releaseContinuation = nil
+    }
+}
+
 private enum TestFailure: Error { case fetch }
 
 private extension Garment {
@@ -126,4 +204,28 @@ private extension Garment {
         updatedAt: Date(timeIntervalSince1970: 1),
         deletedAt: nil
     )
+
+    static func fixture(name: String, userID: UUID, wardrobeID: UUID) -> Garment {
+        Garment(
+            id: UUID(),
+            userID: userID,
+            wardrobeID: wardrobeID,
+            imagePath: "fixture/original.jpg",
+            name: name,
+            category: .tops,
+            seasons: ["spring"],
+            colors: ["白色"],
+            brand: "衣序",
+            price: Decimal(string: "199.90"),
+            size: "M",
+            purchaseDate: Date(timeIntervalSince1970: 0),
+            materials: ["棉"],
+            styles: ["通勤"],
+            storageLocation: "主衣柜",
+            notes: nil,
+            createdAt: Date(timeIntervalSince1970: 1),
+            updatedAt: Date(timeIntervalSince1970: 1),
+            deletedAt: nil
+        )
+    }
 }
