@@ -283,7 +283,7 @@ private final class AuthRepositorySpy: AuthRepository, @unchecked Sendable {
     func verifySignUp(email: String, code: String) async throws -> AuthenticatedUser { try signUpResult.get() }
     func signIn(email: String, password: String) async throws -> AuthenticatedUser { try signInResult.get() }
     func signOut() async throws { try signOutResult.get() }
-    func send(_ event: AuthSessionEvent) { queue.sync { continuation.yield(event) } }
+    func send(_ event: AuthSessionEvent) { _ = queue.sync { continuation.yield(event) } }
 }
 
 private final class ProfileRepositorySpy: ProfileRepository, @unchecked Sendable {

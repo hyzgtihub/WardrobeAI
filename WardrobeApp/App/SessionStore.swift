@@ -32,7 +32,7 @@ final class SessionStore {
     private var sessionGeneration = 0
     private var accountLoadGeneration = 0
     private var submissionGeneration = 0
-    private nonisolated(unsafe) var eventTask: Task<Void, Never>?
+    private var eventTask: Task<Void, Never>?
 
     init(
         authRepository: any AuthRepository,
@@ -53,7 +53,7 @@ final class SessionStore {
         }
     }
 
-    deinit {
+    isolated deinit {
         eventTask?.cancel()
     }
 

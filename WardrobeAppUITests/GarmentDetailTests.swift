@@ -11,7 +11,9 @@ final class GarmentDetailTests: XCTestCase {
         XCTAssertTrue(card.waitForExistence(timeout: 3))
         card.tap()
 
-        XCTAssertTrue(app.staticTexts["garmentDetail.title"].waitForExistence(timeout: 3))
+        let name = app.textFields["garmentDetail.name"]
+        XCTAssertTrue(name.waitForExistence(timeout: 3))
+        XCTAssertEqual(name.value as? String, "白色亚麻衬衫")
         for identifier in ["garmentDetail.back", "garmentDetail.more", "garmentDetail.changePhoto"] {
             let button = app.buttons[identifier]
             XCTAssertTrue(button.exists, identifier)

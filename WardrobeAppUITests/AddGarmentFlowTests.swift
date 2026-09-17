@@ -42,7 +42,7 @@ final class AddGarmentFlowTests: XCTestCase {
         submit.tap()
         XCTAssertEqual(app.staticTexts["addGarment.error"].label, "请选择衣物分类")
 
-        app.buttons["addGarment.category.tops"].tap()
+        selectCategoryAndSpring(in: app, includeSeason: false)
         submit.tap()
         XCTAssertEqual(app.staticTexts["addGarment.error"].label, "请至少选择一个季节")
     }
@@ -77,7 +77,7 @@ final class AddGarmentFlowTests: XCTestCase {
         XCTAssertEqual(app.textFields["addGarment.name"].value as? String, "重试衬衫")
 
         submit.tap()
-        XCTAssertTrue(app.staticTexts["garmentDetail.title"].waitForExistence(timeout: 4))
+        XCTAssertTrue(app.textFields["garmentDetail.name"].waitForExistence(timeout: 4))
     }
 
     @MainActor
@@ -93,7 +93,7 @@ final class AddGarmentFlowTests: XCTestCase {
         XCTAssertEqual(app.textFields["addGarment.name"].value as? String, "补偿衬衫")
 
         submit.tap()
-        XCTAssertTrue(app.staticTexts["garmentDetail.title"].waitForExistence(timeout: 4))
+        XCTAssertTrue(app.textFields["garmentDetail.name"].waitForExistence(timeout: 4))
     }
 
     @MainActor
@@ -104,7 +104,7 @@ final class AddGarmentFlowTests: XCTestCase {
         let submit = app.buttons["addGarment.submit"]
         submit.tap()
         XCTAssertFalse(submit.isEnabled)
-        XCTAssertTrue(app.staticTexts["garmentDetail.title"].waitForExistence(timeout: 4))
+        XCTAssertTrue(app.textFields["garmentDetail.name"].waitForExistence(timeout: 4))
     }
 
     @MainActor
@@ -134,8 +134,39 @@ final class AddGarmentFlowTests: XCTestCase {
         let field = app.textFields["addGarment.name"]
         field.tap()
         field.typeText(name)
-        app.buttons["addGarment.category.tops"].tap()
-        app.buttons["addGarment.season.spring"].tap()
+        selectCategoryAndSpring(in: app)
+    }
+
+    @MainActor
+    private func selectCategoryAndSpring(in app: XCUIApplication, includeSeason: Bool = true) {
+        dismissKeyboardIfNeeded(in: app)
+        app.buttons["addGarment.category"].tap()
+        let tops = app.descendants(matching: .any)["picker.category.上衣"]
+        XCTAssertTrue(tops.waitForExistence(timeout: 3))
+        tops.tap()
+        XCTAssertTrue(tops.waitForNonExistence(timeout: 2))
+
+        guard includeSeason else { return }
+        let seasons = app.buttons["addGarment.seasons"]
+        XCTAssertTrue(seasons.waitForExistence(timeout: 3))
+        seasons.tap()
+        let spring = app.descendants(matching: .any)["picker.seasons.春季"]
+        XCTAssertTrue(spring.waitForExistence(timeout: 3))
+        spring.tap()
+        let complete = app.buttons["picker.seasons.complete"]
+        XCTAssertTrue(complete.waitForExistence(timeout: 3))
+        complete.tap()
+        XCTAssertTrue(complete.waitForNonExistence(timeout: 2))
+    }
+
+    @MainActor
+    private func dismissKeyboardIfNeeded(in app: XCUIApplication) {
+        let keyboard = app.keyboards.firstMatch
+        guard keyboard.exists else { return }
+        let returnKey = keyboard.buttons["Return"]
+        XCTAssertTrue(returnKey.exists)
+        returnKey.tap()
+        XCTAssertTrue(keyboard.waitForNonExistence(timeout: 2))
     }
 
     @MainActor

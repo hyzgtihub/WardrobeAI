@@ -6,7 +6,7 @@ struct ModelTests {
     @Test("分类顺序与 Gate B4 一致")
     func categoryOrderMatchesGateB4() {
         #expect(YISUCategory.allCases.map(\.title) == [
-            "全部", "上衣", "裤子", "外套", "裙子", "鞋子", "配饰", "其他"
+            "全部", "上衣", "裤子", "连衣裙", "外套", "鞋履", "包袋", "配饰", "其他"
         ])
     }
 
