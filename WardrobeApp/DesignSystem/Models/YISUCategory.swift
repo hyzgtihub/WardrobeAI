@@ -9,6 +9,10 @@ enum YISUCategory: String, Codable, CaseIterable, Equatable, Sendable {
     case accessories
     case other
 
+    static let browseableCases: [YISUCategory] = [
+        .tops, .pants, .dresses, .outerwear, .shoes, .bags, .accessories, .other
+    ]
+
     var title: String {
         switch self {
         case .all: "全部"
