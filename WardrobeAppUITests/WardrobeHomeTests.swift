@@ -41,16 +41,37 @@ final class WardrobeHomeTests: XCTestCase {
         app.launchArguments += ["-ui-screen", "add-garment", "-ui-add-garment-scenario", "success"]
         app.launch()
 
-        app.buttons["addGarment.choosePhoto"].tap()
-        app.buttons["addGarment.usePhoto"].tap()
+        let choosePhoto = app.buttons["addGarment.choosePhoto"]
+        XCTAssertTrue(choosePhoto.waitForExistence(timeout: 3))
+        choosePhoto.tap()
+        let usePhoto = app.buttons["addGarment.usePhoto"]
+        XCTAssertTrue(usePhoto.waitForExistence(timeout: 3))
+        usePhoto.tap()
         let name = app.textFields["addGarment.name"]
         XCTAssertTrue(name.waitForExistence(timeout: 3))
         name.tap()
         name.typeText("新增衬衫")
-        app.buttons["addGarment.category.tops"].tap()
-        app.buttons["addGarment.season.spring"].tap()
+        let keyboard = app.keyboards.firstMatch
+        if keyboard.exists {
+            let returnKey = keyboard.buttons["Return"]
+            XCTAssertTrue(returnKey.exists)
+            returnKey.tap()
+            XCTAssertTrue(keyboard.waitForNonExistence(timeout: 2))
+        }
+        app.buttons["addGarment.category"].tap()
+        let tops = app.descendants(matching: .any)["picker.category.上衣"]
+        XCTAssertTrue(tops.waitForExistence(timeout: 3))
+        tops.tap()
+        XCTAssertTrue(tops.waitForNonExistence(timeout: 2))
+        app.buttons["addGarment.seasons"].tap()
+        let spring = app.descendants(matching: .any)["picker.seasons.春季"]
+        XCTAssertTrue(spring.waitForExistence(timeout: 3))
+        spring.tap()
+        let complete = app.buttons["picker.seasons.complete"]
+        complete.tap()
+        XCTAssertTrue(complete.waitForNonExistence(timeout: 2))
         app.buttons["addGarment.submit"].tap()
-        XCTAssertTrue(app.staticTexts["garmentDetail.title"].waitForExistence(timeout: 4))
+        XCTAssertTrue(app.textFields["garmentDetail.name"].waitForExistence(timeout: 4))
 
         app.buttons["garmentDetail.back"].tap()
         let createdCard = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "新增衬衫")).firstMatch

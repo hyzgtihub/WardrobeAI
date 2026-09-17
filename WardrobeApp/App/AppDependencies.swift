@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 @MainActor
 struct AppDependencies {
@@ -34,10 +35,7 @@ struct AppDependencies {
             ),
             garmentRepository: UITestGarmentRepository(scenario: addGarmentScenario),
             garmentImageRepository: UITestGarmentImageRepository(scenario: addGarmentScenario),
-            addGarmentFixtureData: Bundle.main.url(
-                forResource: "garment-photo-metadata",
-                withExtension: "jpg"
-            ).flatMap { try? Data(contentsOf: $0) }
+            addGarmentFixtureData: uiTestGarmentImageData()
         )
     }
 
@@ -52,6 +50,14 @@ struct AppDependencies {
         guard let index = arguments.firstIndex(of: flag), arguments.indices.contains(index + 1) else { return nil }
         return arguments[index + 1]
     }
+
+    private static func uiTestGarmentImageData() -> Data? {
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 64, height: 64))
+        return renderer.image { context in
+            UIColor.systemBrown.setFill()
+            context.fill(CGRect(origin: .zero, size: CGSize(width: 64, height: 64)))
+        }.jpegData(compressionQuality: 0.8)
+    }
 }
 
 private struct UITestAuthRepository: AuthRepository {
@@ -65,8 +71,14 @@ private struct UITestAuthRepository: AuthRepository {
         scenario == "signed-in" ? Self.user : nil
     }
 
-    func signUp(email: String, password: String) async throws -> AuthenticatedUser {
+    func requestSignUpVerification(email: String, password: String) async throws {
         guard scenario != "registration-failure" else { throw AccountError.emailAlreadyRegistered }
+    }
+
+    func resendSignUpVerification(email: String) async throws {}
+
+    func verifySignUp(email: String, code: String) async throws -> AuthenticatedUser {
+        guard scenario != "verification-failure" else { throw AccountError.invalidCredentials }
         return Self.user
     }
 

@@ -71,5 +71,7 @@ schemes:
     test:
       gatherCoverageData: true
       targets:
-        - YISUTests
-        - YISUUITests
+        - name: YISUTests
+          parallelizable: false
+        - name: YISUUITests
+          parallelizable: false

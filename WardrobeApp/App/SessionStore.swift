@@ -32,7 +32,7 @@ final class SessionStore {
     private var sessionGeneration = 0
     private var accountLoadGeneration = 0
     private var submissionGeneration = 0
-    private nonisolated(unsafe) var eventTask: Task<Void, Never>?
+    private var eventTask: Task<Void, Never>?
 
     init(
         authRepository: any AuthRepository,
@@ -53,7 +53,7 @@ final class SessionStore {
         }
     }
 
-    deinit {
+    isolated deinit {
         eventTask?.cancel()
     }
 
@@ -86,14 +86,39 @@ final class SessionStore {
         }
     }
 
-    func signUp(email: String, password: String) async {
+    func requestSignUpVerification(email: String, password: String) async {
         guard !isSubmitting else { return }
         let submission = beginSubmission()
         submissionError = nil
         defer { finishSubmission(submission) }
-
         do {
-            let user = try await authRepository.signUp(email: email, password: password)
+            try await authRepository.requestSignUpVerification(email: email, password: password)
+        } catch {
+            state = .signedOut
+            submissionError = accountError(from: error)
+        }
+    }
+
+    func resendSignUpVerification(email: String) async {
+        guard !isSubmitting else { return }
+        let submission = beginSubmission()
+        submissionError = nil
+        defer { finishSubmission(submission) }
+        do {
+            try await authRepository.resendSignUpVerification(email: email)
+        } catch {
+            state = .signedOut
+            submissionError = accountError(from: error)
+        }
+    }
+
+    func verifySignUp(email: String, code: String) async {
+        guard !isSubmitting else { return }
+        let submission = beginSubmission()
+        submissionError = nil
+        defer { finishSubmission(submission) }
+        do {
+            let user = try await authRepository.verifySignUp(email: email, code: code)
             await loadAccount(for: user)
         } catch {
             state = .signedOut

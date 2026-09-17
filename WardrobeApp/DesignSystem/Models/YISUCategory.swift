@@ -2,8 +2,8 @@ enum YISUCategory: String, Codable, CaseIterable, Equatable, Sendable {
     case all
     case tops
     case pants
-    case outerwear
     case dresses
+    case outerwear
     case shoes
     case bags
     case accessories

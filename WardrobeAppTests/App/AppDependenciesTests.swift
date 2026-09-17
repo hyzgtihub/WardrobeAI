@@ -18,7 +18,7 @@ struct AppDependenciesTests {
         )
 
         await dependencies.sessionStore.restore()
-        await dependencies.sessionStore.signUp(email: "mia@example.com", password: "password")
+        await dependencies.sessionStore.requestSignUpVerification(email: "mia@example.com", password: "password")
 
         #expect(dependencies.sessionStore.state == .signedOut)
         #expect(dependencies.sessionStore.submissionError == .emailAlreadyRegistered)

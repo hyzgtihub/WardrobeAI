@@ -87,24 +87,19 @@ struct RootView: View {
                 error: nil,
                 passwordTextContentType: .none,
                 onBack: { route = .signIn },
-                onCreated: { email, password in
-                    await sessionStore.signUp(email: email, password: password)
-                    if sessionStore.submissionError == nil { route = .signIn }
+                onRequestCode: { email, password in
+                    await sessionStore.requestSignUpVerification(email: email, password: password)
+                    return sessionStore.submissionError
+                },
+                onResendCode: { email in
+                    await sessionStore.resendSignUpVerification(email: email)
+                    return sessionStore.submissionError
+                },
+                onVerifyCode: { email, code in
+                    await sessionStore.verifySignUp(email: email, code: code)
                     return sessionStore.submissionError
                 }
             )
-            .overlay(alignment: .top) {
-                if let message = registrationErrorMessage {
-                    Text(message)
-                        .font(YISUTheme.Typography.footnote)
-                        .foregroundStyle(YISUTheme.Color.danger)
-                        .padding(YISUTheme.Spacing.md)
-                        .background(YISUTheme.Color.dangerSubtle)
-                        .clipShape(RoundedRectangle(cornerRadius: YISUTheme.Radius.small))
-                        .padding(.top, YISUTheme.Spacing.lg)
-                        .accessibilityIdentifier("auth.error")
-                }
-            }
         } else {
             SignInView(
                 isSubmitting: sessionStore.isSubmitting,
@@ -141,7 +136,7 @@ struct RootView: View {
         case .signIn:
             SignInView(onRegister: { route = .signUp }, onSubmit: { _, _ in route = .wardrobe })
         case .signUp:
-            SignUpView(onBack: { route = .signIn }, onCreated: { _, _ in
+            SignUpView(onBack: { route = .signIn }, onVerifyCode: { _, _ in
                 route = .wardrobe
                 return nil
             })
@@ -289,16 +284,6 @@ struct RootView: View {
         )
         .padding(YISUTheme.Spacing.lg)
         .background(YISUTheme.Color.background.ignoresSafeArea())
-    }
-
-    private var registrationErrorMessage: String? {
-        switch sessionStore.submissionError {
-        case .emailAlreadyRegistered: "该邮箱已注册，请直接登录"
-        case .networkUnavailable: "网络连接不可用，请稍后重试"
-        case .invalidCredentials, .accountDataUnavailable, .invalidConfiguration, .unknown:
-            "服务暂时不可用，请稍后重试"
-        case nil: nil
-        }
     }
 
     private static func argument(after flag: String, in arguments: [String]) -> String? {
