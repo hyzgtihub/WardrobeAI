@@ -7,34 +7,35 @@ struct WardrobeFilterBar: View {
 
     var body: some View {
         HStack(spacing: YISUTheme.Spacing.sm) {
-            Button(action: onOpen) {
-                Image(systemName: "line.3.horizontal.decrease")
-                    .font(.system(size: 17, weight: .semibold))
-                    .foregroundStyle(YISUTheme.Color.textPrimary)
-                    .frame(width: YISUTheme.Size.minimumTouchTarget, height: YISUTheme.Size.minimumTouchTarget)
-                    .background(YISUTheme.Color.surface, in: Circle())
-                    .overlay {
-                        Circle()
-                            .stroke(YISUTheme.Color.border, lineWidth: 1)
-                    }
-                    .overlay(alignment: .topTrailing) {
-                        if filter.hasNonCategoryConditions {
+            ZStack(alignment: .topTrailing) {
+                Button(action: onOpen) {
+                    Image(systemName: "line.3.horizontal.decrease")
+                        .font(.system(size: 17, weight: .semibold))
+                        .foregroundStyle(YISUTheme.Color.textPrimary)
+                        .frame(width: YISUTheme.Size.minimumTouchTarget, height: YISUTheme.Size.minimumTouchTarget)
+                        .background(YISUTheme.Color.surface, in: Circle())
+                        .overlay {
                             Circle()
-                                .fill(YISUTheme.Color.brandEmphasis)
-                                .frame(width: 10, height: 10)
-                                .overlay {
-                                    Circle().stroke(YISUTheme.Color.surface, lineWidth: 2)
-                                }
-                                .offset(x: -2, y: 2)
-                                .accessibilityHidden(true)
-                                .accessibilityIdentifier("wardrobe.filter.active")
+                                .stroke(YISUTheme.Color.border, lineWidth: 1)
                         }
-                    }
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("筛选")
+                .accessibilityValue(filter.hasNonCategoryConditions ? "已有条件" : "无附加条件")
+                .accessibilityIdentifier("wardrobe.filter.open")
+
+                if filter.hasNonCategoryConditions {
+                    Circle()
+                        .fill(YISUTheme.Color.brandEmphasis)
+                        .frame(width: 10, height: 10)
+                        .overlay {
+                            Circle().stroke(YISUTheme.Color.surface, lineWidth: 2)
+                        }
+                        .offset(x: -2, y: 2)
+                        .accessibilityLabel("筛选状态，已有条件")
+                        .accessibilityIdentifier("wardrobe.filter.active")
+                }
             }
-            .buttonStyle(.plain)
-            .accessibilityLabel("筛选")
-            .accessibilityValue(filter.hasNonCategoryConditions ? "已有条件" : "无附加条件")
-            .accessibilityIdentifier("wardrobe.filter.open")
 
             if !chips.isEmpty {
                 ScrollView(.horizontal, showsIndicators: false) {
