@@ -91,6 +91,7 @@ struct WardrobeFilterSheet: View {
         }
         .presentationDetents([.large])
         .presentationDragIndicator(.visible)
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("wardrobe.filter.sheet")
         .onDisappear {
             if !didFinish {

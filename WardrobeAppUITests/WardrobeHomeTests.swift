@@ -36,7 +36,7 @@ final class WardrobeHomeTests: XCTestCase {
 
         openFilter(in: app)
         selectFilterOption(dimension: "season", value: "春季", in: app)
-        app.buttons["关闭筛选"].tap()
+        app.buttons["wardrobe.filter.close"].tap()
         waitForFilterToClose(in: app)
 
         XCTAssertFalse(app.buttons["wardrobe.filterChip.春季"].exists)
@@ -62,8 +62,8 @@ final class WardrobeHomeTests: XCTestCase {
         applySeason("春季", in: app)
 
         openFilter(in: app)
-        app.buttons["重置"].tap()
-        app.buttons["关闭筛选"].tap()
+        app.buttons["wardrobe.filter.reset"].tap()
+        app.buttons["wardrobe.filter.close"].tap()
         waitForFilterToClose(in: app)
 
         XCTAssertTrue(app.buttons["wardrobe.filterChip.春季"].exists)
@@ -78,8 +78,8 @@ final class WardrobeHomeTests: XCTestCase {
         applySeason("春季", in: app)
 
         openFilter(in: app)
-        app.buttons["重置"].tap()
-        app.buttons["完成"].tap()
+        app.buttons["wardrobe.filter.reset"].tap()
+        app.buttons["wardrobe.filter.apply"].tap()
         waitForFilterToClose(in: app)
 
         XCTAssertFalse(app.buttons["wardrobe.filterChip.春季"].exists)
@@ -122,7 +122,7 @@ final class WardrobeHomeTests: XCTestCase {
         openFilter(in: app)
         selectFilterOption(dimension: "category", value: "上衣", in: app)
         selectFilterOption(dimension: "category", value: "外套", in: app)
-        app.buttons["完成"].tap()
+        app.buttons["wardrobe.filter.apply"].tap()
         waitForFilterToClose(in: app)
 
         let multiple = app.buttons["wardrobe.category.multiple"]
@@ -148,7 +148,7 @@ final class WardrobeHomeTests: XCTestCase {
         selectFilterOption(dimension: "material", value: "亚麻", in: app)
         selectFilterOption(dimension: "style", value: "通勤", in: app)
         selectFilterOption(dimension: "storageLocation", value: "主卧衣柜", in: app)
-        app.buttons["完成"].tap()
+        app.buttons["wardrobe.filter.apply"].tap()
         waitForFilterToClose(in: app)
 
         XCTAssertTrue(app.buttons["wardrobe.filterChip.亚麻"].exists)
@@ -166,7 +166,7 @@ final class WardrobeHomeTests: XCTestCase {
         openFilter(in: app)
         selectFilterOption(dimension: "season", value: "春季", in: app)
         selectFilterOption(dimension: "season", value: "秋季", in: app)
-        app.buttons["完成"].tap()
+        app.buttons["wardrobe.filter.apply"].tap()
         waitForFilterToClose(in: app)
 
         app.buttons["wardrobe.filterChip.春季"].tap()
@@ -301,7 +301,7 @@ final class WardrobeHomeTests: XCTestCase {
     private func applySeason(_ season: String, in app: XCUIApplication) {
         openFilter(in: app)
         selectFilterOption(dimension: "season", value: season, in: app)
-        app.buttons["完成"].tap()
+        app.buttons["wardrobe.filter.apply"].tap()
         waitForFilterToClose(in: app)
     }
 
