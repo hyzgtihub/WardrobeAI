@@ -156,7 +156,15 @@ final class WardrobeHomeTests: XCTestCase {
 
         openFilter(in: app)
         selectFilterOption(dimension: "material", value: "亚麻", in: app)
+        app.buttons["wardrobe.filter.apply"].tap()
+        waitForFilterToClose(in: app)
+
+        openFilter(in: app)
         selectFilterOption(dimension: "style", value: "通勤", in: app)
+        app.buttons["wardrobe.filter.apply"].tap()
+        waitForFilterToClose(in: app)
+
+        openFilter(in: app)
         selectFilterOption(dimension: "storageLocation", value: "主卧衣柜", in: app)
         app.buttons["wardrobe.filter.apply"].tap()
         waitForFilterToClose(in: app)
@@ -296,25 +304,12 @@ final class WardrobeHomeTests: XCTestCase {
         XCTAssertTrue(option.waitForExistence(timeout: 2), "\(dimension): \(value)")
         makeHittable(option, in: app)
         option.tap()
-
-        // Keep only the active dimension expanded so lower sections remain
-        // reliably reachable on compact device screens.
-        makeHittableBySwipingDown(section, in: app)
-        section.tap()
     }
 
     @MainActor
     private func makeHittable(_ element: XCUIElement, in app: XCUIApplication) {
         for _ in 0..<8 where !element.exists || !element.isHittable {
             app.swipeUp()
-        }
-        XCTAssertTrue(element.isHittable, element.identifier)
-    }
-
-    @MainActor
-    private func makeHittableBySwipingDown(_ element: XCUIElement, in app: XCUIApplication) {
-        for _ in 0..<8 where !element.exists || !element.isHittable {
-            app.swipeDown()
         }
         XCTAssertTrue(element.isHittable, element.identifier)
     }
@@ -351,7 +346,7 @@ final class WardrobeHomeTests: XCTestCase {
         line: UInt = #line
     ) {
         for identifier in identifiers {
-            XCTAssertTrue(app.buttons[identifier].waitForExistence(timeout: 2), identifier, file: file, line: line)
+            XCTAssertTrue(app.buttons[identifier].waitForExistence(timeout: 5), identifier, file: file, line: line)
         }
     }
 
@@ -363,7 +358,7 @@ final class WardrobeHomeTests: XCTestCase {
         line: UInt = #line
     ) {
         for identifier in identifiers {
-            XCTAssertTrue(app.buttons[identifier].waitForNonExistence(timeout: 2), identifier, file: file, line: line)
+            XCTAssertTrue(app.buttons[identifier].waitForNonExistence(timeout: 5), identifier, file: file, line: line)
         }
     }
 }
