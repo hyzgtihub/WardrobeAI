@@ -8,12 +8,12 @@
 
 - 仓库主目录：`/Users/huyouzhen/Documents/衣橱APP`
 - 功能工作树：`/Users/huyouzhen/Documents/衣橱APP/.worktrees/codex-wardrobe-filtering`
-- 当前分支：`codex/wardrobe-filtering`
-- 基线：`main` 的 PR #3 合并提交 `b8e3833`
+- 当前集成分支：`main`
+- 功能分支：`codex/wardrobe-filtering`
 - 产品规格：`docs/superpowers/specs/2026-09-17-yisu-wardrobe-category-filtering-design.md`
 - 实施计划：`docs/superpowers/plans/2026-09-17-yisu-wardrobe-category-filtering.md`
 
-当前小周期的功能开发和真机验收已经完成。分支尚未推送、尚未创建 PR、尚未合并到 `main`。
+当前小周期的功能开发和真机验收已经完成。PR #4 已合并到 `main`。
 
 ## 2. 已完成内容
 
@@ -69,38 +69,28 @@
 - 用户已在真机完成视觉与交互验收，确认无误。
 - 在最新 UI 修改之前，本分支曾完成完整测试：126 项单元测试 + 37 项 UI 测试，共 163 项，0 失败。
 - 最新修改后的全量测试已启动，但用户确认改用真机验收后会话被中止，因此不要把这次全量运行记为完成；相关 18 项定向测试和真机验收均已通过。
+- PR #4 的首次 CI 全量运行中，产品与单元测试正常，3 个 UI 断言因 CI 滚动误触和等待时间不足失败；测试流程修复后，两条涉及的测试已在本机重跑并通过（2 项，0 失败）。
 
-## 4. 当前未提交改动
+## 4. 当前交付状态
 
-以下最新 UI 修改仍在工作树中，下一会话不要误认为已经提交：
-
-- `WardrobeApp/DesignSystem/Components/YISUCategoryFilter.swift`
-- `WardrobeApp/Features/Wardrobe/WardrobeCategoryBrowser.swift`
-- `WardrobeApp/Features/Wardrobe/WardrobeFilterSheet.swift`
-- `WardrobeApp/Features/Wardrobe/WardrobeHomeView.swift`
-- `WardrobeAppUITests/WardrobeHomeTests.swift`
-- `HANDOFF.md`
-
-`YISU.xcodeproj/project.pbxproj` 也处于修改状态，其中包含 XcodeGen 生成结果和用户本地签名 Team 设置。提交前必须单独审查；不要直接把整个 PBX 文件随功能提交，也不要覆盖或丢失用户本地签名。
+- 功能提交：`b729487 feat: refine wardrobe filtering interface`。
+- PR：`https://github.com/hyzgtihub/WardrobeAI/pull/4`，已合并。
+- 本地 `main` 已同步到 PR #4 的合并提交。
+- 当前仅剩 CI UI 稳定性修复和本交接更新需要提交并推送到 `main`。
+- 功能工作树中的 `YISU.xcodeproj/project.pbxproj` 仍可能保留用户本地 Personal Team 差异；不要把个人签名推送到远程。
 
 ## 5. 当前卡住的问题
 
 没有产品或功能层面的阻塞。
 
-剩余的是交付动作：
-
-- 最新 UI 修改和本交接文档尚未提交。
-- 分支尚未推送，尚未创建 PR，尚未合并到 `main`。
-- 如果团队要求“最新修改后必须全量自动化通过”，需要重新运行一次完整测试；用户已完成真机验收，因此这不是当前产品阻塞。
+剩余的是 CI 收尾：提交 UI 测试稳定性修复并确认远程检查通过。功能本身没有阻塞。
 
 ## 6. 下一步计划
 
-1. 在功能工作树中查看 `git status` 和完整 diff，确认只包含本次 UI 修改。
-2. 运行 `git diff --check`。
-3. 可选：重新运行完整 `xcodebuild test`；至少保留“18 项相关 UI 测试通过 + 真机验收通过”的现有证据。
-4. 仅提交五个源码/测试文件与 `HANDOFF.md`；谨慎处理或排除 `YISU.xcodeproj/project.pbxproj`。
-5. 推送 `codex/wardrobe-filtering`，创建 PR，或按用户选择合并到 `main`。
-6. 完成本周期集成后，再启动下一产品周期。候选方向仍是“收藏持久化 + 智能集合”，但必须重新做需求确认、规格与实施计划。
+1. 提交并推送 UI 测试稳定性修复与本交接更新。
+2. 确认 `main` 的远程 CI 通过；若仍有环境型 UI 波动，按失败日志继续收敛测试，不修改已验收的产品行为。
+3. CI 收尾后关闭“分类浏览与组合筛选”周期。
+4. 下一产品周期候选为“收藏持久化 + 智能集合”；开始编码前必须向用户确认入口、交互、集合范围和“当季”判定规则。
 
 ## 7. 踩过的坑与恢复方法
 
