@@ -9,6 +9,7 @@ enum WardrobeCategorySelection {
 struct WardrobeCategoryBrowser: View {
     let categories: Set<YISUCategory>
     let counts: [YISUCategory: Int]
+    var accessibilityIdentifierPrefix = "wardrobe.category"
     let onSelect: (Set<YISUCategory>) -> Void
 
     private var allCount: Int {
@@ -26,7 +27,7 @@ struct WardrobeCategoryBrowser: View {
                     title: "全部",
                     count: allCount,
                     isSelected: categories.isEmpty,
-                    identifier: "wardrobe.category.all"
+                    identifier: "\(accessibilityIdentifierPrefix).all"
                 ) {
                     onSelect(WardrobeCategorySelection.replacing(categories, with: nil))
                 }
@@ -36,7 +37,7 @@ struct WardrobeCategoryBrowser: View {
                         title: category.title,
                         count: counts[category, default: 0],
                         isSelected: categories == [category],
-                        identifier: "wardrobe.category.\(category.rawValue)"
+                        identifier: "\(accessibilityIdentifierPrefix).\(category.rawValue)"
                     ) {
                         onSelect(WardrobeCategorySelection.replacing(categories, with: category))
                     }
@@ -47,7 +48,7 @@ struct WardrobeCategoryBrowser: View {
                         title: "多分类",
                         count: multipleCount,
                         isSelected: true,
-                        identifier: "wardrobe.category.multiple"
+                        identifier: "\(accessibilityIdentifierPrefix).multiple"
                     ) {
                         onSelect(categories)
                     }

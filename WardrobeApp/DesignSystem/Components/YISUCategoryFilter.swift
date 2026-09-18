@@ -11,7 +11,8 @@ struct YISUCategoryFilter: View {
     var body: some View {
         WardrobeCategoryBrowser(
             categories: selectedCategories,
-            counts: [:]
+            counts: [:],
+            accessibilityIdentifierPrefix: "designSystem.category"
         ) { categories in
             onSelect(categories.first ?? .all)
         }
