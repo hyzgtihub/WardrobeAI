@@ -8,24 +8,14 @@ enum WardrobeCategorySelection {
 
 struct WardrobeCategoryBrowser: View {
     let categories: Set<YISUCategory>
-    let counts: [YISUCategory: Int]
     var accessibilityIdentifierPrefix = "wardrobe.category"
     let onSelect: (Set<YISUCategory>) -> Void
-
-    private var allCount: Int {
-        YISUCategory.browseableCases.reduce(0) { $0 + counts[$1, default: 0] }
-    }
-
-    private var multipleCount: Int {
-        categories.reduce(0) { $0 + counts[$1, default: 0] }
-    }
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: YISUTheme.Spacing.sm) {
                 categoryControl(
                     title: "全部",
-                    count: allCount,
                     isSelected: categories.isEmpty,
                     identifier: "\(accessibilityIdentifierPrefix).all"
                 ) {
@@ -35,7 +25,6 @@ struct WardrobeCategoryBrowser: View {
                 ForEach(YISUCategory.browseableCases, id: \.self) { category in
                     categoryControl(
                         title: category.title,
-                        count: counts[category, default: 0],
                         isSelected: categories == [category],
                         identifier: "\(accessibilityIdentifierPrefix).\(category.rawValue)"
                     ) {
@@ -46,7 +35,6 @@ struct WardrobeCategoryBrowser: View {
                 if categories.count > 1 {
                     categoryControl(
                         title: "多分类",
-                        count: multipleCount,
                         isSelected: true,
                         identifier: "\(accessibilityIdentifierPrefix).multiple"
                     ) {
@@ -61,17 +49,12 @@ struct WardrobeCategoryBrowser: View {
 
     private func categoryControl(
         title: String,
-        count: Int,
         isSelected: Bool,
         identifier: String,
         action: @escaping () -> Void
     ) -> some View {
         Button(action: action) {
-            HStack(spacing: YISUTheme.Spacing.xs) {
-                Text(title)
-                Text("\(count)")
-                    .foregroundStyle(isSelected ? YISUTheme.Color.textOnBrand.opacity(0.8) : YISUTheme.Color.textSecondary)
-            }
+            Text(title)
             .font(YISUTheme.Typography.callout.weight(.semibold))
             .foregroundStyle(isSelected ? YISUTheme.Color.textOnBrand : YISUTheme.Color.textPrimary)
             .padding(.horizontal, YISUTheme.Spacing.md)
@@ -93,7 +76,6 @@ struct WardrobeCategoryBrowser: View {
 #Preview("Category Browser") {
     WardrobeCategoryBrowser(
         categories: [.tops, .pants],
-        counts: [.tops: 4, .pants: 2, .dresses: 1],
         onSelect: { _ in }
     )
     .background(YISUTheme.Color.background)

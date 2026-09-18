@@ -77,7 +77,7 @@ struct WardrobeFilterSheet: View {
 
             ScrollView {
                 VStack(spacing: YISUTheme.Spacing.md) {
-                    ForEach(WardrobeFilterDimension.allCases) { dimension in
+                    ForEach(Self.visibleDimensions) { dimension in
                         dimensionSection(dimension)
                     }
                 }
@@ -129,18 +129,31 @@ struct WardrobeFilterSheet: View {
 
     private var actionBar: some View {
         HStack(spacing: YISUTheme.Spacing.md) {
-            Button("重置") {
+            Button {
                 draft.reset()
+            } label: {
+                Text("重置")
+                    .font(YISUTheme.Typography.body.weight(.semibold))
+                    .foregroundStyle(YISUTheme.Color.textSecondary)
+                    .frame(width: 104, height: YISUTheme.Size.buttonHeight)
+                    .contentShape(Rectangle())
             }
-            .buttonStyle(.bordered)
-            .tint(YISUTheme.Color.brandEmphasis)
-            .frame(minHeight: YISUTheme.Size.minimumTouchTarget)
+            .buttonStyle(.plain)
             .accessibilityIdentifier("wardrobe.filter.reset")
 
-            Button("完成", action: apply)
-                .buttonStyle(.borderedProminent)
-                .tint(YISUTheme.Color.brandEmphasis)
-                .frame(maxWidth: .infinity, minHeight: YISUTheme.Size.minimumTouchTarget)
+            Button(action: apply) {
+                Text("完成")
+                    .font(YISUTheme.Typography.body.weight(.bold))
+                    .foregroundStyle(YISUTheme.Color.textOnBrand)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: YISUTheme.Size.buttonHeight)
+                    .background(
+                        YISUTheme.Color.brandEmphasis,
+                        in: RoundedRectangle(cornerRadius: YISUTheme.Radius.small)
+                    )
+                    .contentShape(RoundedRectangle(cornerRadius: YISUTheme.Radius.small))
+            }
+                .buttonStyle(.plain)
                 .accessibilityIdentifier("wardrobe.filter.apply")
         }
         .padding(.horizontal, YISUTheme.Spacing.md)
@@ -203,12 +216,8 @@ struct WardrobeFilterSheet: View {
         return Button {
             draft.toggle(option.value, in: dimension)
         } label: {
-            HStack(spacing: YISUTheme.Spacing.xs) {
-                Text(option.value)
-                    .lineLimit(1)
-                Text("\(option.count)")
-                    .foregroundStyle(isSelected ? YISUTheme.Color.textOnBrand.opacity(0.8) : YISUTheme.Color.textSecondary)
-            }
+            Text(option.value)
+                .lineLimit(1)
             .font(YISUTheme.Typography.callout.weight(.medium))
             .foregroundStyle(isSelected ? YISUTheme.Color.textOnBrand : YISUTheme.Color.textPrimary)
             .frame(maxWidth: .infinity, minHeight: YISUTheme.Size.minimumTouchTarget)
@@ -221,7 +230,7 @@ struct WardrobeFilterSheet: View {
             }
         }
         .buttonStyle(.plain)
-        .accessibilityLabel("\(option.value)，\(option.count) 件")
+        .accessibilityLabel(option.value)
         .accessibilityValue(isSelected ? "已选中" : "未选中")
         .accessibilityAddTraits(isSelected ? .isSelected : [])
         .accessibilityIdentifier("wardrobe.filter.option.\(dimension.rawValue).\(WardrobeFilterPolicy.normalized(option.value))")
@@ -255,6 +264,10 @@ struct WardrobeFilterSheet: View {
         didFinish = true
         onApply(draft.filter)
     }
+
+    private static let visibleDimensions: [WardrobeFilterDimension] = [
+        .season, .color, .material, .style, .size, .storageLocation
+    ]
 }
 
 private extension WardrobeFilterDimension {

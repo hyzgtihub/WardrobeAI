@@ -116,28 +116,38 @@ final class WardrobeHomeTests: XCTestCase {
     }
 
     @MainActor
-    func testMultipleCategoriesShowAggregateAndTappingCategoryReplacesSelection() {
+    func testFilterPresentationOmitsCategoryAndOptionCounts() {
         let app = launchWardrobe()
 
+        XCTAssertEqual(app.buttons["wardrobe.category.all"].label, "全部")
+        XCTAssertEqual(app.buttons["wardrobe.category.tops"].label, "上衣")
+
         openFilter(in: app)
-        selectFilterOption(dimension: "category", value: "上衣", in: app)
-        selectFilterOption(dimension: "category", value: "外套", in: app)
-        app.buttons["wardrobe.filter.apply"].tap()
-        waitForFilterToClose(in: app)
+        XCTAssertFalse(app.buttons["wardrobe.filter.dimension.category"].exists)
+        let season = app.buttons["wardrobe.filter.dimension.season"]
+        XCTAssertTrue(season.waitForExistence(timeout: 2))
+        season.tap()
 
-        let multiple = app.buttons["wardrobe.category.multiple"]
-        XCTAssertTrue(multiple.waitForExistence(timeout: 2))
-        XCTAssertTrue(multiple.isSelected)
-        XCTAssertFalse(app.descendants(matching: .any)["wardrobe.filter.active"].exists)
-        assertVisibleGarments([whiteShirt, blueKnit, beigeTrench], in: app)
-        assertHiddenGarments([blackDress], in: app)
+        let spring = app.buttons["wardrobe.filter.option.season.春季"]
+        XCTAssertTrue(spring.waitForExistence(timeout: 2))
+        XCTAssertEqual(spring.label, "春季")
+    }
 
-        app.buttons["wardrobe.category.dresses"].tap()
+    @MainActor
+    func testFilterActionsMatchBottomBarLayout() {
+        let app = launchWardrobe()
+        openFilter(in: app)
 
-        XCTAssertTrue(multiple.waitForNonExistence(timeout: 2))
-        XCTAssertTrue(app.buttons["wardrobe.category.dresses"].isSelected)
-        assertVisibleGarments([blackDress], in: app)
-        assertHiddenGarments([whiteShirt, blueKnit, beigeTrench], in: app)
+        let reset = app.buttons["wardrobe.filter.reset"]
+        let apply = app.buttons["wardrobe.filter.apply"]
+        XCTAssertTrue(reset.waitForExistence(timeout: 2))
+        XCTAssertTrue(apply.waitForExistence(timeout: 2))
+        XCTAssertGreaterThanOrEqual(reset.frame.height, 56)
+        XCTAssertGreaterThanOrEqual(apply.frame.height, 56)
+        XCTAssertGreaterThan(apply.frame.width, reset.frame.width * 1.8)
+        XCTAssertLessThan(reset.frame.minX, apply.frame.minX)
+        XCTAssertEqual(reset.frame.midY, apply.frame.midY, accuracy: 1)
+
     }
 
     @MainActor
@@ -277,22 +287,34 @@ final class WardrobeHomeTests: XCTestCase {
 
     @MainActor
     private func selectFilterOption(dimension: String, value: String, in app: XCUIApplication) {
+        let section = app.buttons["wardrobe.filter.dimension.\(dimension)"]
         let option = app.buttons["wardrobe.filter.option.\(dimension).\(value)"]
         if !option.exists {
-            let section = app.buttons["wardrobe.filter.dimension.\(dimension)"]
-            XCTAssertTrue(section.waitForExistence(timeout: 2), dimension)
             makeHittable(section, in: app)
             section.tap()
         }
         XCTAssertTrue(option.waitForExistence(timeout: 2), "\(dimension): \(value)")
         makeHittable(option, in: app)
         option.tap()
+
+        // Keep only the active dimension expanded so lower sections remain
+        // reliably reachable on compact device screens.
+        makeHittableBySwipingDown(section, in: app)
+        section.tap()
     }
 
     @MainActor
     private func makeHittable(_ element: XCUIElement, in app: XCUIApplication) {
-        for _ in 0..<5 where !element.isHittable {
+        for _ in 0..<8 where !element.exists || !element.isHittable {
             app.swipeUp()
+        }
+        XCTAssertTrue(element.isHittable, element.identifier)
+    }
+
+    @MainActor
+    private func makeHittableBySwipingDown(_ element: XCUIElement, in app: XCUIApplication) {
+        for _ in 0..<8 where !element.exists || !element.isHittable {
+            app.swipeDown()
         }
         XCTAssertTrue(element.isHittable, element.identifier)
     }

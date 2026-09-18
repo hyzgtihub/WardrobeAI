@@ -90,7 +90,6 @@ struct WardrobeHomeView: View {
 
             WardrobeCategoryBrowser(
                 categories: filter.categories,
-                counts: WardrobeFilterPolicy.categoryCounts(in: garments),
                 onSelect: { filter.categories = $0 }
             )
             .padding(.horizontal, -YISUTheme.Spacing.sm)
