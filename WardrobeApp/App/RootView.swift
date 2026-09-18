@@ -1,5 +1,30 @@
 import SwiftUI
 
+struct WardrobeFilterSession: Equatable {
+    private(set) var ownerUserID: UUID?
+    private var appliedFilter = WardrobeFilter()
+
+    mutating func prepare(for userID: UUID) {
+        guard ownerUserID != userID else { return }
+        ownerUserID = userID
+        appliedFilter = WardrobeFilter()
+    }
+
+    mutating func reset() {
+        ownerUserID = nil
+        appliedFilter = WardrobeFilter()
+    }
+
+    func filter(for userID: UUID) -> WardrobeFilter {
+        ownerUserID == userID ? appliedFilter : WardrobeFilter()
+    }
+
+    mutating func apply(_ filter: WardrobeFilter, for userID: UUID) {
+        guard ownerUserID == userID else { return }
+        appliedFilter = filter
+    }
+}
+
 struct RootView: View {
     let dependencies: AppDependencies
 
@@ -10,6 +35,7 @@ struct RootView: View {
     @State private var addGarmentStore: AddGarmentStore
     @State private var garmentStore: GarmentStore
     @State private var photoPickerCancelRoute: AppRoute = .wardrobe
+    @State private var wardrobeFilterSession = WardrobeFilterSession()
     private let forcedScreen: String?
 
     init(dependencies: AppDependencies, arguments: [String] = ProcessInfo.processInfo.arguments) {
@@ -50,10 +76,19 @@ struct RootView: View {
                     switch state {
                     case .signedOut:
                         garmentDetailStore.cancelPendingWork()
+                        garmentStore.resetSession()
+                        wardrobeFilterSession.reset()
                         route = .signIn
-                    case .ready(let account) where garmentDetailStore.garmentUserID != account.user.id:
-                        garmentDetailStore.cancelPendingWork()
-                        route = .wardrobe
+                    case .ready(let account):
+                        garmentStore.prepareForSession(
+                            userID: account.user.id,
+                            wardrobeID: account.defaultWardrobe.id
+                        )
+                        wardrobeFilterSession.prepare(for: account.user.id)
+                        if garmentDetailStore.garmentUserID != account.user.id {
+                            garmentDetailStore.cancelPendingWork()
+                            route = .wardrobe
+                        }
                     default:
                         break
                     }
@@ -159,9 +194,12 @@ struct RootView: View {
     }
 
     private func wardrobe(account: UserAccount) -> some View {
-        WardrobeHomeView(
-            items: garmentStore.garments.map(\.summary),
-            state: garmentStore.state,
+        let userID = account.user.id
+        let wardrobeID = account.defaultWardrobe.id
+        return WardrobeHomeView(
+            garments: garmentStore.garments(forUserID: userID, wardrobeID: wardrobeID),
+            filter: wardrobeFilterBinding(for: userID),
+            state: garmentStore.state(forUserID: userID, wardrobeID: wardrobeID),
             imageRepository: dependencies.garmentImageRepository,
             onAdd: {
                 addGarmentStore.startNewFlow()
@@ -175,9 +213,20 @@ struct RootView: View {
             },
             onProfile: { route = .profile }
         )
-        .task(id: account.defaultWardrobe.id) {
-            await garmentStore.load(wardrobeID: account.defaultWardrobe.id)
+        .id(userID)
+        .task(id: wardrobeID) {
+            wardrobeFilterSession.prepare(for: userID)
+            await garmentStore.load(userID: userID, wardrobeID: wardrobeID)
         }
+    }
+
+    private func wardrobeFilterBinding(for userID: UUID) -> Binding<WardrobeFilter> {
+        Binding(
+            get: { wardrobeFilterSession.filter(for: userID) },
+            set: { newValue in
+                wardrobeFilterSession.apply(newValue, for: userID)
+            }
+        )
     }
 
     @ViewBuilder private func addGarmentContent(account: UserAccount) -> some View {
@@ -320,7 +369,8 @@ struct RootView: View {
         imagePath: "garment-white-linen-shirt", name: "白色亚麻衬衫", category: .tops,
         seasons: ["春季", "夏季"], colors: ["白色系"], brand: "MUJI", price: 299, size: "M",
         purchaseDate: nil, materials: ["麻", "棉"], styles: ["通勤", "简约"],
-        storageLocation: "主卧衣橱 · 上层", notes: "适合搭配浅色长裤", createdAt: Date(), updatedAt: Date(), deletedAt: nil
+        storageLocation: "主卧衣橱 · 上层", notes: "适合搭配浅色长裤",
+        createdAt: Date(timeIntervalSince1970: 0), updatedAt: Date(timeIntervalSince1970: 0), deletedAt: nil
     )
 
 }

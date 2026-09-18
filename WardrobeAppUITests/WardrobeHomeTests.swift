@@ -1,35 +1,227 @@
 import XCTest
 
 final class WardrobeHomeTests: XCTestCase {
+    private let whiteShirt = "designSystem.garment.white-linen-shirt"
+    private let blueKnit = "designSystem.garment.powder-blue-knit"
+    private let beigeTrench = "designSystem.garment.beige-trench"
+    private let blackDress = "designSystem.garment.black-knit-dress"
+
     @MainActor
     func testP05ControlsAndFilteringAreReachable() {
-        let app = XCUIApplication()
-        app.launchArguments += ["-ui-screen", "wardrobe"]
-        app.launch()
+        let app = launchWardrobe()
 
-        let identifiers = [
-            "wardrobe.search",
-            "designSystem.tab.addGarment",
-            "designSystem.tab.profile"
-        ]
-        for identifier in identifiers {
+        XCTAssertFalse(app.buttons["wardrobe.search"].exists)
+
+        let filter = app.buttons["wardrobe.filter.open"]
+        XCTAssertTrue(filter.waitForExistence(timeout: 3))
+        XCTAssertGreaterThanOrEqual(filter.frame.width, 44)
+        XCTAssertGreaterThanOrEqual(filter.frame.height, 44)
+
+        for identifier in ["designSystem.tab.addGarment", "designSystem.tab.profile"] {
             let control = app.buttons[identifier]
             XCTAssertTrue(control.waitForExistence(timeout: 3), identifier)
             XCTAssertGreaterThanOrEqual(control.frame.width, 44, identifier)
             XCTAssertGreaterThanOrEqual(control.frame.height, 44, identifier)
         }
 
-        app.buttons["designSystem.category.tops"].tap()
-        XCTAssertTrue(app.buttons["designSystem.garment.white-linen-shirt"].exists)
-        XCTAssertFalse(app.buttons["designSystem.garment.beige-trench"].exists)
-        app.buttons["designSystem.garment.white-linen-shirt"].tap()
+        app.buttons["wardrobe.category.tops"].tap()
+        assertVisibleGarments([whiteShirt, blueKnit], in: app)
+        assertHiddenGarments([beigeTrench, blackDress], in: app)
+        app.buttons[whiteShirt].tap()
+    }
+
+    @MainActor
+    func testClosingFilterDiscardsSeasonDraft() {
+        let app = launchWardrobe()
+
+        openFilter(in: app)
+        selectFilterOption(dimension: "season", value: "春季", in: app)
+        app.buttons["wardrobe.filter.close"].tap()
+        waitForFilterToClose(in: app)
+
+        XCTAssertFalse(app.buttons["wardrobe.filterChip.春季"].exists)
+        XCTAssertFalse(app.descendants(matching: .any)["wardrobe.filter.active"].exists)
+        assertAllGarmentsVisible(in: app)
+    }
+
+    @MainActor
+    func testCompletingFilterAppliesSeasonAndShowsChipAndDot() {
+        let app = launchWardrobe()
+
+        applySeason("春季", in: app)
+
+        XCTAssertTrue(app.buttons["wardrobe.filterChip.春季"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.descendants(matching: .any)["wardrobe.filter.active"].waitForExistence(timeout: 2))
+        assertVisibleGarments([whiteShirt, blueKnit], in: app)
+        assertHiddenGarments([beigeTrench, blackDress], in: app)
+    }
+
+    @MainActor
+    func testResetThenClosePreservesAppliedFilter() {
+        let app = launchWardrobe()
+        applySeason("春季", in: app)
+
+        openFilter(in: app)
+        app.buttons["wardrobe.filter.reset"].tap()
+        app.buttons["wardrobe.filter.close"].tap()
+        waitForFilterToClose(in: app)
+
+        XCTAssertTrue(app.buttons["wardrobe.filterChip.春季"].exists)
+        XCTAssertTrue(app.descendants(matching: .any)["wardrobe.filter.active"].exists)
+        assertVisibleGarments([whiteShirt, blueKnit], in: app)
+        assertHiddenGarments([beigeTrench, blackDress], in: app)
+    }
+
+    @MainActor
+    func testResetThenCompleteClearsAppliedFilter() {
+        let app = launchWardrobe()
+        applySeason("春季", in: app)
+
+        openFilter(in: app)
+        app.buttons["wardrobe.filter.reset"].tap()
+        app.buttons["wardrobe.filter.apply"].tap()
+        waitForFilterToClose(in: app)
+
+        XCTAssertFalse(app.buttons["wardrobe.filterChip.春季"].exists)
+        XCTAssertFalse(app.descendants(matching: .any)["wardrobe.filter.active"].exists)
+        assertAllGarmentsVisible(in: app)
+    }
+
+    @MainActor
+    func testSingleCategoryFiltersWithoutShowingNonCategoryDot() {
+        let app = launchWardrobe()
+
+        let outerwear = app.buttons["wardrobe.category.outerwear"]
+        outerwear.tap()
+
+        XCTAssertTrue(outerwear.isSelected)
+        XCTAssertFalse(app.descendants(matching: .any)["wardrobe.filter.active"].exists)
+        assertVisibleGarments([beigeTrench], in: app)
+        assertHiddenGarments([whiteShirt, blueKnit, blackDress], in: app)
+    }
+
+    @MainActor
+    func testCategoryAndSeasonFilterPreserveBothConditions() {
+        let app = launchWardrobe()
+
+        let tops = app.buttons["wardrobe.category.tops"]
+        tops.tap()
+        applySeason("秋季", in: app)
+
+        XCTAssertTrue(tops.isSelected)
+        XCTAssertTrue(app.buttons["wardrobe.filterChip.秋季"].exists)
+        XCTAssertTrue(app.descendants(matching: .any)["wardrobe.filter.active"].exists)
+        assertVisibleGarments([blueKnit], in: app)
+        assertHiddenGarments([whiteShirt, beigeTrench, blackDress], in: app)
+    }
+
+    @MainActor
+    func testFilterPresentationOmitsCategoryAndOptionCounts() {
+        let app = launchWardrobe()
+
+        XCTAssertEqual(app.buttons["wardrobe.category.all"].label, "全部")
+        XCTAssertEqual(app.buttons["wardrobe.category.tops"].label, "上衣")
+
+        openFilter(in: app)
+        XCTAssertFalse(app.buttons["wardrobe.filter.dimension.category"].exists)
+        let season = app.buttons["wardrobe.filter.dimension.season"]
+        XCTAssertTrue(season.waitForExistence(timeout: 2))
+        season.tap()
+
+        let spring = app.buttons["wardrobe.filter.option.season.春季"]
+        XCTAssertTrue(spring.waitForExistence(timeout: 2))
+        XCTAssertEqual(spring.label, "春季")
+    }
+
+    @MainActor
+    func testFilterActionsMatchBottomBarLayout() {
+        let app = launchWardrobe()
+        openFilter(in: app)
+
+        let reset = app.buttons["wardrobe.filter.reset"]
+        let apply = app.buttons["wardrobe.filter.apply"]
+        XCTAssertTrue(reset.waitForExistence(timeout: 2))
+        XCTAssertTrue(apply.waitForExistence(timeout: 2))
+        XCTAssertGreaterThanOrEqual(reset.frame.height, 56)
+        XCTAssertGreaterThanOrEqual(apply.frame.height, 56)
+        XCTAssertGreaterThan(apply.frame.width, reset.frame.width * 1.8)
+        XCTAssertLessThan(reset.frame.minX, apply.frame.minX)
+        XCTAssertEqual(reset.frame.midY, apply.frame.midY, accuracy: 1)
+
+    }
+
+    @MainActor
+    func testCompoundDynamicFiltersUseCustomFixtureValues() {
+        let app = launchWardrobe()
+
+        openFilter(in: app)
+        selectFilterOption(dimension: "material", value: "亚麻", in: app)
+        selectFilterOption(dimension: "style", value: "通勤", in: app)
+        selectFilterOption(dimension: "storageLocation", value: "主卧衣柜", in: app)
+        app.buttons["wardrobe.filter.apply"].tap()
+        waitForFilterToClose(in: app)
+
+        XCTAssertTrue(app.buttons["wardrobe.filterChip.亚麻"].exists)
+        XCTAssertTrue(app.buttons["wardrobe.filterChip.通勤"].exists)
+        XCTAssertTrue(app.buttons["wardrobe.filterChip.主卧衣柜"].exists)
+        XCTAssertTrue(app.descendants(matching: .any)["wardrobe.filter.active"].exists)
+        assertVisibleGarments([whiteShirt], in: app)
+        assertHiddenGarments([blueKnit, beigeTrench, blackDress], in: app)
+    }
+
+    @MainActor
+    func testRemovingOneAppliedChipKeepsOtherCondition() {
+        let app = launchWardrobe()
+
+        openFilter(in: app)
+        selectFilterOption(dimension: "season", value: "春季", in: app)
+        selectFilterOption(dimension: "season", value: "秋季", in: app)
+        app.buttons["wardrobe.filter.apply"].tap()
+        waitForFilterToClose(in: app)
+
+        app.buttons["wardrobe.filterChip.春季"].tap()
+
+        XCTAssertFalse(app.buttons["wardrobe.filterChip.春季"].exists)
+        XCTAssertTrue(app.buttons["wardrobe.filterChip.秋季"].exists)
+        XCTAssertTrue(app.descendants(matching: .any)["wardrobe.filter.active"].exists)
+        assertVisibleGarments([blueKnit, beigeTrench, blackDress], in: app)
+        assertHiddenGarments([whiteShirt], in: app)
+    }
+
+    @MainActor
+    func testNoResultsClearActionRestoresAllGarments() {
+        let app = launchWardrobe()
+        createNoResultsState(in: app)
+
+        XCTAssertTrue(app.descendants(matching: .any)["wardrobe.filteredEmpty"].waitForExistence(timeout: 2))
+        let clear = app.buttons["wardrobe.filter.clearAll"]
+        XCTAssertTrue(clear.exists)
+        XCTAssertTrue(app.buttons["wardrobe.filteredEmpty.add"].exists)
+        clear.tap()
+
+        XCTAssertTrue(app.descendants(matching: .any)["wardrobe.filteredEmpty"].waitForNonExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["wardrobe.category.all"].isSelected)
+        XCTAssertFalse(app.buttons["wardrobe.filterChip.春季"].exists)
+        XCTAssertFalse(app.descendants(matching: .any)["wardrobe.filter.active"].exists)
+        assertAllGarmentsVisible(in: app)
+    }
+
+    @MainActor
+    func testNoResultsAddActionOpensAddGarmentFlow() {
+        let app = launchWardrobe()
+        createNoResultsState(in: app)
+
+        let add = app.buttons["wardrobe.filteredEmpty.add"]
+        XCTAssertTrue(add.waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["wardrobe.filter.clearAll"].exists)
+        add.tap()
+
+        XCTAssertTrue(app.buttons["addGarment.choosePhoto"].waitForExistence(timeout: 3))
     }
 
     @MainActor
     func testCenterTabOpensPhotoPicker() {
-        let app = XCUIApplication()
-        app.launchArguments += ["-ui-screen", "wardrobe"]
-        app.launch()
+        let app = launchWardrobe()
 
         app.buttons["designSystem.tab.addGarment"].tap()
         XCTAssertTrue(app.buttons["addGarment.choosePhoto"].waitForExistence(timeout: 3))
@@ -76,5 +268,102 @@ final class WardrobeHomeTests: XCTestCase {
         app.buttons["garmentDetail.back"].tap()
         let createdCard = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "新增衬衫")).firstMatch
         XCTAssertTrue(createdCard.waitForExistence(timeout: 3))
+    }
+
+    @MainActor
+    private func launchWardrobe() -> XCUIApplication {
+        let app = XCUIApplication()
+        app.launchArguments += ["-ui-screen", "wardrobe"]
+        app.launch()
+        XCTAssertTrue(app.buttons["wardrobe.filter.open"].waitForExistence(timeout: 3))
+        return app
+    }
+
+    @MainActor
+    private func openFilter(in app: XCUIApplication) {
+        app.buttons["wardrobe.filter.open"].tap()
+        XCTAssertTrue(app.descendants(matching: .any)["wardrobe.filter.sheet"].waitForExistence(timeout: 3))
+    }
+
+    @MainActor
+    private func selectFilterOption(dimension: String, value: String, in app: XCUIApplication) {
+        let section = app.buttons["wardrobe.filter.dimension.\(dimension)"]
+        let option = app.buttons["wardrobe.filter.option.\(dimension).\(value)"]
+        if !option.exists {
+            makeHittable(section, in: app)
+            section.tap()
+        }
+        XCTAssertTrue(option.waitForExistence(timeout: 2), "\(dimension): \(value)")
+        makeHittable(option, in: app)
+        option.tap()
+
+        // Keep only the active dimension expanded so lower sections remain
+        // reliably reachable on compact device screens.
+        makeHittableBySwipingDown(section, in: app)
+        section.tap()
+    }
+
+    @MainActor
+    private func makeHittable(_ element: XCUIElement, in app: XCUIApplication) {
+        for _ in 0..<8 where !element.exists || !element.isHittable {
+            app.swipeUp()
+        }
+        XCTAssertTrue(element.isHittable, element.identifier)
+    }
+
+    @MainActor
+    private func makeHittableBySwipingDown(_ element: XCUIElement, in app: XCUIApplication) {
+        for _ in 0..<8 where !element.exists || !element.isHittable {
+            app.swipeDown()
+        }
+        XCTAssertTrue(element.isHittable, element.identifier)
+    }
+
+    @MainActor
+    private func applySeason(_ season: String, in app: XCUIApplication) {
+        openFilter(in: app)
+        selectFilterOption(dimension: "season", value: season, in: app)
+        app.buttons["wardrobe.filter.apply"].tap()
+        waitForFilterToClose(in: app)
+    }
+
+    @MainActor
+    private func createNoResultsState(in app: XCUIApplication) {
+        app.buttons["wardrobe.category.outerwear"].tap()
+        applySeason("春季", in: app)
+    }
+
+    @MainActor
+    private func waitForFilterToClose(in app: XCUIApplication) {
+        XCTAssertTrue(app.descendants(matching: .any)["wardrobe.filter.sheet"].waitForNonExistence(timeout: 3))
+    }
+
+    @MainActor
+    private func assertAllGarmentsVisible(in app: XCUIApplication, file: StaticString = #filePath, line: UInt = #line) {
+        assertVisibleGarments([whiteShirt, blueKnit, beigeTrench, blackDress], in: app, file: file, line: line)
+    }
+
+    @MainActor
+    private func assertVisibleGarments(
+        _ identifiers: [String],
+        in app: XCUIApplication,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        for identifier in identifiers {
+            XCTAssertTrue(app.buttons[identifier].waitForExistence(timeout: 2), identifier, file: file, line: line)
+        }
+    }
+
+    @MainActor
+    private func assertHiddenGarments(
+        _ identifiers: [String],
+        in app: XCUIApplication,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        for identifier in identifiers {
+            XCTAssertTrue(app.buttons[identifier].waitForNonExistence(timeout: 2), identifier, file: file, line: line)
+        }
     }
 }

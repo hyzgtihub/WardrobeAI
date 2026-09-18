@@ -4,18 +4,17 @@ struct YISUCategoryFilter: View {
     let selection: YISUCategory
     let onSelect: (YISUCategory) -> Void
 
+    private var selectedCategories: Set<YISUCategory> {
+        selection == .all ? [] : [selection]
+    }
+
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: YISUTheme.Spacing.sm) {
-                ForEach(YISUCategory.allCases, id: \.self) { category in
-                    YISUCategoryChip(category: category, isSelected: category == selection) {
-                        onSelect(YISUCategorySelection.select(category, current: selection))
-                    }
-                }
-            }
-            .padding(.horizontal, YISUTheme.Spacing.sm)
+        WardrobeCategoryBrowser(
+            categories: selectedCategories,
+            accessibilityIdentifierPrefix: "designSystem.category"
+        ) { categories in
+            onSelect(categories.first ?? .all)
         }
-        .contentMargins(.vertical, YISUTheme.Spacing.sm, for: .scrollContent)
         .accessibilityIdentifier("designSystem.categoryFilter")
     }
 }

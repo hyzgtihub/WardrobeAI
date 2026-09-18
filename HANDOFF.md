@@ -1,202 +1,181 @@
 # YISU 项目会话交接
 
-更新时间：2026-09-17（Asia/Shanghai）
+更新时间：2026-09-18（Asia/Shanghai）
 
-## 1. 当前任务
+## 1. 当前任务与工作位置
 
-当前周期是“账号注册邮箱验证码”。目标是在创建账号页面内完成：填写邮箱和密码、发送邮件验证码、输入验证码、点击“创建账号”后统一校验并建立账号。
-
-当前工作位置：
+当前小周期为“衣橱分类浏览与组合筛选”。产品方向已经收敛为：不提供文本搜索框或独立搜索页，衣橱首页仅保留分类浏览和筛选弹窗。
 
 - 仓库主目录：`/Users/huyouzhen/Documents/衣橱APP`
-- 功能工作树：`/Users/huyouzhen/Documents/衣橱APP/.worktrees/codex-garment-photo-upload`
-- 当前分支：`codex/account-identity`
-- 基线分支：`main`
-- 远程分支：`origin/codex/account-identity`
-- Pull Request：<https://github.com/hyzgtihub/WardrobeAI/pull/3>
-- PR 状态：OPEN，目标为 `main`。上一次远端 CI 失败；本地修复后完整 131 项测试已全部通过，待提交推送并重跑 GitHub Actions。
+- 功能工作树：`/Users/huyouzhen/Documents/衣橱APP/.worktrees/codex-wardrobe-filtering`
+- 当前分支：`codex/wardrobe-filtering`
+- 基线：`main` 的 PR #3 合并提交 `b8e3833`
+- 产品规格：`docs/superpowers/specs/2026-09-17-yisu-wardrobe-category-filtering-design.md`
+- 实施计划：`docs/superpowers/plans/2026-09-17-yisu-wardrobe-category-filtering.md`
 
-本功能已经由用户完成真机验证并确认验收。当前任务是提交、推送 CI 修复，并在 GitHub Actions 全绿后请求用户合并授权。
+当前小周期的功能开发和真机验收已经完成。分支尚未推送、尚未创建 PR、尚未合并到 `main`。
 
-## 2. 已完成的内容
+## 2. 已完成内容
 
-### 2.1 Git 和分支
+### 2.1 首页分类浏览
 
-账号验证码功能包含两个提交：
+- 首页分类固定为：全部、上衣、裤子、连衣裙、外套、鞋履、包袋、配饰、其他。
+- 分类只允许在首页横向标签栏中切换，筛选弹窗不再提供“分类”维度。
+- 分类标签不再显示衣物数量，辅助功能标签也不包含数量。
+- 点击分类只替换分类条件，保留季节、颜色等其他筛选条件。
+- 分类条件不重复显示为顶部条件标签；仅选择分类时不显示筛选圆点。
 
-- `474e26d feat: verify email during registration`
-- `4e660a5 feat: harden email verification signup flow`
+### 2.2 组合筛选
 
-以上提交已经推送到 `origin/codex/account-identity`，并创建 PR #3。当前本地分支已包含最新 `origin/main`；修复提交前的实际关系为 `origin/main...HEAD = 0 3`（左侧落后 0，右侧领先 3）。
+- 不实现独立搜索页、文本搜索框或顶部搜索按钮。
+- 首页提供筛选按钮；存在已应用的非分类条件时，按钮显示小圆点。
+- 已应用条件以可移除标签横向展示；关闭筛选弹窗后仍保留本次已应用条件。
+- 筛选面板采用底部弹窗形式。
+- 当前可见筛选维度：季节、颜色、材质、风格、尺码、收纳位置。
+- 同维度多选为“或”，不同维度为“且”。
+- 季节使用固定选项；其他维度从当前已加载衣物中动态去重，自定义值也可筛选。
+- 所有筛选选项均不再显示匹配数量，VoiceOver 标签也不再朗读数量。
+- 关闭或下滑关闭会放弃未完成草稿；“完成”才应用；“重置”清空草稿后仍需点击“完成”才生效。
+- 衣橱有数据但筛选无结果时，可以清空筛选或进入添加衣物流程。
 
-### 2.2 注册验证码流程
+### 2.3 筛选弹窗底部操作区
 
-- 验证码没有独立页面，直接位于“创建账号”页面。
-- 用户先填写邮箱、密码、确认密码并同意条款，再点击“获取验证码”。
-- 客户端通过 Supabase `auth.signUp(email:password:)` 请求注册邮件验证码。
-- 邮件模板使用 `{{ .Token }}` 输出 6 位验证码。
-- 用户输入验证码后点击“创建账号”，客户端通过 `verifyOTP(..., type: .signup)` 完成验证和注册。
-- 支持 60 秒重发倒计时、验证码过期/错误提示和重新发送。
-- 日常登录仍为邮箱＋密码，不重复要求验证码。
+- “重置”位于左侧，固定较窄宽度，灰色文字、无边框、无背景。
+- “完成”占右侧剩余宽度，高度为设计系统按钮高度（56pt），使用小圆角矩形。
+- “完成”按钮保持应用主题色 `YISUTheme.Color.brandEmphasis`，不是黑色；文字为白色加粗。
+- 两个按钮保持同一垂直中心，并满足最小点击区域要求。
 
-### 2.3 Supabase、Resend 和域名
+### 2.4 会话生命周期与数据隔离
 
-- Supabase 已开启 Email provider、允许新用户注册和 Confirm email。
-- Email OTP 长度为 6 位，过期时间为 3600 秒。
-- 注册确认邮件模板已改为中文验证码模板，正文使用 `{{ .Token }}`。
-- 已使用 Resend 自定义 SMTP。
-- 发信子域名为 `auth.huyouzhen.com`。
-- 阿里云 DNS 中已配置 Resend 提供的 DKIM、SPF/Return-Path CNAME 以及 DMARC TXT 记录。
-- Resend 页面已显示域名和相关 DNS 记录为 Verified，可发送邮件。
-- Supabase 邮件发送限流曾调整为测试阶段适用值；继续测试前应以 Dashboard 当前配置为准，不依赖本文中的历史截图数值。
-- 不要把 Resend API Key、SMTP Password、Supabase secret/service-role key 或数据库连接串写入本文、代码或 Git。
+- 筛选状态在当前登录会话内保留；进入详情或添加流程再返回不会丢失。
+- 退出账号或切换账号时清空筛选。
+- 当前版本明确不实现多衣橱或“更换默认衣橱”，因此无需按衣橱维度保存筛选会话。
+- `GarmentStore` 使用用户和衣橱作为数据 owner；账号切换时清空旧衣物，并以 generation 拒绝旧请求迟到写入，避免跨账号数据泄漏。
+- 已打开的旧账号筛选弹窗会在账号变化时销毁，旧草稿不能写入新账号状态。
+- 本期不使用数据库、`UserDefaults` 或远端配置持久化筛选条件。
 
-### 2.4 注册页交互优化
+### 2.5 Supabase 配置与真机构建修复
 
-- 验证码输入框隐藏了原来的 `#` 图标。
-- 占位文案改为“请输入邮件验证码”。
-- 删除“修改邮箱”按钮。
-- 发送验证码后邮箱仍可直接编辑；修改邮箱会自动清空旧验证码、倒计时和错误状态，并恢复密码输入。
-- 如果 Supabase 明确返回 `emailAlreadyRegistered`，页面提示“该邮箱已注册，请直接登录”，并禁用密码、确认密码和发送验证码；修改邮箱后恢复。
-- 请求验证码期间会捕获提交时的邮箱、密码和操作 generation，邮箱变化后旧请求不能恢复倒计时或污染新表单，包括 A→B→A 的情况。
-- 校验验证码期间锁定邮箱，且使用相同 generation 防止旧校验结果污染新状态。
-- 去除了 `RootView` 中重复的注册错误展示，注册错误在表单对应位置呈现。
+- 已修复“应用配置不可用，请检查本地 Supabase 配置”的启动页问题。
+- `project.yml` 已改为使用 `Config/AppInfo.plist`，确保 `SUPABASE_URL` 和 `SUPABASE_PUBLISHABLE_KEY` 被打进应用包。
+- 修复提交：`ab887d7 fix: include Supabase settings in app bundle`。
+- 本地 `Config/Secrets.xcconfig` 已由用户补充真实值且被 Git 忽略；严禁把真实 URL/key 写入 Git、交接文档或聊天输出。
+- 已恢复用户的 Personal Team 签名并成功完成真机构建、安装和启动。
 
-### 2.5 Supabase 重复邮箱的安全语义
+## 3. 验证状态
 
-Supabase 开启 Confirm email 后，对“已确认的既有邮箱”再次调用 `signUp`，通常不会返回“邮箱已注册”错误，而会返回伪造/混淆后的成功用户对象，以防止邮箱枚举。因此客户端不能可靠判断邮箱是否已注册。
+- 最新相关 UI 回归：`WardrobeHomeTests + DesignSystemGalleryTests` 共 18 项，全部通过，0 失败。
+- 新增/更新的 UI 测试覆盖：首页分类标签无数量、筛选弹窗无“分类”、筛选选项无数量、底部按钮布局、多维组合筛选。
+- 用户已在真机完成视觉与交互验收，确认无误。
+- 在最新 UI 修改之前，本分支曾完成完整测试：126 项单元测试 + 37 项 UI 测试，共 163 项，0 失败。
+- 最新修改后的全量测试已启动，但用户确认改用真机验收后会话被中止，因此不要把这次全量运行记为完成；相关 18 项定向测试和真机验收均已通过。
 
-当前采用安全统一提示：
+## 4. 当前未提交改动
 
-> 如果该邮箱尚未注册，验证码已发送；如果已经注册，请直接登录。
+以下最新 UI 修改仍在工作树中，下一会话不要误认为已经提交：
 
-该提示在请求表面成功后出现。页面进入倒计时仅表示 Supabase 接受请求，不代表旧账号一定实际收到新验证码邮件。不要再尝试仅根据客户端 `signUp` 成功结果判断邮箱是否存在。
+- `WardrobeApp/DesignSystem/Components/YISUCategoryFilter.swift`
+- `WardrobeApp/Features/Wardrobe/WardrobeCategoryBrowser.swift`
+- `WardrobeApp/Features/Wardrobe/WardrobeFilterSheet.swift`
+- `WardrobeApp/Features/Wardrobe/WardrobeHomeView.swift`
+- `WardrobeAppUITests/WardrobeHomeTests.swift`
+- `HANDOFF.md`
 
-### 2.6 测试与审查
+`YISU.xcodeproj/project.pbxproj` 也处于修改状态，其中包含 XcodeGen 生成结果和用户本地签名 Team 设置。提交前必须单独审查；不要直接把整个 PBX 文件随功能提交，也不要覆盖或丢失用户本地签名。
 
-- 新增/更新了注册状态单元测试与认证 UI 测试。
-- 统一提示测试严格走过 TDD：先因提示不存在而失败，实现后通过。
-- generation 失效和校验期间锁邮箱也有状态测试。
-- 完整认证相关单元/UI 测试在最终修复后重新运行，`xcodebuild` 退出码为 0。
-- 通用 iOS Simulator 构建在最终修复后重新运行，退出码为 0。
-- `git diff --check` 通过。
-- 提交前代码审查发现两个异步竞态，修复后复审确认无剩余阻断问题。
-- 用户已经完成真机注册验证码流程以及本轮优化的人工验收。
+## 5. 当前卡住的问题
 
-## 3. 当前卡住的问题
+没有产品或功能层面的阻塞。
 
-### 3.1 PR CI 待重跑
+剩余的是交付动作：
 
-远端上一次 `iOS / test` 已失败。已完成根因修复：测试照片加入 App 资源、选择器 UI 测试跟随当前交互、明确串行 UI 测试、修正分类顺序，并消除 `SessionStore` actor 隔离 warning。推送后应等待新 CI；全绿后仍需用户明确授权才能合并。
+- 最新 UI 修改和本交接文档尚未提交。
+- 分支尚未推送，尚未创建 PR，尚未合并到 `main`。
+- 如果团队要求“最新修改后必须全量自动化通过”，需要重新运行一次完整测试；用户已完成真机验收，因此这不是当前产品阻塞。
 
-### 3.2 两个用户本地 Xcode 文件仍未提交
+## 6. 下一步计划
 
-工作树目前仍有以下本地修改：
+1. 在功能工作树中查看 `git status` 和完整 diff，确认只包含本次 UI 修改。
+2. 运行 `git diff --check`。
+3. 可选：重新运行完整 `xcodebuild test`；至少保留“18 项相关 UI 测试通过 + 真机验收通过”的现有证据。
+4. 仅提交五个源码/测试文件与 `HANDOFF.md`；谨慎处理或排除 `YISU.xcodeproj/project.pbxproj`。
+5. 推送 `codex/wardrobe-filtering`，创建 PR，或按用户选择合并到 `main`。
+6. 完成本周期集成后，再启动下一产品周期。候选方向仍是“收藏持久化 + 智能集合”，但必须重新做需求确认、规格与实施计划。
 
-- `YISU.xcodeproj/project.pbxproj`
-- `YISU.xcodeproj/xcshareddata/xcschemes/YISU.xcscheme`
+## 7. 踩过的坑与恢复方法
 
-这些修改包含用户的真机 Development Team、签名或 Xcode/Scheme 自动生成差异。本轮提交有意排除了它们。不要运行 `git add .`，不要还原、覆盖、删除或强行清理；只有用户明确要求时才能处理。
+### 7.1 新 Swift 文件存在，但 Xcode 报类型不在作用域
 
-### 3.3 最近验证
+- 原因：工程文件没有重新生成，新文件没有进入 target，而不是 Swift 类型本身写错。
+- 处理：以 `project.yml` 为工程源，通过 XcodeGen 重新生成工程；不要长期手工维护 PBX 文件引用。
+- 重新生成工程可能覆盖本地签名 Team，生成后必须检查 Signing & Capabilities。
 
-- 2026-09-14 本地按 CI 生成工程方式运行完整测试：131 项通过，0 失败，0 跳过。
-- `SessionStore.eventTask` 改为主 actor 隔离属性，并使用 `isolated deinit` 取消任务；原 warning 已消除。
-- 用户的 Development Team 和 Scheme 本地修改已从安全保存点恢复。
+### 7.2 Supabase 文件补了但应用仍提示配置不可用
 
-## 4. 下一步计划
+- 仅创建 `Secrets.xcconfig` 不够，Info.plist 必须把构建变量映射为应用可读取的键。
+- 当前正确链路：`Secrets.xcconfig` → Debug/Release xcconfig → `Config/AppInfo.plist` → 应用包。
+- xcconfig 中 URL 的 `//` 会被当成注释；使用项目模板规定的转义写法，不要擅自改成普通 URL 文本。
+- 修改配置后需要重新生成工程、清理旧构建产物并重新安装应用，旧安装包不会自动获得新配置。
 
-1. 读取 PR #3 最新状态和 `iOS / test` 结果。
-2. 如果 CI 失败：查看完整日志，复现失败，先写/确认回归测试，再做最小修复；修复后重新推送本分支。
-3. 如果 CI 通过：向用户报告可合并状态，并等待用户明确授权合并。
-4. 合并后确认 `main` 已包含 `474e26d` 和 `4e660a5`，再拉取/同步本地主目录。
-5. 在处理 worktree 或删除分支前，先解决两个未提交 Xcode 文件的归属；禁止强制删除带有这些修改的工作树。
-6. 账号验证码功能正式收尾后，再从最新 `main` 创建新的 `codex/...` 分支开始下一项产品工作。
-7. 后续优先级可回到衣橱工具路线：搜索、筛选、智能集合（最近添加/最爱/当季）和分类浏览；开始前重新读取最新 PRD/需求清单并确认范围。
+### 7.3 删除 DerivedData 后依赖显示红色或首次构建失败
 
-## 5. 踩过的坑
+- 删除 `YISU-` 开头的 DerivedData 会让 Swift Package 重新解析和下载，Xcode 左侧依赖短暂标红并不等于源码损坏。
+- 先等待 Resolve Package Graph 完成，再重新构建；不要反复删除缓存。
 
-### 5.1 打开错工程会运行旧代码
+### 7.4 真机签名与工程再生成
 
-- 本功能位于隐藏工作树，不在主目录当前 `main` 工作副本中。
-- 真机调试必须打开：`/Users/huyouzhen/Documents/衣橱APP/.worktrees/codex-garment-photo-upload/YISU.xcodeproj`。
-- 若打开 `/Users/huyouzhen/Documents/衣橱APP/YISU.xcodeproj`，会看不到尚未合并到 `main` 的最新功能，容易误判为“代码没更新”。
+- XcodeGen 重新生成可能移除用户选择的 Personal Team，导致 “Signing requires a development team”。
+- 用户 Team ID 属于本地环境配置；保留本机可运行状态，但不要未经确认把个人签名信息作为产品代码提交。
 
-### 5.2 Supabase 防邮箱枚举会返回“伪成功”
+### 7.5 UI 测试在长筛选弹窗中找不到底部维度
 
-- 开启 Confirm email 后，旧邮箱再次注册可能不会抛出 `user_already_exists` / `email_exists`。
-- 因此仅靠客户端错误映射无法稳定显示“邮箱已注册”。
-- 若未来产品坚持精确检查，必须通过受信任服务端使用管理员能力查询，但这会主动暴露邮箱存在性并引入枚举风险；不能把 service-role key 放进 iOS App。
-- 当前统一提示方案是更简单、更安全的实现。
+- 组合筛选测试曾因多个 DisclosureGroup 同时展开，导致底部“收纳位置”不可点击；XCUI 还会出现 Button/DisclosureTriangle 类型快照不一致。
+- 测试 helper 已改为：必要时滚动查找，选择后折叠当前维度，再继续下一个维度。
+- 该问题属于自动化可达性/滚动稳定性，不是筛选业务逻辑失败。
+- iPhone SE 小屏对长弹窗更苛刻；当前主要定向回归使用 iPhone 17 Pro Max，真机视觉验收已通过。
 
-### 5.3 UI 倒计时不等于邮件一定发出
+### 7.6 不要误实现多衣橱清理逻辑
 
-- “重新发送 58s”代表客户端收到表面成功并进入冷却状态。
-- 对已注册邮箱，Supabase 可能为了隐私返回成功但不发送实际注册邮件。
-- 产品文案不要写成无条件的“验证码已发送”。
+- 早期评审提出“更换默认衣橱时清空筛选”，但用户明确当前版本不实现多衣橱或更换衣橱。
+- 当前只需保证账号切换时清空状态，不要为了未进入范围的场景扩展会话模型。
 
-### 5.4 异步请求存在 A→B→A 竞态
+## 8. 主要提交
 
-- 仅比较请求完成时的邮箱字符串不足以判断请求是否过期。
-- 用户可以在请求期间把邮箱从 A 改为 B，再改回 A，旧请求仍会通过字符串比较。
-- 解决方式是每次实际邮箱编辑都递增 operation generation；异步请求捕获提交时 generation，完成时必须一致才允许更新 UI。
-- 请求参数也必须在 Task 创建前捕获，不能在异步闭包里继续读取可变的 `email`/`password`。
+- `26083f9 docs: plan wardrobe category filtering`
+- `66a8233 feat: add wardrobe filtering policy`
+- `3f5ce26 feat: add counted category browser`
+- `07dd9de feat: add wardrobe filter sheet`
+- `6578d28 fix: expose active wardrobe filter state`
+- `6d76f08 feat: integrate wardrobe filtering`
+- `caf320a fix: isolate wardrobe sessions`
+- `2796611 test: cover wardrobe filtering flows`
+- `97634ac fix: preserve wardrobe filter action identifiers`
+- `8086931 fix: preserve design system category identifiers`
+- `e776972 fix: finalize wardrobe filtering handoff`
+- `ab887d7 fix: include Supabase settings in app bundle`
 
-### 5.5 验证期间编辑邮箱会污染状态
+## 9. 关键文件
 
-- 原实现允许在 `.verifying` 时编辑邮箱，旧失败结果会在新邮箱表单上重新写入错误和重发状态。
-- 当前在验证码校验期间锁定邮箱，并在结果落地前检查 generation 与提交邮箱。
+- 工程源：`project.yml`
+- 应用 Info.plist：`Config/AppInfo.plist`
+- 本地密钥模板：`Config/Secrets.xcconfig.example`
+- 本地真实密钥：`Config/Secrets.xcconfig`（Git 忽略，禁止提交）
+- 纯筛选规则：`WardrobeApp/Features/Wardrobe/WardrobeFilter.swift`
+- 首页集成：`WardrobeApp/Features/Wardrobe/WardrobeHomeView.swift`
+- 分类浏览：`WardrobeApp/Features/Wardrobe/WardrobeCategoryBrowser.swift`
+- 已生效条件栏：`WardrobeApp/Features/Wardrobe/WardrobeFilterBar.swift`
+- 筛选弹窗：`WardrobeApp/Features/Wardrobe/WardrobeFilterSheet.swift`
+- 会话接线：`WardrobeApp/App/RootView.swift`
+- 衣物加载隔离：`WardrobeApp/Features/Wardrobe/GarmentStore.swift`
+- 策略测试：`WardrobeAppTests/Wardrobe/WardrobeFilterPolicyTests.swift`
+- 会话测试：`WardrobeAppTests/Wardrobe/GarmentStoreTests.swift`、`WardrobeAppTests/Wardrobe/WardrobeHomePolicyTests.swift`
+- UI 测试：`WardrobeAppUITests/WardrobeHomeTests.swift`
 
-### 5.6 测试缓存与沙箱可能制造假象
+## 10. 明确延期
 
-- 复用旧 DerivedData 曾运行到旧测试二进制，导致测试看似没有覆盖最新接口。
-- 对关键 TDD 红灯使用独立/明确的 DerivedData，确认失败原因确实是功能缺失，而不是编译缓存。
-- 新建空 DerivedData 会触发 SwiftPM 重新拉取依赖；网络受限时可能报 GitHub DNS 失败，这不是业务代码错误。
-- CoreSimulator 和 `~/Library`/SwiftPM 缓存受沙箱限制时，`xcodebuild` 可能报 `CoreSimulatorService connection invalid` 或 `Operation not permitted`；需要授权后在沙箱外运行。
-- `xcodebuild -quiet` 成功时可能只输出观察器信息，应以最终进程退出码 0 为准。
-
-### 5.7 Git worktree 的 index 位于主仓库
-
-- worktree 的 index 位于主仓库 `.git/worktrees/...`，沙箱内 `git add`/`commit` 可能因无法创建 `index.lock` 失败。
-- 需要授权后重试，不要绕过 Git 锁。
-- 始终显式暂存功能文件；本轮提交明确排除了两个 Xcode 本地文件。
-
-### 5.8 旧交接方案已经失效
-
-- 旧 HANDOFF 曾记录“固定验证码 123456、Debug 菜单、开发 Edge Function、独立验证码页面”等架构设想。
-- 用户后来明确收缩为真实 Supabase 邮件验证码，并要求验证码直接放在注册页面。
-- 后续不得按旧方案恢复固定测试验证码或独立验证码页，除非用户重新提出并批准新设计。
-
-## 6. 关键文件
-
-- 注册页面：`WardrobeApp/Features/Auth/SignUpView.swift`
-- 注册/验证码状态：`WardrobeApp/Features/Auth/AuthSubmissionState.swift`
-- 页面与 SessionStore 接线：`WardrobeApp/App/RootView.swift`
-- Supabase Auth Repository：`WardrobeApp/Infrastructure/Supabase/SupabaseAuthRepository.swift`
-- Supabase 错误映射：`WardrobeApp/Infrastructure/Supabase/SupabaseErrorMapper.swift`
-- SessionStore：`WardrobeApp/App/SessionStore.swift`
-- UI 测试依赖：`WardrobeApp/App/AppDependencies.swift`
-- 状态测试：`WardrobeAppTests/Auth/AuthSubmissionStateTests.swift`
-- 认证流程 UI 测试：`WardrobeAppUITests/AuthSessionFlowTests.swift`
-- Supabase 本地配置：`supabase/config.toml`
-- 本地确认邮件模板：`supabase/templates/confirmation.html`
-- 当前 PR：<https://github.com/hyzgtihub/WardrobeAI/pull/3>
-
-## 7. 新会话启动检查清单
-
-```bash
-cd /Users/huyouzhen/Documents/衣橱APP/.worktrees/codex-garment-photo-upload
-git branch --show-current
-git status --short
-git log --oneline -6
-git fetch origin
-git rev-list --left-right --count origin/main...HEAD
-gh pr view 3 --json state,mergeStateStatus,statusCheckRollup,url
-```
-
-预期重点：
-
-- 当前分支应为 `codex/account-identity`。
-- 两个 Xcode 文件可能仍显示为未提交，必须保留。
-- 先确认 PR CI，再决定修复、合并或保留分支。
-- 不要把本文中的历史测试结果当作新改动后的证明；任何修改后都应重新运行对应测试和构建。
+- 文本搜索框、独立搜索页和本地关键字搜索。
+- 多衣橱、切换默认衣橱及衣橱级筛选状态。
+- 收藏字段持久化、卡片/详情收藏入口。
+- 智能集合：最近添加、最爱、当季衣物。
+- 服务端筛选、筛选偏好同步、价格和购买日期筛选。
+- AI 图片处理、搭配、OOTD 和分享。

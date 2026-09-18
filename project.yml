@@ -30,7 +30,8 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.huyouzhen.wardrobe
-        GENERATE_INFOPLIST_FILE: YES
+        GENERATE_INFOPLIST_FILE: NO
+        INFOPLIST_FILE: Config/AppInfo.plist
         INFOPLIST_KEY_CFBundleDisplayName: 衣序
         INFOPLIST_KEY_SupabaseURL: "$(SUPABASE_URL)"
         INFOPLIST_KEY_SupabasePublishableKey: "$(SUPABASE_PUBLISHABLE_KEY)"

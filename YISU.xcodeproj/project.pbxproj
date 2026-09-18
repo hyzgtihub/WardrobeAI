@@ -8,22 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		0069F4C190E3C843F7E86DAB /* CurrentWardrobeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B042293BE06012AAB28F451 /* CurrentWardrobeView.swift */; };
-		016AF5D201B3C547698A0B2C /* AddGarmentFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176BF6D312C4E6587A9B0C2D /* AddGarmentFlowTests.swift */; };
-		026BF6D312C4E6587A9B0C2D /* GarmentPhotoPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287C07E423D5F7698A0B1C3D /* GarmentPhotoPickerView.swift */; };
-		036CF7E423D5F7698A0B1C3D /* GarmentPhotoPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398D18F534E6077A9B0C2D4E /* GarmentPhotoPreviewView.swift */; };
-		046DF8F534E6077A9B0C2D4E /* AddGarmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9E290645F7188B0C1D3E5F /* AddGarmentView.swift */; };
-		056EF90645F7188B0C1D3E5F /* garment-photo-metadata.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6E8A0B2C4D6F8193A5E7F9C1 /* garment-photo-metadata.jpg */; };
 		02729C5611C224621113DF2C /* GarmentDetailTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2352787C60645DBA33DA9CF /* GarmentDetailTests.swift */; };
 		02F4D24DBC073C86A6C0456C /* WardrobeHomePolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5C8A4C3418D6B4C37E1C2C /* WardrobeHomePolicyTests.swift */; };
 		03EBBD3BC6EC356DBFF0B6E2 /* SupabaseConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32828918AE6D675CF62A06E /* SupabaseConfigurationTests.swift */; };
 		04C3191FB0C2365FC5F5312D /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DB435246FE769FEAB25D9 /* ModelTests.swift */; };
+		07C16129ACA86900A828B013 /* AddGarmentStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A43662EA458A792A746726E /* AddGarmentStoreTests.swift */; };
+		0FB35EFDB35EADF45C5CF882 /* SupabaseGarmentImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AEF2ECA58A9E25A516E0B7 /* SupabaseGarmentImageRepository.swift */; };
 		11400DC336C7CCDB4EA8CC7D /* AppDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86330F2FBE249CB2E279FC4B /* AppDependencies.swift */; };
 		1451829F825E013892749F7E /* GarmentRepositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E0035ED9D795BF3C56B954 /* GarmentRepositories.swift */; };
 		14541358F539BB2C4F6BDA24 /* AuthSessionFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7062A69595B7F9A8B4D7F5 /* AuthSessionFlowTests.swift */; };
+		17233D3BB656A1402DB051C2 /* AddGarmentModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6AAFBAE3B235FC4AEFF3B4 /* AddGarmentModels.swift */; };
 		21EB3D64E795C85800EB3AFB /* GarmentModelCodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E418B72AD97ACA60A04F2F /* GarmentModelCodingTests.swift */; };
 		26D528236AEEA5E93E8E745D /* SupabaseProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0B77FB37F8803F9B56D380 /* SupabaseProfileRepository.swift */; };
 		297C81632EBD8509C50403F4 /* AppRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063904435C870A2D29CF1E26 /* AppRoute.swift */; };
 		2C6BD65ABF2D9A7D783608E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA106F2D845E7256446C5FD6 /* Assets.xcassets */; };
+		2C8CE17963A8A7932E737D4D /* WardrobeFilterSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE64159C92C8FB60BD60669 /* WardrobeFilterSheet.swift */; };
 		2E3E1D17375A7D72213BA1B6 /* GarmentDetailPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0D7C4E391802D9F2508FEF /* GarmentDetailPolicyTests.swift */; };
 		30EDE1BCBCD52B54C1D61668 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0491A94AA215385953033BE /* SignUpView.swift */; };
 		31FA8BE31085391AA255BEA4 /* WardrobeSetupState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003E554A42C25C7B46EAC75D /* WardrobeSetupState.swift */; };
@@ -33,29 +32,24 @@
 		45F64DFFE9BA32126F59E91D /* WardrobeSetupStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F338FBCC073E7894D4E6256A /* WardrobeSetupStateTests.swift */; };
 		49E3A161E4E039076FA192D3 /* DesignSystemGalleryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469FA0AB02377F1B56792DD2 /* DesignSystemGalleryTests.swift */; };
 		4B38B9ABAC6A082C0A140D09 /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AC7E25E50DB3916D8D2C29 /* SmokeTests.swift */; };
+		50225F28A75D27F9D2DBB1D2 /* AddGarmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3645321B9279C839623EFC4 /* AddGarmentView.swift */; };
 		524A1B1FCE81D179F977601B /* WardrobeSampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D16DB641F6A9DF785B71AC6 /* WardrobeSampleData.swift */; };
+		5291C59B9394B5CA8D3310F2 /* WardrobeFilterBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1960D7ABBDEDACBD5C7642 /* WardrobeFilterBar.swift */; };
+		53A00EC0B4B3579B14B339B0 /* AddGarmentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFAADC61030F14FC4EB4C464 /* AddGarmentStore.swift */; };
 		55E820685356BBFC7E2A0332 /* CollectionBehaviorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437130D898E88B896F0C71EF /* CollectionBehaviorTests.swift */; };
 		57A36F6A5939EFE27C26BF64 /* AppDependenciesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743D2B331AAB8EA6C3E0782F /* AppDependenciesTests.swift */; };
-		58A7C9E1F3B5D7092A4C6E80 /* GarmentImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69B8D0F2A4C6E8193B5D7F01 /* GarmentImageProcessor.swift */; };
-		59B8D0F2A4C6E8193B5D7F01 /* AddGarmentModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A9C1E3F5B7D8092A4C6E8F /* AddGarmentModels.swift */; };
-		60AC2E4F6B8D9013C5E7F902 /* GarmentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BD3F506C9E0124D6F80913 /* GarmentStore.swift */; };
-		61BD3F506C9E0124D6F80913 /* PrivateGarmentImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CE40517DAF1235E7F90124 /* PrivateGarmentImageView.swift */; };
-		5AB9D1F3A5C7E8092B4D6F81 /* AddGarmentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B0D2F4A6C8E8193B5D7F90 /* AddGarmentStore.swift */; };
-		5A7B9C1D3E5F708192A4B6C8 /* SupabaseGarmentRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8CAD1E3F507192A4B6C8D0 /* SupabaseGarmentRepositoryTests.swift */; };
-		5B7D9F1A3C5E708294B6D8F0 /* GarmentImageProcessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8E0A2B4D6F8193A5C7E9F1 /* GarmentImageProcessorTests.swift */; };
-		5E8A0C2D4F6B8193A5C7E9F1 /* AddGarmentStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9B1D3E5A7C8092B4D6F801 /* AddGarmentStoreTests.swift */; };
-		5F9B1D3E5A7C8092B4D6F801 /* GarmentStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC2E4F6B8D9013C5E7F902 /* GarmentStoreTests.swift */; };
-		5C7E9A1B3D5F708294B6C8E0 /* garment-photo-landscape.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6D8F0A2B4C6E8193A5D7F9B1 /* garment-photo-landscape.jpg */; };
-		5D7F9B1C3E5A708294C6D8F0 /* garment-photo-metadata.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6E8A0B2C4D6F8193A5E7F9C1 /* garment-photo-metadata.jpg */; };
+		597818782C0F5B71118B9818 /* GarmentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B42423B0D447FCAC72B263 /* GarmentStore.swift */; };
 		5A6149836D677442BC5EE0F3 /* SupabaseWardrobeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A3057C6D8A237F646E4E2E /* SupabaseWardrobeRepository.swift */; };
 		5FF8D4BEFD214325A5A5F0CA /* SupabaseAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D18F0E054E741DF8ADEC34 /* SupabaseAuthRepository.swift */; };
 		62A7AE88027C37BBB5DF10F1 /* YISUCategoryFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B64E05C66A1089FE5C1BAFB /* YISUCategoryFilter.swift */; };
 		65C75DC9A52055FFA8F9B30C /* SupabaseErrorMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AD26C971DD37EDA0972F25 /* SupabaseErrorMapper.swift */; };
 		6B27A7FB43349092A283E6FB /* SupabaseClientFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D45B77C991C3AC93E3AE5A1 /* SupabaseClientFactory.swift */; };
+		7322DD0D5085D5B6902D76AB /* GarmentStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142A658B4EC2D0A1021FEFC9 /* GarmentStoreTests.swift */; };
+		73F7B93F44039BD8EA408537 /* WardrobeFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939372CDFDDF9720836CFD94 /* WardrobeFilter.swift */; };
 		77809BD98769222D7691972F /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA5EC2F381A930D1C89ECC3 /* SignInView.swift */; };
-		7C8D9E0F1A2B3C4D5E6F7081 /* SupabaseGarmentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9E0F1A2B3C4D5E6F708192 /* SupabaseGarmentRepository.swift */; };
-		7D8E9F0A1B2C3D4E5F607182 /* SupabaseGarmentImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9F0A1B2C3D4E5F60718293 /* SupabaseGarmentImageRepository.swift */; };
+		797F106527409C55550BBC8C /* SupabaseGarmentRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C55B4171A095E4B43B7DDB /* SupabaseGarmentRepositoryTests.swift */; };
 		7AE229BE3D693FD068F26857 /* YISUTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F15D1E8890942046B4E372E /* YISUTheme.swift */; };
+		7C566FF52883FA1DE3722634 /* garment-photo-metadata.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AD51F066E1B6F7CA6FE457E9 /* garment-photo-metadata.jpg */; };
 		7CEF84076B094FD52D234EB9 /* WardrobeHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C553E22CD0B4411D370BE0D9 /* WardrobeHomeView.swift */; };
 		825CA264F0011B7DF4886509 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = D3534A727A029543A69CDC49 /* Supabase */; };
 		83516AFD1C87246D83CCF380 /* FoundationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186F4DA5E18B28ED85E9CD16 /* FoundationTests.swift */; };
@@ -64,10 +58,14 @@
 		863DF5D077654E8384BDDDA5 /* GarmentModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0C4D8DC160ADDB6D7FEEE7 /* GarmentModels.swift */; };
 		86CE2359B6EA8BA942D6335A /* YISUComponentState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857B97111652B2592BFB2982 /* YISUComponentState.swift */; };
 		87578537B8D00273BF220039 /* OnboardingFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E51D018EF93CF07BEF87FC /* OnboardingFlowTests.swift */; };
+		87DBC049ED604D5C348BC0FD /* GarmentImageProcessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E29B8C0835EA55C943F6A4E /* GarmentImageProcessorTests.swift */; };
+		8B6A2B9602FF63AA1A03DF12 /* GarmentPhotoPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DF3F3CF8C7D5B5E2E063C6 /* GarmentPhotoPickerView.swift */; };
 		8E36D96068B8D968286BB481 /* SessionStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEA1A020CC045EAD77924A /* SessionStoreTests.swift */; };
 		91B392E42D659BAA47BDCBFF /* ControlBehaviorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB763FE465B9CFC1DDE51D26 /* ControlBehaviorTests.swift */; };
 		9404EA3DE38CB2EE78B37CFE /* YISUApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497A5C0305038852711A7688 /* YISUApp.swift */; };
+		94E510B82AEB2A6E74E159E5 /* AddGarmentFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0323C925262A79CAAF7703AB /* AddGarmentFlowTests.swift */; };
 		9AEE4713E74DBC2E465ABB9A /* AccountModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD442C4FDA23B540ADF1689 /* AccountModels.swift */; };
+		9DD45D5AE31FAFE95F1458CA /* garment-photo-landscape.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3477E59E8C08D4386C857BFC /* garment-photo-landscape.jpg */; };
 		9F2D539591BC28580D065E48 /* YISUCategoryChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D1E0FC5F69B35CAEBC97C1 /* YISUCategoryChip.swift */; };
 		A02A645A134C87085B9E4FE2 /* YISUBottomNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D46BAFE516AA8BD1B69A8A /* YISUBottomNavigation.swift */; };
 		A21E664F8450304ECE6ECD2B /* GarmentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D0C35C55E844FAA10DD295 /* GarmentDetailView.swift */; };
@@ -76,6 +74,7 @@
 		AD142FCF1DC4D918CE5B9A6D /* WardrobeHomeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFFCCBD4A656823137FB37E2 /* WardrobeHomeTests.swift */; };
 		AD96232CE6C40EBE4DF71AF2 /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01F8FE78921C95149792B82 /* SessionStore.swift */; };
 		ADDFB973C722C4601BF86627 /* AuthFormPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF399EFB9FBCAC7A7D05D0B1 /* AuthFormPolicy.swift */; };
+		AE186135F2B7BB72351D496F /* PrivateGarmentImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2552DF3675E962341C471E /* PrivateGarmentImageView.swift */; };
 		B075C02E4408D9ECC8AADE8B /* AuthFormPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD04FEB2D68752A82B70CAA /* AuthFormPolicyTests.swift */; };
 		B0C3DDEE173D04CFC813706E /* AppIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A9C9627E69BD77234EEAB2 /* AppIdentity.swift */; };
 		B6CD886F8ECF379639C404DA /* AuthSubmissionStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D959CC576383CD94CD9975A /* AuthSubmissionStateTests.swift */; };
@@ -86,11 +85,17 @@
 		C4F176BD9B1D23C01889CBF2 /* GarmentDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE7A003F4DCE609FE2087AA /* GarmentDetailModel.swift */; };
 		CC10561C4A21F38BB8EA0888 /* YISUGarmentCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C68D9E99BE84D7C2290B83C /* YISUGarmentCard.swift */; };
 		CC6BF320EA1F8DC49EB02AA6 /* YISUAuthScaffold.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3030C543511AE06C0E43A /* YISUAuthScaffold.swift */; };
+		CDBCD085FFF46D22DAF039E5 /* SupabaseGarmentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E48EBDAE95D54FDAD6CAFEF /* SupabaseGarmentRepository.swift */; };
+		CDBF56B3AAB15B334F07A645 /* WardrobeCategoryBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752810042A3FCB35FFCE6CB5 /* WardrobeCategoryBrowser.swift */; };
+		D1F9685C09322B8AE8CC99E6 /* WardrobeFilterPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC94F2F4324DF603865EA7F /* WardrobeFilterPolicyTests.swift */; };
 		D81C57138923BFCCAD2F5CF2 /* YISUContentStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC1FDB49AF03AC690A0B6A8 /* YISUContentStateView.swift */; };
+		DD59E4EAF9F9235380434260 /* GarmentImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEF7A3B949749C0130323D2 /* GarmentImageProcessor.swift */; };
+		E3B12EE658DBAC7F913570D8 /* WardrobeFilterDraftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE201E4AE2A3FF745A3B24E /* WardrobeFilterDraftTests.swift */; };
 		E5D5A4AD85ED8B0FC10AF6A6 /* SupabaseConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785FDCFE4EB06900146D66F1 /* SupabaseConfiguration.swift */; };
 		E798517D62BE125CE9E766E3 /* DesignSystemGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4E099C8A517B7866713AEB /* DesignSystemGalleryView.swift */; };
 		ED09DA92CB1711C22D6AB9C6 /* AccountRepositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3604722319521DEB614467EF /* AccountRepositories.swift */; };
 		EE2C7E1205D3734FA225EF6F /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CBF57357C9F2716E436D0E /* ProfileView.swift */; };
+		F03A41EC0841B0ED41A58AFD /* GarmentPhotoPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508989991AC56AF2D0829977 /* GarmentPhotoPreviewView.swift */; };
 		F1C085690E8449DEC1EF5DD3 /* YISUGarmentGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B81D2C7BE7469893128BD69 /* YISUGarmentGrid.swift */; };
 		F27F3783968E54D4DD12D6E4 /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C12093FFA6C8AB6E318FA5 /* SmokeTests.swift */; };
 /* End PBXBuildFile section */
@@ -114,19 +119,19 @@
 
 /* Begin PBXFileReference section */
 		003E554A42C25C7B46EAC75D /* WardrobeSetupState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeSetupState.swift; sourceTree = "<group>"; };
+		0323C925262A79CAAF7703AB /* AddGarmentFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGarmentFlowTests.swift; sourceTree = "<group>"; };
 		063904435C870A2D29CF1E26 /* AppRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRoute.swift; sourceTree = "<group>"; };
 		0CC1FDB49AF03AC690A0B6A8 /* YISUContentStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUContentStateView.swift; sourceTree = "<group>"; };
 		0D959CC576383CD94CD9975A /* AuthSubmissionStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSubmissionStateTests.swift; sourceTree = "<group>"; };
-		176BF6D312C4E6587A9B0C2D /* AddGarmentFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGarmentFlowTests.swift; sourceTree = "<group>"; };
-		287C07E423D5F7698A0B1C3D /* GarmentPhotoPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentPhotoPickerView.swift; sourceTree = "<group>"; };
-		398D18F534E6077A9B0C2D4E /* GarmentPhotoPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentPhotoPreviewView.swift; sourceTree = "<group>"; };
-		4A9E290645F7188B0C1D3E5F /* AddGarmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGarmentView.swift; sourceTree = "<group>"; };
+		142A658B4EC2D0A1021FEFC9 /* GarmentStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentStoreTests.swift; sourceTree = "<group>"; };
 		186F4DA5E18B28ED85E9CD16 /* FoundationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationTests.swift; sourceTree = "<group>"; };
 		1B64E05C66A1089FE5C1BAFB /* YISUCategoryFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUCategoryFilter.swift; sourceTree = "<group>"; };
 		1E9DB435246FE769FEAB25D9 /* ModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
-		30097FB853DAB2C9845955AC /* YISU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YISU.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		29B42423B0D447FCAC72B263 /* GarmentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentStore.swift; sourceTree = "<group>"; };
+		30097FB853DAB2C9845955AC /* YISU.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = YISU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3120796F5308EAB3EA2296E6 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		31D1E0FC5F69B35CAEBC97C1 /* YISUCategoryChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUCategoryChip.swift; sourceTree = "<group>"; };
+		3477E59E8C08D4386C857BFC /* garment-photo-landscape.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "garment-photo-landscape.jpg"; sourceTree = "<group>"; };
 		3604722319521DEB614467EF /* AccountRepositories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRepositories.swift; sourceTree = "<group>"; };
 		3D16DB641F6A9DF785B71AC6 /* WardrobeSampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeSampleData.swift; sourceTree = "<group>"; };
 		437130D898E88B896F0C71EF /* CollectionBehaviorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionBehaviorTests.swift; sourceTree = "<group>"; };
@@ -136,39 +141,33 @@
 		48A9C9627E69BD77234EEAB2 /* AppIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIdentity.swift; sourceTree = "<group>"; };
 		497A5C0305038852711A7688 /* YISUApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUApp.swift; sourceTree = "<group>"; };
 		4C68D9E99BE84D7C2290B83C /* YISUGarmentCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUGarmentCard.swift; sourceTree = "<group>"; };
+		508989991AC56AF2D0829977 /* GarmentPhotoPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentPhotoPreviewView.swift; sourceTree = "<group>"; };
+		60C55B4171A095E4B43B7DDB /* SupabaseGarmentRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseGarmentRepositoryTests.swift; sourceTree = "<group>"; };
 		63E30539C5FBF8D0B8D8AEA3 /* WardrobeSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeSetupView.swift; sourceTree = "<group>"; };
+		6A43662EA458A792A746726E /* AddGarmentStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGarmentStoreTests.swift; sourceTree = "<group>"; };
 		6B0B77FB37F8803F9B56D380 /* SupabaseProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseProfileRepository.swift; sourceTree = "<group>"; };
 		6B81D2C7BE7469893128BD69 /* YISUGarmentGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUGarmentGrid.swift; sourceTree = "<group>"; };
-		6B8CAD1E3F507192A4B6C8D0 /* SupabaseGarmentRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseGarmentRepositoryTests.swift; sourceTree = "<group>"; };
-		6C8E0A2B4D6F8193A5C7E9F1 /* GarmentImageProcessorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGarment/GarmentImageProcessorTests.swift; sourceTree = "<group>"; };
-		6D8F0A2B4C6E8193A5D7F9B1 /* garment-photo-landscape.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Fixtures/garment-photo-landscape.jpg; sourceTree = "<group>"; };
-		6E8A0B2C4D6F8193A5E7F9C1 /* garment-photo-metadata.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Fixtures/garment-photo-metadata.jpg; sourceTree = "<group>"; };
-		6F9B1D3E5A7C8092B4D6F801 /* AddGarmentStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGarment/AddGarmentStoreTests.swift; sourceTree = "<group>"; };
-		70AC2E4F6B8D9013C5E7F902 /* GarmentStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentStoreTests.swift; sourceTree = "<group>"; };
-		71BD3F506C9E0124D6F80913 /* GarmentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentStore.swift; sourceTree = "<group>"; };
-		72CE40517DAF1235E7F90124 /* PrivateGarmentImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateGarmentImageView.swift; sourceTree = "<group>"; };
 		6D45B77C991C3AC93E3AE5A1 /* SupabaseClientFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseClientFactory.swift; sourceTree = "<group>"; };
-		69B8D0F2A4C6E8193B5D7F01 /* GarmentImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentImageProcessor.swift; sourceTree = "<group>"; };
-		60A9C1E3F5B7D8092A4C6E8F /* AddGarmentModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGarmentModels.swift; sourceTree = "<group>"; };
-		61B0D2F4A6C8E8193B5D7F90 /* AddGarmentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGarmentStore.swift; sourceTree = "<group>"; };
+		6E29B8C0835EA55C943F6A4E /* GarmentImageProcessorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentImageProcessorTests.swift; sourceTree = "<group>"; };
+		6E48EBDAE95D54FDAD6CAFEF /* SupabaseGarmentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseGarmentRepository.swift; sourceTree = "<group>"; };
 		743D2B331AAB8EA6C3E0782F /* AppDependenciesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependenciesTests.swift; sourceTree = "<group>"; };
+		752810042A3FCB35FFCE6CB5 /* WardrobeCategoryBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeCategoryBrowser.swift; sourceTree = "<group>"; };
 		785FDCFE4EB06900146D66F1 /* SupabaseConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseConfiguration.swift; sourceTree = "<group>"; };
 		78D0C35C55E844FAA10DD295 /* GarmentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentDetailView.swift; sourceTree = "<group>"; };
+		79DF3F3CF8C7D5B5E2E063C6 /* GarmentPhotoPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentPhotoPickerView.swift; sourceTree = "<group>"; };
 		7ADD599013CE7666543E844E /* YISUGarmentDetailComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUGarmentDetailComponents.swift; sourceTree = "<group>"; };
-		7D074D1130419ABA00237585 /* AppInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AppInfo.plist; sourceTree = "<group>"; };
 		7F15D1E8890942046B4E372E /* YISUTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUTheme.swift; sourceTree = "<group>"; };
 		7FE3030C543511AE06C0E43A /* YISUAuthScaffold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUAuthScaffold.swift; sourceTree = "<group>"; };
-		84368EB371249E8B6C5DE7C9 /* YISUTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YISUTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		84368EB371249E8B6C5DE7C9 /* YISUTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = YISUTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		857B97111652B2592BFB2982 /* YISUComponentState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUComponentState.swift; sourceTree = "<group>"; };
 		86330F2FBE249CB2E279FC4B /* AppDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependencies.swift; sourceTree = "<group>"; };
 		89D18F0E054E741DF8ADEC34 /* SupabaseAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseAuthRepository.swift; sourceTree = "<group>"; };
 		89D46BAFE516AA8BD1B69A8A /* YISUBottomNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUBottomNavigation.swift; sourceTree = "<group>"; };
 		8B042293BE06012AAB28F451 /* CurrentWardrobeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWardrobeView.swift; sourceTree = "<group>"; };
-		8D9E0F1A2B3C4D5E6F708192 /* SupabaseGarmentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseGarmentRepository.swift; sourceTree = "<group>"; };
-		8E9F0A1B2C3D4E5F60718293 /* SupabaseGarmentImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseGarmentImageRepository.swift; sourceTree = "<group>"; };
 		8E0C4D8DC160ADDB6D7FEEE7 /* GarmentModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentModels.swift; sourceTree = "<group>"; };
 		8FD442C4FDA23B540ADF1689 /* AccountModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModels.swift; sourceTree = "<group>"; };
 		903900986BD01F8F3AA8D918 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		939372CDFDDF9720836CFD94 /* WardrobeFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeFilter.swift; sourceTree = "<group>"; };
 		98A3057C6D8A237F646E4E2E /* SupabaseWardrobeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseWardrobeRepository.swift; sourceTree = "<group>"; };
 		995472F01A313D9C9E8EB633 /* YISUCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUCategory.swift; sourceTree = "<group>"; };
 		9FD67F4AA9EC18B83E9CCFD9 /* AuthSubmissionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSubmissionState.swift; sourceTree = "<group>"; };
@@ -176,9 +175,13 @@
 		AA106F2D845E7256446C5FD6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AC4E099C8A517B7866713AEB /* DesignSystemGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystemGalleryView.swift; sourceTree = "<group>"; };
 		ACA5EC2F381A930D1C89ECC3 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		AD51F066E1B6F7CA6FE457E9 /* garment-photo-metadata.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "garment-photo-metadata.jpg"; sourceTree = "<group>"; };
 		ADC111B708C72FB4C75A7BE3 /* YISUAgreementCheckbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUAgreementCheckbox.swift; sourceTree = "<group>"; };
+		AEE201E4AE2A3FF745A3B24E /* WardrobeFilterDraftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeFilterDraftTests.swift; sourceTree = "<group>"; };
 		B01F8FE78921C95149792B82 /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
 		B3CBF57357C9F2716E436D0E /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		BDC94F2F4324DF603865EA7F /* WardrobeFilterPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeFilterPolicyTests.swift; sourceTree = "<group>"; };
+		BEEF7A3B949749C0130323D2 /* GarmentImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentImageProcessor.swift; sourceTree = "<group>"; };
 		C553E22CD0B4411D370BE0D9 /* WardrobeHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeHomeView.swift; sourceTree = "<group>"; };
 		C727E80CE5517984972CC5B7 /* AccountModelCodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModelCodingTests.swift; sourceTree = "<group>"; };
 		C7BEA1A020CC045EAD77924A /* SessionStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStoreTests.swift; sourceTree = "<group>"; };
@@ -187,20 +190,27 @@
 		CAD04FEB2D68752A82B70CAA /* AuthFormPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFormPolicyTests.swift; sourceTree = "<group>"; };
 		CB7062A69595B7F9A8B4D7F5 /* AuthSessionFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSessionFlowTests.swift; sourceTree = "<group>"; };
 		CB763FE465B9CFC1DDE51D26 /* ControlBehaviorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlBehaviorTests.swift; sourceTree = "<group>"; };
+		CFAADC61030F14FC4EB4C464 /* AddGarmentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGarmentStore.swift; sourceTree = "<group>"; };
+		CFE64159C92C8FB60BD60669 /* WardrobeFilterSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeFilterSheet.swift; sourceTree = "<group>"; };
 		CFFCCBD4A656823137FB37E2 /* WardrobeHomeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeHomeTests.swift; sourceTree = "<group>"; };
 		D0491A94AA215385953033BE /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		D8AEF2ECA58A9E25A516E0B7 /* SupabaseGarmentImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseGarmentImageRepository.swift; sourceTree = "<group>"; };
 		D8C12093FFA6C8AB6E318FA5 /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
 		DB0D7C4E391802D9F2508FEF /* GarmentDetailPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentDetailPolicyTests.swift; sourceTree = "<group>"; };
 		DBE7A003F4DCE609FE2087AA /* GarmentDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentDetailModel.swift; sourceTree = "<group>"; };
 		DD41C37A39974DAF72FC91BC /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		DF2552DF3675E962341C471E /* PrivateGarmentImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateGarmentImageView.swift; sourceTree = "<group>"; };
+		E3645321B9279C839623EFC4 /* AddGarmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGarmentView.swift; sourceTree = "<group>"; };
 		E4E418B72AD97ACA60A04F2F /* GarmentModelCodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentModelCodingTests.swift; sourceTree = "<group>"; };
+		EA1960D7ABBDEDACBD5C7642 /* WardrobeFilterBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeFilterBar.swift; sourceTree = "<group>"; };
 		EFE9C936381084B65990CA1C /* YISUAuthField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUAuthField.swift; sourceTree = "<group>"; };
 		F2352787C60645DBA33DA9CF /* GarmentDetailTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarmentDetailTests.swift; sourceTree = "<group>"; };
 		F338FBCC073E7894D4E6256A /* WardrobeSetupStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeSetupStateTests.swift; sourceTree = "<group>"; };
 		F3436BC8D13945FAD5981977 /* SupabaseErrorMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseErrorMapperTests.swift; sourceTree = "<group>"; };
 		F4AD26C971DD37EDA0972F25 /* SupabaseErrorMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseErrorMapper.swift; sourceTree = "<group>"; };
-		F61B251486587E22D03C6EFA /* YISUUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YISUUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F61B251486587E22D03C6EFA /* YISUUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = YISUUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F970D6EDA6C29BCF9AEF5CAE /* YISUButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YISUButton.swift; sourceTree = "<group>"; };
+		FA6AAFBAE3B235FC4AEFF3B4 /* AddGarmentModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGarmentModels.swift; sourceTree = "<group>"; };
 		FD5C8A4C3418D6B4C37E1C2C /* WardrobeHomePolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeHomePolicyTests.swift; sourceTree = "<group>"; };
 		FF399EFB9FBCAC7A7D05D0B1 /* AuthFormPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFormPolicy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -221,26 +231,13 @@
 			isa = PBXGroup;
 			children = (
 				68BB3521C6C1BDF5FB18CD44 /* Account */,
-				7A9C1E3F5B7D8092A4C6E8F0 /* AddGarment */,
+				B1C9A8DAD133539D3366E6C4 /* AddGarment */,
 				6BF305C0BED43066B2D784B3 /* Auth */,
 				FAFEEF5A8492B51F8EE69BD6 /* Onboarding */,
 				89828E03A9FF637841FA327F /* Profile */,
 				B3ED9CB159883534AA1B10B2 /* Wardrobe */,
 			);
 			path = Features;
-			sourceTree = "<group>";
-		};
-		7A9C1E3F5B7D8092A4C6E8F0 /* AddGarment */ = {
-			isa = PBXGroup;
-			children = (
-				60A9C1E3F5B7D8092A4C6E8F /* AddGarmentModels.swift */,
-				61B0D2F4A6C8E8193B5D7F90 /* AddGarmentStore.swift */,
-				4A9E290645F7188B0C1D3E5F /* AddGarmentView.swift */,
-				69B8D0F2A4C6E8193B5D7F01 /* GarmentImageProcessor.swift */,
-				287C07E423D5F7698A0B1C3D /* GarmentPhotoPickerView.swift */,
-				398D18F534E6077A9B0C2D4E /* GarmentPhotoPreviewView.swift */,
-			);
-			path = AddGarment;
 			sourceTree = "<group>";
 		};
 		0DD4555A64E2D0EC8E4BA79C = {
@@ -262,6 +259,15 @@
 				857B97111652B2592BFB2982 /* YISUComponentState.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		2392D09F038A99B2E1D7F25B /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				3477E59E8C08D4386C857BFC /* garment-photo-landscape.jpg */,
+				AD51F066E1B6F7CA6FE457E9 /* garment-photo-metadata.jpg */,
+			);
+			path = Fixtures;
 			sourceTree = "<group>";
 		};
 		3022650830400EB6C68994A6 /* Foundation */ = {
@@ -310,7 +316,7 @@
 		512C761FE5773C9CCD607DEE /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				72CE40517DAF1235E7F90124 /* PrivateGarmentImageView.swift */,
+				DF2552DF3675E962341C471E /* PrivateGarmentImageView.swift */,
 				ADC111B708C72FB4C75A7BE3 /* YISUAgreementCheckbox.swift */,
 				EFE9C936381084B65990CA1C /* YISUAuthField.swift */,
 				7FE3030C543511AE06C0E43A /* YISUAuthScaffold.swift */,
@@ -366,8 +372,8 @@
 		667913C2183CA51129D8CB83 /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
-				6B8CAD1E3F507192A4B6C8D0 /* SupabaseGarmentRepositoryTests.swift */,
 				F3436BC8D13945FAD5981977 /* SupabaseErrorMapperTests.swift */,
+				60C55B4171A095E4B43B7DDB /* SupabaseGarmentRepositoryTests.swift */,
 			);
 			path = Infrastructure;
 			sourceTree = "<group>";
@@ -421,7 +427,6 @@
 			children = (
 				DD41C37A39974DAF72FC91BC /* Debug.xcconfig */,
 				3120796F5308EAB3EA2296E6 /* Release.xcconfig */,
-				7D074D1130419ABA00237585 /* AppInfo.plist */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -442,6 +447,19 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
+		B1C9A8DAD133539D3366E6C4 /* AddGarment */ = {
+			isa = PBXGroup;
+			children = (
+				FA6AAFBAE3B235FC4AEFF3B4 /* AddGarmentModels.swift */,
+				CFAADC61030F14FC4EB4C464 /* AddGarmentStore.swift */,
+				E3645321B9279C839623EFC4 /* AddGarmentView.swift */,
+				BEEF7A3B949749C0130323D2 /* GarmentImageProcessor.swift */,
+				79DF3F3CF8C7D5B5E2E063C6 /* GarmentPhotoPickerView.swift */,
+				508989991AC56AF2D0829977 /* GarmentPhotoPreviewView.swift */,
+			);
+			path = AddGarment;
+			sourceTree = "<group>";
+		};
 		B3E8E78BA75DA02D9B6A9655 /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
@@ -458,7 +476,11 @@
 				78D0C35C55E844FAA10DD295 /* GarmentDetailView.swift */,
 				8E0C4D8DC160ADDB6D7FEEE7 /* GarmentModels.swift */,
 				C7E0035ED9D795BF3C56B954 /* GarmentRepositories.swift */,
-				71BD3F506C9E0124D6F80913 /* GarmentStore.swift */,
+				29B42423B0D447FCAC72B263 /* GarmentStore.swift */,
+				752810042A3FCB35FFCE6CB5 /* WardrobeCategoryBrowser.swift */,
+				939372CDFDDF9720836CFD94 /* WardrobeFilter.swift */,
+				EA1960D7ABBDEDACBD5C7642 /* WardrobeFilterBar.swift */,
+				CFE64159C92C8FB60BD60669 /* WardrobeFilterSheet.swift */,
 				C553E22CD0B4411D370BE0D9 /* WardrobeHomeView.swift */,
 				3D16DB641F6A9DF785B71AC6 /* WardrobeSampleData.swift */,
 			);
@@ -470,7 +492,9 @@
 			children = (
 				DB0D7C4E391802D9F2508FEF /* GarmentDetailPolicyTests.swift */,
 				E4E418B72AD97ACA60A04F2F /* GarmentModelCodingTests.swift */,
-				70AC2E4F6B8D9013C5E7F902 /* GarmentStoreTests.swift */,
+				142A658B4EC2D0A1021FEFC9 /* GarmentStoreTests.swift */,
+				AEE201E4AE2A3FF745A3B24E /* WardrobeFilterDraftTests.swift */,
+				BDC94F2F4324DF603865EA7F /* WardrobeFilterPolicyTests.swift */,
 				FD5C8A4C3418D6B4C37E1C2C /* WardrobeHomePolicyTests.swift */,
 			);
 			path = Wardrobe;
@@ -480,15 +504,13 @@
 			isa = PBXGroup;
 			children = (
 				D8C12093FFA6C8AB6E318FA5 /* SmokeTests.swift */,
-				6F9B1D3E5A7C8092B4D6F801 /* AddGarmentStoreTests.swift */,
-				6C8E0A2B4D6F8193A5C7E9F1 /* GarmentImageProcessorTests.swift */,
-				6D8F0A2B4C6E8193A5D7F9B1 /* garment-photo-landscape.jpg */,
-				6E8A0B2C4D6F8193A5E7F9C1 /* garment-photo-metadata.jpg */,
 				7CC748481F302F5F9954EF5E /* Account */,
+				E5714A4B0D2634FA0B58333D /* AddGarment */,
 				3CE89CBB41FB8B68544B77B1 /* App */,
 				5BC7F9B6FFF2AF6D9B10429E /* Auth */,
 				61B419DD45D5CB70472001AE /* Configuration */,
 				E383F9F511E7C96B8F920880 /* DesignSystem */,
+				2392D09F038A99B2E1D7F25B /* Fixtures */,
 				667913C2183CA51129D8CB83 /* Infrastructure */,
 				EC75B95C2F1E5A0FDC90FC5B /* Onboarding */,
 				BDC039FF5656958A1E511321 /* Wardrobe */,
@@ -507,6 +529,15 @@
 			path = DesignSystem;
 			sourceTree = "<group>";
 		};
+		E5714A4B0D2634FA0B58333D /* AddGarment */ = {
+			isa = PBXGroup;
+			children = (
+				6A43662EA458A792A746726E /* AddGarmentStoreTests.swift */,
+				6E29B8C0835EA55C943F6A4E /* GarmentImageProcessorTests.swift */,
+			);
+			path = AddGarment;
+			sourceTree = "<group>";
+		};
 		EC75B95C2F1E5A0FDC90FC5B /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -518,7 +549,7 @@
 		F696BB093A6FEBEA31EE003D /* WardrobeAppUITests */ = {
 			isa = PBXGroup;
 			children = (
-				176BF6D312C4E6587A9B0C2D /* AddGarmentFlowTests.swift */,
+				0323C925262A79CAAF7703AB /* AddGarmentFlowTests.swift */,
 				CB7062A69595B7F9A8B4D7F5 /* AuthSessionFlowTests.swift */,
 				469FA0AB02377F1B56792DD2 /* DesignSystemGalleryTests.swift */,
 				F2352787C60645DBA33DA9CF /* GarmentDetailTests.swift */,
@@ -535,8 +566,8 @@
 				89D18F0E054E741DF8ADEC34 /* SupabaseAuthRepository.swift */,
 				6D45B77C991C3AC93E3AE5A1 /* SupabaseClientFactory.swift */,
 				F4AD26C971DD37EDA0972F25 /* SupabaseErrorMapper.swift */,
-				8E9F0A1B2C3D4E5F60718293 /* SupabaseGarmentImageRepository.swift */,
-				8D9E0F1A2B3C4D5E6F708192 /* SupabaseGarmentRepository.swift */,
+				D8AEF2ECA58A9E25A516E0B7 /* SupabaseGarmentImageRepository.swift */,
+				6E48EBDAE95D54FDAD6CAFEF /* SupabaseGarmentRepository.swift */,
 				6B0B77FB37F8803F9B56D380 /* SupabaseProfileRepository.swift */,
 				98A3057C6D8A237F646E4E2E /* SupabaseWardrobeRepository.swift */,
 			);
@@ -581,7 +612,7 @@
 			buildConfigurationList = 2E3FFE5747EA59C7A1C4A609 /* Build configuration list for PBXNativeTarget "YISUTests" */;
 			buildPhases = (
 				A913041B030AAB0DF432D928 /* Sources */,
-				7F9B1C3D5E708294A6C8E0F2 /* Resources */,
+				7A1CD8847D85B0B92BE64366 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -659,12 +690,12 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		7F9B1C3D5E708294A6C8E0F2 /* Resources */ = {
+		7A1CD8847D85B0B92BE64366 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C7E9A1B3D5F708294B6C8E0 /* garment-photo-landscape.jpg in Resources */,
-				5D7F9B1C3E5A708294C6D8F0 /* garment-photo-metadata.jpg in Resources */,
+				9DD45D5AE31FAFE95F1458CA /* garment-photo-landscape.jpg in Resources */,
+				7C566FF52883FA1DE3722634 /* garment-photo-metadata.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -673,7 +704,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C6BD65ABF2D9A7D783608E0 /* Assets.xcassets in Resources */,
-				056EF90645F7188B0C1D3E5F /* garment-photo-metadata.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -684,7 +714,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				016AF5D201B3C547698A0B2C /* AddGarmentFlowTests.swift in Sources */,
+				94E510B82AEB2A6E74E159E5 /* AddGarmentFlowTests.swift in Sources */,
 				14541358F539BB2C4F6BDA24 /* AuthSessionFlowTests.swift in Sources */,
 				49E3A161E4E039076FA192D3 /* DesignSystemGalleryTests.swift in Sources */,
 				02729C5611C224621113DF2C /* GarmentDetailTests.swift in Sources */,
@@ -699,6 +729,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				34D12C5468DE0AEBCB0AAB5A /* AccountModelCodingTests.swift in Sources */,
+				07C16129ACA86900A828B013 /* AddGarmentStoreTests.swift in Sources */,
 				57A36F6A5939EFE27C26BF64 /* AppDependenciesTests.swift in Sources */,
 				B075C02E4408D9ECC8AADE8B /* AuthFormPolicyTests.swift in Sources */,
 				B6CD886F8ECF379639C404DA /* AuthSubmissionStateTests.swift in Sources */,
@@ -706,16 +737,17 @@
 				91B392E42D659BAA47BDCBFF /* ControlBehaviorTests.swift in Sources */,
 				83516AFD1C87246D83CCF380 /* FoundationTests.swift in Sources */,
 				2E3E1D17375A7D72213BA1B6 /* GarmentDetailPolicyTests.swift in Sources */,
+				87DBC049ED604D5C348BC0FD /* GarmentImageProcessorTests.swift in Sources */,
 				21EB3D64E795C85800EB3AFB /* GarmentModelCodingTests.swift in Sources */,
-				5F9B1D3E5A7C8092B4D6F801 /* GarmentStoreTests.swift in Sources */,
-				5E8A0C2D4F6B8193A5C7E9F1 /* AddGarmentStoreTests.swift in Sources */,
-				5B7D9F1A3C5E708294B6D8F0 /* GarmentImageProcessorTests.swift in Sources */,
+				7322DD0D5085D5B6902D76AB /* GarmentStoreTests.swift in Sources */,
 				04C3191FB0C2365FC5F5312D /* ModelTests.swift in Sources */,
 				8E36D96068B8D968286BB481 /* SessionStoreTests.swift in Sources */,
 				F27F3783968E54D4DD12D6E4 /* SmokeTests.swift in Sources */,
 				03EBBD3BC6EC356DBFF0B6E2 /* SupabaseConfigurationTests.swift in Sources */,
-				5A7B9C1D3E5F708192A4B6C8 /* SupabaseGarmentRepositoryTests.swift in Sources */,
 				BDB32DCC40732927C168BE66 /* SupabaseErrorMapperTests.swift in Sources */,
+				797F106527409C55550BBC8C /* SupabaseGarmentRepositoryTests.swift in Sources */,
+				E3B12EE658DBAC7F913570D8 /* WardrobeFilterDraftTests.swift in Sources */,
+				D1F9685C09322B8AE8CC99E6 /* WardrobeFilterPolicyTests.swift in Sources */,
 				02F4D24DBC073C86A6C0456C /* WardrobeHomePolicyTests.swift in Sources */,
 				45F64DFFE9BA32126F59E91D /* WardrobeSetupStateTests.swift in Sources */,
 			);
@@ -725,9 +757,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				046DF8F534E6077A9B0C2D4E /* AddGarmentView.swift in Sources */,
 				9AEE4713E74DBC2E465ABB9A /* AccountModels.swift in Sources */,
 				ED09DA92CB1711C22D6AB9C6 /* AccountRepositories.swift in Sources */,
+				17233D3BB656A1402DB051C2 /* AddGarmentModels.swift in Sources */,
+				53A00EC0B4B3579B14B339B0 /* AddGarmentStore.swift in Sources */,
+				50225F28A75D27F9D2DBB1D2 /* AddGarmentView.swift in Sources */,
 				11400DC336C7CCDB4EA8CC7D /* AppDependencies.swift in Sources */,
 				B0C3DDEE173D04CFC813706E /* AppIdentity.swift in Sources */,
 				297C81632EBD8509C50403F4 /* AppRoute.swift in Sources */,
@@ -737,15 +771,14 @@
 				E798517D62BE125CE9E766E3 /* DesignSystemGalleryView.swift in Sources */,
 				C4F176BD9B1D23C01889CBF2 /* GarmentDetailModel.swift in Sources */,
 				A21E664F8450304ECE6ECD2B /* GarmentDetailView.swift in Sources */,
+				DD59E4EAF9F9235380434260 /* GarmentImageProcessor.swift in Sources */,
 				863DF5D077654E8384BDDDA5 /* GarmentModels.swift in Sources */,
-				60AC2E4F6B8D9013C5E7F902 /* GarmentStore.swift in Sources */,
-				59B8D0F2A4C6E8193B5D7F01 /* AddGarmentModels.swift in Sources */,
-				5AB9D1F3A5C7E8092B4D6F81 /* AddGarmentStore.swift in Sources */,
-				58A7C9E1F3B5D7092A4C6E80 /* GarmentImageProcessor.swift in Sources */,
-				026BF6D312C4E6587A9B0C2D /* GarmentPhotoPickerView.swift in Sources */,
-				036CF7E423D5F7698A0B1C3D /* GarmentPhotoPreviewView.swift in Sources */,
+				8B6A2B9602FF63AA1A03DF12 /* GarmentPhotoPickerView.swift in Sources */,
+				F03A41EC0841B0ED41A58AFD /* GarmentPhotoPreviewView.swift in Sources */,
 				1451829F825E013892749F7E /* GarmentRepositories.swift in Sources */,
+				597818782C0F5B71118B9818 /* GarmentStore.swift in Sources */,
 				BE9EFA9F1087483698262764 /* GarmentSummary.swift in Sources */,
+				AE186135F2B7BB72351D496F /* PrivateGarmentImageView.swift in Sources */,
 				EE2C7E1205D3734FA225EF6F /* ProfileView.swift in Sources */,
 				A4286A59DDCD2F1BF009B502 /* RootView.swift in Sources */,
 				AD96232CE6C40EBE4DF71AF2 /* SessionStore.swift in Sources */,
@@ -755,16 +788,19 @@
 				6B27A7FB43349092A283E6FB /* SupabaseClientFactory.swift in Sources */,
 				E5D5A4AD85ED8B0FC10AF6A6 /* SupabaseConfiguration.swift in Sources */,
 				65C75DC9A52055FFA8F9B30C /* SupabaseErrorMapper.swift in Sources */,
-				7D8E9F0A1B2C3D4E5F607182 /* SupabaseGarmentImageRepository.swift in Sources */,
-				7C8D9E0F1A2B3C4D5E6F7081 /* SupabaseGarmentRepository.swift in Sources */,
+				0FB35EFDB35EADF45C5CF882 /* SupabaseGarmentImageRepository.swift in Sources */,
+				CDBCD085FFF46D22DAF039E5 /* SupabaseGarmentRepository.swift in Sources */,
 				26D528236AEEA5E93E8E745D /* SupabaseProfileRepository.swift in Sources */,
 				5A6149836D677442BC5EE0F3 /* SupabaseWardrobeRepository.swift in Sources */,
+				CDBF56B3AAB15B334F07A645 /* WardrobeCategoryBrowser.swift in Sources */,
+				73F7B93F44039BD8EA408537 /* WardrobeFilter.swift in Sources */,
+				5291C59B9394B5CA8D3310F2 /* WardrobeFilterBar.swift in Sources */,
+				2C8CE17963A8A7932E737D4D /* WardrobeFilterSheet.swift in Sources */,
 				7CEF84076B094FD52D234EB9 /* WardrobeHomeView.swift in Sources */,
 				524A1B1FCE81D179F977601B /* WardrobeSampleData.swift in Sources */,
 				31FA8BE31085391AA255BEA4 /* WardrobeSetupState.swift in Sources */,
 				8543A2DEC3583BD30D22E595 /* WardrobeSetupView.swift in Sources */,
 				C281986D494E04CBE6C8A81C /* YISUAgreementCheckbox.swift in Sources */,
-				61BD3F506C9E0124D6F80913 /* PrivateGarmentImageView.swift in Sources */,
 				9404EA3DE38CB2EE78B37CFE /* YISUApp.swift in Sources */,
 				3829C7C7D426A2AB802A2D0A /* YISUAuthField.swift in Sources */,
 				CC6BF320EA1F8DC49EB02AA6 /* YISUAuthScaffold.swift in Sources */,
@@ -920,7 +956,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = Config/AppInfo.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -985,7 +1020,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = Config/AppInfo.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
