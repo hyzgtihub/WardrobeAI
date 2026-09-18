@@ -40,7 +40,7 @@ struct WardrobeFilterBar: View {
             if !chips.isEmpty {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: YISUTheme.Spacing.sm) {
-                        ForEach(chips, id: \.identifier) { chip in
+                        ForEach(chips, id: \.renderID) { chip in
                             Button {
                                 onRemove(chip.dimension, chip.value)
                             } label: {
@@ -91,6 +91,10 @@ struct WardrobeFilterBar: View {
     private struct Chip {
         let dimension: WardrobeFilterDimension
         let value: String
+
+        var renderID: String {
+            "\(dimension.rawValue):\(WardrobeFilterPolicy.normalized(value))"
+        }
 
         var identifier: String {
             "wardrobe.filterChip.\(WardrobeFilterPolicy.normalized(value))"
