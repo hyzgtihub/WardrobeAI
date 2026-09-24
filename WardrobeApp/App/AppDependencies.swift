@@ -29,7 +29,7 @@ struct AppDependencies {
         return Self(
             sessionStore: SessionStore(
                 authRepository: UITestAuthRepository(scenario: scenario),
-                profileRepository: UITestProfileRepository(),
+                profileRepository: UITestProfileRepository(failsUpdate: scenario == "profile-save-failure"),
                 wardrobeRepository: UITestWardrobeRepository(),
                 sleep: { _ in }
             ),
@@ -68,7 +68,7 @@ private struct UITestAuthRepository: AuthRepository {
     }
 
     func currentUser() async throws -> AuthenticatedUser? {
-        scenario == "signed-in" ? Self.user : nil
+        ["signed-in", "profile-save-failure"].contains(scenario) ? Self.user : nil
     }
 
     func requestSignUpVerification(email: String, password: String) async throws {
@@ -96,6 +96,10 @@ private struct UITestAuthRepository: AuthRepository {
 }
 
 private actor UITestProfileRepository: ProfileRepository {
+    let failsUpdate: Bool
+
+    init(failsUpdate: Bool) { self.failsUpdate = failsUpdate }
+
     private var profile = UserProfile(
         id: UUID(uuidString: "11111111-1111-1111-1111-111111111111")!,
         nickname: "Mia",
@@ -109,6 +113,7 @@ private actor UITestProfileRepository: ProfileRepository {
     func fetchProfile() async throws -> UserProfile { profile }
 
     func updateProfile(_ changes: ProfileChanges, for userID: UUID) async throws -> UserProfile {
+        if failsUpdate { throw AccountError.networkUnavailable }
         profile.nickname = changes.nickname
         profile.languageCode = changes.languageCode
         profile.notificationsEnabled = changes.notificationsEnabled

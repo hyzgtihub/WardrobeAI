@@ -141,7 +141,7 @@ struct SessionStoreTests {
         let store = dependencies.makeStore()
         await store.restore()
 
-        await store.updateProfile(ProfileChanges(
+        let saved = await store.updateProfile(ProfileChanges(
             nickname: "Mia",
             languageCode: "zh-Hans",
             notificationsEnabled: true
@@ -151,8 +151,26 @@ struct SessionStoreTests {
             Issue.record("Expected a ready account")
             return
         }
+        #expect(saved)
         #expect(account.profile.nickname == "Mia")
         #expect(dependencies.profile.updatedUserID == AuthenticatedUser.fixture.id)
+    }
+
+    @Test @MainActor
+    func failedProfileUpdateReturnsFalseAndPreservesAccount() async {
+        let dependencies = TestAccountDependencies(
+            currentUser: .success(.fixture),
+            updatedProfile: .failure(AccountError.networkUnavailable)
+        )
+        let store = dependencies.makeStore()
+        await store.restore()
+        let original = store.state
+        let saved = await store.updateProfile(ProfileChanges(
+            nickname: "新昵称", languageCode: "zh-Hans", notificationsEnabled: true
+        ))
+        #expect(!saved)
+        #expect(store.state == original)
+        #expect(store.submissionError == .networkUnavailable)
     }
 
     @Test @MainActor
@@ -180,7 +198,7 @@ struct SessionStoreTests {
         #expect(dependencies.profile.updateCount == 1)
 
         await updateGate.release()
-        await firstUpdate.value
+        #expect(await firstUpdate.value)
         #expect(!store.isSubmitting)
     }
 
@@ -206,7 +224,7 @@ struct SessionStoreTests {
 
         await store.signOut()
         await updateGate.release()
-        await updateTask.value
+        #expect(!(await updateTask.value))
 
         #expect(store.state == .signedOut)
         #expect(!store.isSubmitting)
@@ -241,7 +259,7 @@ struct SessionStoreTests {
         }
 
         await updateGate.release()
-        await updateTask.value
+        #expect(await updateTask.value)
 
         #expect(!store.isSubmitting)
         guard case let .ready(account) = store.state else {

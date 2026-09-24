@@ -152,7 +152,6 @@ struct RootView: View {
             ProfileView(
                 account: account,
                 isSaving: sessionStore.isSubmitting,
-                error: sessionStore.submissionError,
                 onBack: { route = .wardrobe },
                 onSave: { changes in await sessionStore.updateProfile(changes) },
                 onSignOut: { await sessionStore.signOut() }

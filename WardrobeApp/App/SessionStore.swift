@@ -134,8 +134,9 @@ final class SessionStore {
         await loadAccount(for: lastUser)
     }
 
-    func updateProfile(_ changes: ProfileChanges) async {
-        guard !isSubmitting, case var .ready(account) = state else { return }
+    @discardableResult
+    func updateProfile(_ changes: ProfileChanges) async -> Bool {
+        guard !isSubmitting, case var .ready(account) = state else { return false }
         let generation = sessionGeneration
         let submission = beginSubmission()
         submissionError = nil
@@ -143,12 +144,14 @@ final class SessionStore {
         do {
             account.profile = try await profileRepository.updateProfile(changes, for: account.user.id)
             guard generation == sessionGeneration,
-                  lastUser?.id == account.user.id else { return }
+                  lastUser?.id == account.user.id else { return false }
             accountLoadGeneration += 1
             state = .ready(account)
+            return true
         } catch {
-            guard generation == sessionGeneration else { return }
+            guard generation == sessionGeneration else { return false }
             submissionError = accountError(from: error)
+            return false
         }
     }
 
