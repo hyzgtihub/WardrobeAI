@@ -130,6 +130,85 @@ final class AuthSessionFlowTests: XCTestCase {
     }
 
     @MainActor
+    func testNicknameEditorSavesAndDiscardsDraft() {
+        let app = launch(scenario: "signed-in")
+        app.buttons["designSystem.tab.profile"].tap()
+        let row = app.buttons["profile.editNickname"]
+        XCTAssertTrue(row.waitForExistence(timeout: 5))
+        guard row.exists else { return }
+        let profileScreenshot = XCTAttachment(screenshot: app.screenshot())
+        profileScreenshot.name = "Profile overview"
+        profileScreenshot.lifetime = .keepAlways
+        add(profileScreenshot)
+        row.tap()
+        let editorScreenshot = XCTAttachment(screenshot: app.screenshot())
+        editorScreenshot.name = "Nickname editor"
+        editorScreenshot.lifetime = .keepAlways
+        add(editorScreenshot)
+        let save = app.buttons["profile.save"]
+        XCTAssertFalse(save.isEnabled)
+        app.buttons["profile.clearNickname"].tap()
+        XCTAssertFalse(save.isEnabled)
+        let field = app.textFields["profile.nickname"]
+        field.tap()
+        field.typeText("NewName")
+        save.tap()
+        XCTAssertTrue(row.waitForExistence(timeout: 5))
+        XCTAssertTrue(row.label.contains("NewName"))
+        row.tap()
+        app.buttons["profile.clearNickname"].tap()
+        field.tap()
+        field.typeText("DiscardMe")
+        app.buttons["profile.nicknameBack"].tap()
+        XCTAssertTrue(row.label.contains("NewName"))
+        row.tap()
+        XCTAssertEqual(field.value as? String, "NewName")
+    }
+
+    @MainActor
+    func testNicknameSaveFailureRetainsDraftAndOriginalProfile() {
+        let app = launch(scenario: "profile-save-failure")
+        let tab = app.buttons["designSystem.tab.profile"]
+        XCTAssertTrue(tab.waitForExistence(timeout: 5))
+        tab.tap()
+        app.buttons["profile.editNickname"].tap()
+        app.buttons["profile.clearNickname"].tap()
+        let field = app.textFields["profile.nickname"]
+        field.tap()
+        field.typeText("RetryName")
+        app.buttons["profile.save"].tap()
+        XCTAssertTrue(app.staticTexts["profile.saveError"].waitForExistence(timeout: 5))
+        XCTAssertEqual(field.value as? String, "RetryName")
+        XCTAssertTrue(app.buttons["profile.save"].isEnabled)
+        app.buttons["profile.nicknameBack"].tap()
+        XCTAssertTrue(app.buttons["profile.editNickname"].label.contains("Mia"))
+    }
+
+    @MainActor
+    func testNicknameLengthValidationAndChineseInput() {
+        let app = launch(scenario: "signed-in")
+        let tab = app.buttons["designSystem.tab.profile"]
+        XCTAssertTrue(tab.waitForExistence(timeout: 5))
+        tab.tap()
+        app.buttons["profile.editNickname"].tap()
+        app.buttons["profile.clearNickname"].tap()
+        let field = app.textFields["profile.nickname"]
+        field.tap()
+        field.typeText(String(repeating: "a", count: 31))
+        XCTAssertFalse(app.buttons["profile.save"].isEnabled)
+        app.buttons["profile.clearNickname"].tap()
+        field.typeText("   ")
+        XCTAssertFalse(app.buttons["profile.save"].isEnabled)
+        app.buttons["profile.clearNickname"].tap()
+        field.typeText("衣序")
+        XCTAssertTrue(app.buttons["profile.save"].isEnabled)
+        app.buttons["profile.save"].tap()
+        let row = app.buttons["profile.editNickname"]
+        XCTAssertTrue(row.waitForExistence(timeout: 5))
+        XCTAssertTrue(row.label.contains("衣序"))
+    }
+
+    @MainActor
     private func launch(scenario: String) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments += ["-ui-auth-scenario", scenario]
